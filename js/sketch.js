@@ -184,6 +184,9 @@ function draw()
     // check for game over
     if(lives <= 0)
     {
+      // Update the leaderboard and reset the score
+      fb_updateLeaderboard(score);
+
       // reset lives and score
       lives = 3;
       score = 0;
