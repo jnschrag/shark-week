@@ -46,7 +46,9 @@ function preload()
 function setup() 
 {
   // set canvas size
-  createCanvas(800, 500);                    //resize
+  var canvas = createCanvas(800, 500);                    //resize
+  // Move Canvas to game-holder section
+  canvas.parent('game-holder');
   
   // create player object
   player = new Player();
@@ -56,12 +58,12 @@ function setup()
   score = 0;
   
   instructP = createP('<b>Some intro text. Help the robot</b> <br> Use the left and right arrows to swim.<br> Get the bubbles to score but avoid the sharks');
-  instructP.position(275, 20);
+  instructP.position(275, 350);
   
   
   // create clear button
   startButton = createButton('Play Game');
-  startButton.position(350, 100);
+  startButton.position(350, 500);
   startButton.mousePressed(startGame);
   
   // set gameStarted equal to false
@@ -184,6 +186,9 @@ function draw()
     // check for game over
     if(lives <= 0)
     {
+      // Update the leaderboard and reset the score
+      fb_updateLeaderboard(score);
+
       // reset lives and score
       lives = 3;
       score = 0;
