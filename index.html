@@ -8,22 +8,60 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap-social.css" media="screen">
+    <script src="https://use.fontawesome.com/908da1ccad.js"></script>
   </head>
   <body>
 
-  <table id="leaderboardTable"></table>
-  <input type="text" id="nameInput" placeholder="Name">
-  <input type="text" id="scoreInput" placeholder="Score">
+    <div class="container">
 
-  <div id="highestscore">
-    Highest Score so Far: <span id="highestScoreDiv"></span>
-  </div>
+      <!-- START: Welcome & Leaderboard -->
+      <section id="welcome">
+        <h1>Shark Week Interactive</h1>
+        <div id="welcomeMessage"></div>
 
+        <h2>Leaderboard</h2>
+        <div id="highestscore">
+          Highest Score so Far: <span id="highestScoreDiv"></span>
+        </div><br />
+        <table id="leaderboardTable"></table>
+        <br />
+        <a class="btn btn-block btn-social sign-out" style="color:#000;">
+          Sign Out
+        </a>      
+        <br />
+      </section>
+      <!-- END: Welcome & Leaderboard -->
+
+      <!-- START: Authentication Screen -->
+      <section id="authentication">
+        To save your high score, sign in!<br />
+        <a class="btn btn-block btn-social btn-twitter">
+          <span class="fa fa-twitter"></span> Sign in with Twitter
+        </a>
+        <a class="btn btn-block btn-social btn-facebook">
+          <span class="fa fa-facebook"></span> Sign in with Facebook
+        </a>
+        <a class="btn btn-block btn-social btn-google">
+          <span class="fa fa-google"></span> Sign in with Google
+        </a>
+      </section>
+      <br />
+      <!-- END: Authentication Screen -->
+
+      <!-- START: Game Canvas -->
+      <section id="game-holder"></section>
+      <!-- END: Game Canvas -->
+
+
+      </div>
   
   </body>
   <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
-  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.0.2/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script language="javascript" src="js/leaderboard.js"></script>
+  <script language="javascript" src="js/authentication.js"></script>
   <script language="javascript" src="js/p5.js"></script>
   <script language="javascript" src="js/p5.dom.js"></script>
   <script language="javascript" src="js/p5.sound.js"></script>

@@ -12,33 +12,89 @@ var config = {
 firebase.initializeApp(config);
 
 var LEADERBOARD_SIZE = 5;
+var provider;
 
 // Build some firebase references.
 var rootRef = firebase.database().ref();
 var scoreListRef = firebase.database().ref("scoreList");
 var highestScoreRef = firebase.database().ref("highestScore");
 
-// Authentication
-firebase.auth().signInAnonymously().catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // ...
+// Welcome Message if authenticated
+firebase.auth().onAuthStateChanged(function(user) {
+  if(user) {
+    $("#welcomeMessage").html("Welcome back, <strong>"+user.displayName+"</strong>!");
+    // Sign Out Option
+    $(".sign-out").show();
+    $(".sign-out").click(function() {
+      authenticateSignOut();
+    });
+  }
+  else {
+    $("#welcomeMessage").html("You're not currently logged in. Your high score will not be saved. You will be able to log in after the game and save your score.");
+    $(".sign-out").hide();
+  }
 });
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    var isAnonymous = user.isAnonymous;
-    var uid = user.uid;
-    var name = $("#nameInput").val();
-    // ...
-  } else {
-    // User is signed out.
-    // ...
-  }
-  // ...
-});
+// Update the leaderboard with the new score; replace preexisting score if there is one
+function fb_updateLeaderboard(score) {
+
+  // Check to see if user is logged in, if they're not, give them the opportunity to do so
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      $("#authentication").hide();
+      var newScore = Number(score);
+      var name = user.displayName;
+
+      if (name.length === 0)
+        return;
+
+      var userScoreRef = scoreListRef.child(user.uid);
+
+      // Check what the current score is if the user already has a record. If the new score is greater, update it.
+      firebase.database().ref("scoreList/"+user.uid).once('value').then(function(snapshot) {
+        if(snapshot.val() != null) {
+          var oldScore = snapshot.val().score;
+          if(oldScore === null || newScore > oldScore) {
+            // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
+            userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+          }
+          else {
+            return;
+          }
+        }
+        else {
+          // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
+          userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+        }
+      });
+
+      // Track the highest score using a transaction.  A transaction guarantees that the code inside the block is
+      // executed on the latest data from the server, so transactions should be used if you have multiple
+      // clients writing to the same data and you want to avoid conflicting changes.
+      highestScoreRef.transaction(function (currentHighestScore) {
+        if (currentHighestScore === null || newScore > currentHighestScore) {
+          // The return value of this function gets saved to the server as the new highest score.
+          return newScore;
+        }
+        // if we return with no arguments, it cancels the transaction.
+        return;
+      });
+    } 
+    else {
+      $("#authentication").show();
+      $(".btn-twitter").click(function() {
+        authenticateUser("Twitter");
+      });
+      $(".btn-facebook").click(function() {
+        authenticateUser("Facebook");
+      });
+      $(".btn-google").click(function() {
+        authenticateUser("Google");
+      });
+    }
+  });
+
+}
 
 // Keep a mapping of firebase locations to HTML elements, so we can move / remove elements as necessary.
 var htmlForPath = {};
@@ -46,11 +102,11 @@ var htmlForPath = {};
 // Helper function that takes a new score snapshot and adds an appropriate row to our leaderboard table.
 function handleScoreAdded(scoreSnapshot, prevScoreName) {
   var newScoreRow = $("<tr/>");
-  newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));
+  newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val()['name'])));
   newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
 
   // Store a reference to the table row so we can get it again later.
-  htmlForPath[scoreSnapshot.name()] = newScoreRow;
+  htmlForPath[scoreSnapshot.key] = newScoreRow;
 
   // Insert the new score in the appropriate place in the table.
   if (prevScoreName === null) {
@@ -62,41 +118,15 @@ function handleScoreAdded(scoreSnapshot, prevScoreName) {
   }
 }
 
-// Update the leaderboard with the new score; replace preexisting score if there is one
-function fb_updateLeaderboard(score) {
-  var newScore = Number(score);
-  var name = $("#nameInput").val();
-
-  if (name.length === 0)
-    return;
-
-  var userScoreRef = scoreListRef.child(name);
-
-  // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-  userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
-
-  // Track the highest score using a transaction.  A transaction guarantees that the code inside the block is
-  // executed on the latest data from the server, so transactions should be used if you have multiple
-  // clients writing to the same data and you want to avoid conflicting changes.
-  highestScoreRef.transaction(function (currentHighestScore) {
-    if (currentHighestScore === null || newScore > currentHighestScore) {
-      // The return value of this function gets saved to the server as the new highest score.
-      return newScore;
-    }
-    // if we return with no arguments, it cancels the transaction.
-    return;
-  });
-}
-
 // Helper function to handle a score object being removed; just removes the corresponding table row.
 function handleScoreRemoved(scoreSnapshot) {
-  var removedScoreRow = htmlForPath[scoreSnapshot.name()];
+  var removedScoreRow = htmlForPath[scoreSnapshot.key];
   removedScoreRow.remove();
-  delete htmlForPath[scoreSnapshot.name()];
+  delete htmlForPath[scoreSnapshot.key];
 }
 
 // Create a view to only receive callbacks for the last LEADERBOARD_SIZE scores
-var scoreListView = scoreListRef.limitToFirst(LEADERBOARD_SIZE);
+var scoreListView = scoreListRef.limitToLast(LEADERBOARD_SIZE);
 
 // Add a callback to handle when a new score is added.
 scoreListView.on('child_added', function (newScoreSnapshot, prevScoreName) {
