@@ -74,7 +74,7 @@ function draw()
 
   if(gameStarted == true)
   {
-  
+
     // hide start button
     $("#start-game").hide();
     //hide beginning text
@@ -191,7 +191,7 @@ function draw()
       score = 0;
       
       // reset player's position
-      player.xpos = displayWidth*.5;
+      player.xpos = width*.5;
       player.direction = "stopped";
     
       // remove sharks and dots
@@ -238,6 +238,23 @@ function keyPressed()
   {
     // change player's direction property
     player.direction = 'left';
+  }
+}
+
+function touchStarted() {
+  // Calculate difference between displayWidth and width. This becomes our touchX multiplier
+  var touchDiff = round(width/displayWidth);
+  var touchCalc = touchX * touchDiff;
+
+  // Only move if the game has started. Necessary to avoid moving when touching the play button
+  if(gameStarted == true) {
+
+    if(player.xpos >= touchCalc) {
+      player.direction = 'left';
+    }
+    else {
+      player.direction = 'right';
+    }
   }
 }
 
