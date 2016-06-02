@@ -8,3 +8,15 @@
 #leaderboardTable td {
   border-bottom:1px solid #ccc;
 }
+
+button#start-game {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+}
+
+.game-canvas {
+  width:100% !important;
+  height:100% !important;
+  max-height:500px;
+}
