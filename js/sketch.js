@@ -47,8 +47,9 @@ function setup()
 {
   // set canvas size
   var canvas = createCanvas(800, 500);                    //resize
-  // Move Canvas to game-holder section
-  canvas.parent('game-holder');
+  // Move Canvas to game-holder section, set the game-canvas class for styling
+  canvas.parent("game-holder");
+  canvas.addClass("game-canvas");
   
   // create player object
   player = new Player();
@@ -57,10 +58,10 @@ function setup()
   lives = 3;
   score = 0;
   
-  // create clear button
-  startButton = createButton('Play Game');
-  startButton.position(350, 500);
-  startButton.mousePressed(startGame);
+  // When we click this button, start the game
+  $("#start-game").click(function() {
+    startGame();
+  })
   
   // set gameStarted equal to false
   gameStarted = false;
@@ -75,7 +76,7 @@ function draw()
   {
   
     // hide start button
-    startButton.hide();
+    $("#start-game").hide();
     //hide beginning text
     $("#instructions").hide();
   
@@ -207,7 +208,7 @@ function draw()
   } else {
 	  
     // show start button
-    startButton.show();
+    $("#start-game").show();
     //show instructions again
 	   $("#instructions").show();
   }
