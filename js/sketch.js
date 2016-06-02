@@ -57,10 +57,6 @@ function setup()
   lives = 3;
   score = 0;
   
-  instructP = createP('<b>Some intro text. Help the robot</b> <br> Use the left and right arrows to swim.<br> Get the bubbles to score but avoid the sharks');
-  instructP.position(275, 350);
-  
-  
   // create clear button
   startButton = createButton('Play Game');
   startButton.position(350, 500);
@@ -81,7 +77,7 @@ function draw()
     // hide start button
     startButton.hide();
     //hide beginning text
-    instructP.hide();
+    $("#instructions").hide();
   
     // display score 
     fill(5);
@@ -213,7 +209,7 @@ function draw()
     // show start button
     startButton.show();
     //show instructions again
-	   instructP.show();
+	   $("#instructions").show();
   }
 }
 
