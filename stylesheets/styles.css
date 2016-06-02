@@ -1,0 +1,10 @@
+#authentication {
+  display:none;
+}
+
+#leaderboardTable {
+  width:100%;
+}
+#leaderboardTable td {
+  border-bottom:1px solid #ccc;
+}
