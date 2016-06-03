@@ -47,8 +47,9 @@ function setup()
 {
   // set canvas size
   var canvas = createCanvas(800, 500);                    //resize
-  // Move Canvas to game-holder section
-  canvas.parent('game-holder');
+  // Move Canvas to game-holder section, set the game-canvas class for styling
+  canvas.parent("game-holder");
+  canvas.addClass("game-canvas");
   
   // create player object
   player = new Player();
@@ -57,14 +58,10 @@ function setup()
   lives = 3;
   score = 0;
   
-  instructP = createP('<b>Some intro text. Help the robot</b> <br> Use the left and right arrows to swim.<br> Get the bubbles to score but avoid the sharks');
-  instructP.position(275, 350);
-  
-  
-  // create clear button
-  startButton = createButton('Play Game');
-  startButton.position(350, 500);
-  startButton.mousePressed(startGame);
+  // When we click this button, start the game
+  $("#start-game").click(function() {
+    startGame();
+  })
   
   // set gameStarted equal to false
   gameStarted = false;
@@ -77,11 +74,11 @@ function draw()
 
   if(gameStarted == true)
   {
-  
+
     // hide start button
-    startButton.hide();
+    $("#start-game").hide();
     //hide beginning text
-    instructP.hide();
+    $("#instructions").hide();
   
     // display score 
     fill(5);
@@ -194,7 +191,7 @@ function draw()
       score = 0;
       
       // reset player's position
-      player.xpos = displayWidth*.5;
+      player.xpos = width*.5;
       player.direction = "stopped";
     
       // remove sharks and dots
@@ -211,9 +208,9 @@ function draw()
   } else {
 	  
     // show start button
-    startButton.show();
+    $("#start-game").show();
     //show instructions again
-	   instructP.show();
+	   $("#instructions").show();
   }
 }
 
@@ -241,6 +238,23 @@ function keyPressed()
   {
     // change player's direction property
     player.direction = 'left';
+  }
+}
+
+function touchStarted() {
+  // Calculate difference between displayWidth and width. This becomes our touchX multiplier
+  var touchDiff = round(width/displayWidth);
+  var touchCalc = touchX * touchDiff;
+
+  // Only move if the game has started. Necessary to avoid moving when touching the play button
+  if(gameStarted == true) {
+
+    if(player.xpos >= touchCalc) {
+      player.direction = 'left';
+    }
+    else {
+      player.direction = 'right';
+    }
   }
 }
 
