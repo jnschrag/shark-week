@@ -152,11 +152,6 @@ function fb_updateLeaderboard(score) {
         userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
       }
 
-      // Delete the score cookie, we don't need it anymore
-      var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-      console.log("Cookie Value: "+cookieValue);
-      document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-
     });
 
     // Track the highest score using a transaction.  A transaction guarantees that the code inside the block is
