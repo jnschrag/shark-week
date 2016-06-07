@@ -13,6 +13,7 @@ var quizFlag;
 var pausedFlag;
 var letters = ["a","b","c","d"];
 var correctAnswer;
+var numQuestions = Object.keys(questionsObj).length
 
 function preload()
 {
