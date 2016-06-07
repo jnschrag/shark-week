@@ -10,7 +10,6 @@ var heart;
 var biteSound, gameoverSound, startSound, scoreSound;
 var gameStarted;
 
-
 function preload()
 {
   // load in shark images
@@ -183,12 +182,14 @@ function draw()
     // check for game over
     if(lives <= 0)
     {
+      // Save the score as a cookie
+      document.cookie = "anonScore="+score;
+
       // Update the leaderboard and reset the score
       fb_updateLeaderboard(score);
 
-      // reset lives and score
+      // reset lives
       lives = 3;
-      score = 0;
       
       // reset player's position
       player.xpos = width*.5;
@@ -221,6 +222,9 @@ function startGame()
   
   // play starting sound
   startSound.play();
+
+  // reset score
+  score = 0;
   
 }
 
