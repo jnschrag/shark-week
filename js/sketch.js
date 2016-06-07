@@ -9,6 +9,10 @@ var playerLeft1, playerLeft2, playerLeft3, playerRight1, playerRight2, playerRig
 var heart;
 var biteSound, gameoverSound, startSound, scoreSound;
 var gameStarted;
+var quizFlag;
+var pausedFlag;
+var letters = ["a","b","c","d"];
+var correctAnswer;
 
 function preload()
 {
@@ -102,49 +106,59 @@ function draw()
       break;
     }
 
-    // display player
-    player.display();
-  
-    // random shark hatching
-    var sharkHatch = Math.ceil(random(50));
-    if(sharkHatch == 1)
-    {
-      sharks.push(new Shark());
+    // quizFlag = true, only show the quiz
+    if(quizFlag == true) {
+      $("#quiz").show();
     }
-  
-    // random dot hatching
-    var dotHatch = Math.ceil(random(30));
-    if(dotHatch == 1)
-    {
-      dots.push(new Dot());
-    }
-  
-    // loop through each shark
-    for (var i=0; i<sharks.length; i++) 
-    {
-      // display shark
-      sharks[i].display();
+    // quizFlag = false, hide the quiz, show OEDI, Sharks, & Bubbles
+    else {
+      // Hide the quiz
+      $("#quiz").hide();
+
+      // display player
+      player.display();
     
-      // check if shark reaches top of the screen         
-      if(sharks[i].ypos < 50)                               
+      // random shark hatching
+      var sharkHatch = Math.ceil(random(50));
+      if(sharkHatch == 1)
       {
-        // if does, remove shark
-        sharks.splice(i, 1);
+        sharks.push(new Shark());
+      }
+    
+      // random dot hatching
+      var dotHatch = Math.ceil(random(30));
+      if(dotHatch == 1)
+      {
+        dots.push(new Dot());
+      }
+    
+      // loop through each shark
+      for (var i=0; i<sharks.length; i++) 
+      {
+        // display shark
+        sharks[i].display();
       
-      } else {
-      
-        // check if player is touching shark
-        var d1 = dist(sharks[i].xpos, sharks[i].ypos, player.xpos, player.ypos);
-        if(d1 < 50)
+        // check if shark reaches top of the screen         
+        if(sharks[i].ypos < 50)                               
         {
-          // remove shark
+          // if does, remove shark
           sharks.splice(i, 1);
-         
-          // decrease lives by one
-          lives --;
-         
-          // play bite sound
-          biteSound.play();
+        
+        } else {
+        
+          // check if player is touching shark
+          var d1 = dist(sharks[i].xpos, sharks[i].ypos, player.xpos, player.ypos);
+          if(d1 < 50)
+          {
+            // remove shark
+            sharks.splice(i, 1);
+           
+            // decrease lives by one
+            lives --;
+           
+            // play bite sound
+            biteSound.play();
+          }
         }
       }
     }
@@ -163,9 +177,9 @@ function draw()
     
       } else {
     
-        // check if player is touching dot
+        // check if player is touching dot & the letter is correct
         var d2 = dist(dots[j].xpos, dots[j].ypos, player.xpos, player.ypos);
-        if(d2 < 25)
+        if(d2 < 25 && dots[j].letter == correctAnswer)
         {
           // remove dot
           dots.splice(j, 1);
@@ -175,6 +189,9 @@ function draw()
         
           // play score sound
           scoreSound.play();
+
+          // Stop game, move to next question
+          nextQuestion();
         }
       }
     }
@@ -217,6 +234,13 @@ function draw()
 
 function startGame()
 {
+
+  // Don't loop draw();
+  noLoop();
+
+  // set quizFlag
+  quizFlag = true;
+
   // change gameStarted variable
   gameStarted = true;
   
@@ -233,28 +257,47 @@ function startGame()
 
 function keyPressed()
 {
-  // if the right arrow was pressed
-  if(keyCode == RIGHT_ARROW)
-  {
-    // change player's direction property
-    player.direction = 'right';
-  }
-  
-  // if the left arrow was pressed
-  if(keyCode == LEFT_ARROW)
-  {
-    // change player's direction property
-    player.direction = 'left';
+
+  // Only respond if quizFlag = false
+  if(quizFlag == false) {
+
+    // if the right arrow was pressed
+    if(keyCode == RIGHT_ARROW)
+    {
+      // change player's direction property
+      player.direction = 'right';
+    }
+    
+    // if the left arrow was pressed
+    if(keyCode == LEFT_ARROW)
+    {
+      // change player's direction property
+      player.direction = 'left';
+    }
+
+    // if spacebar was pressed
+    if(keyCode == 32) {
+      // If game is paused
+      if(pausedFlag == true) {
+        pausedFlag = false;
+        loop();
+      }
+      else {
+        pausedFlag = true;
+        noLoop();
+      }
+    }
   }
 }
 
 function touchStarted() {
+
   // Calculate difference between displayWidth and width. This becomes our touchX multiplier
   var touchDiff = round(width/displayWidth);
   var touchCalc = touchX * touchDiff;
 
-  // Only move if the game has started. Necessary to avoid moving when touching the play button
-  if(gameStarted == true) {
+  // Only move if the game has started. Necessary to avoid moving when touching the play button or quiz answers
+  if(gameStarted == true && quizFlag == false) {
 
     if(player.xpos >= touchCalc) {
       player.direction = 'left';
@@ -395,7 +438,7 @@ Shark.prototype.display = function()
     case 3: image(sharkOrange, this.xpos, this.ypos, 46, 100); break;
     case 4: image(sharkBlue, this.xpos, this.ypos, 46, 100); break; 
   }
-  this.ypos = this.ypos - this.speed;         //subtracts speed intead of adds
+  this.ypos = this.ypos - this.speed;         //subtracts speed instead of adds
 }
 
 /* O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O /
@@ -406,8 +449,9 @@ function Dot()
 {
   // set default properties
   this.xpos = random(0, width);
-  this.ypos = height;                            
+  this.ypos = height;                        
   this.speed = random(1, 4);
+  this.letter = letters[Math.floor(Math.random() * letters.length)];
 }
 
 Dot.prototype.display = function()
@@ -416,5 +460,29 @@ Dot.prototype.display = function()
   fill(255);
   noStroke();
   ellipse(this.xpos, this.ypos, 25, 25);
+
+  // Add the randomized letter
+  fill(5);
+  textSize(18);
+  text(String(this.letter), this.xpos - 6.5, this.ypos - 10, 25, 25);
   this.ypos = this.ypos - this.speed;       
+}
+
+/*===================================================================
+// Quiz Mode Functions
+/*==================================================================*/
+function nextQuestion() {
+  // reset lives
+  lives = 3;
+      
+  // reset player's position
+  player.xpos = width*.5;
+  player.direction = "stopped";
+    
+  // remove sharks and dots
+  sharks = [];
+  dots = [];
+
+  // set gameStarted to false
+  quizFlag = true;
 }

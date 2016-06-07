@@ -173,6 +173,57 @@
 
         <!-- START: Game Canvas -->
         <div class="col-xs-12 col-md-9">
+
+          <!-- START: Quiz -->
+          <section id="quiz">
+            <div class="questions">
+              <div class="q0">
+                <span>1. Which of the following is an example of a machine-readable format?</span>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-5">
+                    <input type="radio" name="q0" id="q01" value="a"> <label for="q01">A. Carbonite-frozen format</label><br />
+                    <input type="radio" name="q0" id="q02" value="b"> <label for="q02">B. JabbaScript Object Notation</label>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <input type="radio" name="q0" id="q03" value="c"> <label for="q03">C. Comma-separated file</label><br />
+                    <input type="radio" name="q0" id="q04" value="d"> <label for="q04">D. None of them, these aren't the formats you're looking for.</label>
+                </div>
+              </div>
+              </div>
+              <div class="q1">
+                <span>2. Which one is not an open election data principle?</span>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-5">
+                    <input type="radio" name="q1" id="q11" value="a"> <label for="q11">A. Complete and in bulk, there is no try</label><br />
+                    <input type="radio" name="q1" id="q12" value="b"> <label for="q12">B. Hyperspace compatibility</label>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <input type="radio" name="q1" id="q13" value="c"> <label for="q13">C. Non-proprietary &mdash; the Rebel Alliance answers to no evil overlord</label><br />
+                    <input type="radio" name="q1" id="q14" value="d"> <label for="q14">D. Non-discriminatory, even for half-witted, scruffy-looking Nerf herders.</label>
+                </div>
+              </div>
+              </div>
+              <div class="q2">
+                <span>3. When should election results be released to be considered timely?</span><br />
+                <div class="row">
+                  <div class="col-xs-12 col-sm-5">
+                    <input type="radio" name="q2" id="q21" value="a"> <label for="q21">A. A long time ago in a galaxy far far away</label><br />
+                    <input type="radio" name="q2" id="q22" value="b"> <label for="q22">B. As quickly as necessary for it to be useful</label>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <input type="radio" name="q2" id="q23" value="c"> <label for="q23">C. Never, it's a trap.</label><br />
+                    <input type="radio" name="q2" id="q24" value="d"> <label for="q24">D. Whenever Darth Vader says they're good and ready.</label>
+                </div>
+              </div>
+              </div>
+              <div class="submit">
+                <button name="quizsubmit" class="btn btn-primary">Submit</button>
+                <div class="result"></div>
+              </div>
+            </div>
+          </section>
+          <!-- END: Quiz -->
+
           <section id="game-holder">
             <button id="start-game" class="btn btn-primary">Play Game</button>
           </section>
@@ -246,6 +297,7 @@
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script language="javascript" src="js/leaderboard.js"></script>
   <script language="javascript" src="js/authentication.js"></script>
+  <script language="javascript" src="js/quiz.js"></script>
   <script language="javascript" src="js/p5.js"></script>
   <script language="javascript" src="js/p5.dom.js"></script>
   <script language="javascript" src="js/p5.sound.js"></script>
