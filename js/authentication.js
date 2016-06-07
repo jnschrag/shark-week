@@ -39,6 +39,8 @@ function authenticateUser(chosenProvider) {
 function authenticateSignOut() {
 	firebase.auth().signOut().then(function() {
 	  // Sign-out successful.
+	  displayName = "";
+	  uid = "";
 	}, function(error) {
 	  // An error happened.
 	});
