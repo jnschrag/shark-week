@@ -225,6 +225,9 @@ function startGame()
 
   // reset score
   score = 0;
+
+  // Delete anonScore cookie
+  document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   
 }
 
