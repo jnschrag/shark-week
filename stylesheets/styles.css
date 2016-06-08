@@ -9,10 +9,10 @@
   border-bottom:1px solid #ccc;
 }
 
-button#start-game {
-  position: absolute;
-  top: 50%;
-  left: 45%;
+.start-buttons-container {
+  position:absolute;
+  top:50%;
+  left:40%;
 }
 
 .game-canvas {

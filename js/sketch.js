@@ -11,9 +11,11 @@ var biteSound, gameoverSound, startSound, scoreSound;
 var gameStarted;
 var quizFlag;
 var pausedFlag;
+var freePlayModeFlag;
 var letters = ["a","b","c","d"];
 var correctAnswer;
 var numQuestions = Object.keys(questionsObj).length
+var numQuestionsCorrect;
 
 function preload()
 {
@@ -62,13 +64,24 @@ function setup()
   lives = 3;
   score = 0;
   
-  // When we click this button, start the game
-  $("#start-game").click(function() {
-    startGame();
-  })
-  
   // set gameStarted equal to false
   gameStarted = false;
+
+  // Clicking either the start-quiz or free-play buttons starts the game
+  $("#start-quiz").click(function() {
+    // Set Flags
+    quizFlag = true;
+    freePlayModeFlag = false;
+    // Don't loop draw();
+    noLoop();
+    startGame();
+  });
+  $("#free-play").click(function() {
+    // Set Flags
+    quizFlag = false;
+    freePlayModeFlag = true;
+    startGame();
+  });
   
 }
 
@@ -79,8 +92,10 @@ function draw()
   if(gameStarted == true)
   {
 
-    // hide start button
-    $("#start-game").hide();
+    // hide start buttons
+    $("#start-quiz").hide();
+    $("#free-play").hide();
+
     //hide beginning text
     $("#instructions").hide();
   
@@ -177,22 +192,39 @@ function draw()
         dots.splice(j, 1);
     
       } else {
-    
-        // check if player is touching dot & the letter is correct
-        var d2 = dist(dots[j].xpos, dots[j].ypos, player.xpos, player.ypos);
-        if(d2 < 25 && dots[j].letter == correctAnswer)
-        {
-          // remove dot
-          dots.splice(j, 1);
-        
-          // increase score by one
-          score++;
-        
-          // play score sound
-          scoreSound.play();
 
-          // Stop game, move to next question
-          nextQuestion();
+        // If freePlayModeFlag = false, only count the score when we hit the correct bubble; else count every bubble
+        var d2 = dist(dots[j].xpos, dots[j].ypos, player.xpos, player.ypos);
+        if(freePlayModeFlag == false) {
+          // check if player is touching dot & the letter is correct
+          if(d2 < 25 && dots[j].letter == correctAnswer)
+          {
+            // remove dot
+            dots.splice(j, 1);
+          
+            // increase score by one
+            score++;
+          
+            // play score sound
+            scoreSound.play();
+
+            // Stop game, move to next question
+            nextQuestion();
+          }
+        }
+        else {
+          // check if player is touching dot
+          if(d2 < 25)
+          {
+            // remove dot
+            dots.splice(j, 1);
+          
+            // increase score by one
+            score++;
+          
+            // play score sound
+            scoreSound.play();
+          }
         }
       }
     }
@@ -227,7 +259,8 @@ function draw()
   } else {
 	  
     // show start button
-    $("#start-game").show();
+    $("#start-quiz").show();
+    $("#free-play").show();
     //show instructions again
 	   $("#instructions").show();
   }
@@ -235,12 +268,6 @@ function draw()
 
 function startGame()
 {
-
-  // Don't loop draw();
-  noLoop();
-
-  // set quizFlag
-  quizFlag = true;
 
   // change gameStarted variable
   gameStarted = true;
@@ -462,10 +489,12 @@ Dot.prototype.display = function()
   noStroke();
   ellipse(this.xpos, this.ypos, 25, 25);
 
-  // Add the randomized letter
-  fill(5);
-  textSize(18);
-  text(String(this.letter), this.xpos - 6.5, this.ypos - 10, 25, 25);
+  // Add the randomized letter if freePlayModeFlag = false
+  if(freePlayModeFlag == false) {
+    fill(5);
+    textSize(18);
+    text(String(this.letter), this.xpos - 6.5, this.ypos - 10, 25, 25);
+  }
   this.ypos = this.ypos - this.speed;       
 }
 

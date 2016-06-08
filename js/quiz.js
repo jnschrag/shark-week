@@ -61,6 +61,7 @@ function checkAnswer(question) {
 
     // Update the counters
     score += 1;
+    numQuestionsCorrect += 1;
     questionNumber += 1;
     tries = 0;
 
