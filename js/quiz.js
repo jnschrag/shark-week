@@ -1,35 +1,29 @@
-var questionsObj = {
-  0: {
-    "question": "1. Which of the following is an example of a machine-readable format?",
-    "answers:": [
-      "A. Carbonite-frozen format",
-      "B. JabbaScript Object Notation",
-      "C. Comma-separated file",
-      "D. None of them, these aren't the formats you're looking for."
-    ],
-    "correctAnswer": "C. Comma-separated file",
-  },
-  1: {
-    "question": "2. Which one is not an open election data principle?",
-    "answers:": [
-      "A. Complete and in bulk, there is no try",
-      "B. Hyperspace compatibility",
-      "C. Non-proprietary &mdash; the Rebel Alliance answers to no evil overlord",
-      "D. Non-discriminatory, even for half-witted, scruffy-looking Nerf herders."
-    ],
-    "correctAnswer": "B. Hyperspace compatibility"
-  },
-  2: {
-    "question": "3. When should election results be released to be considered timely?",
-    "answers:": [
-      "A. A long time ago in a galaxy far far away",
-      "B. As quickly as necessary for it to be useful",
-      "C. Never, it's a trap.",
-      "D. Whenever Darth Vader says they're good and ready."
-    ],
-    "correctAnswer": "B. As quickly as necessary for it to be useful"
-  },
-}
+var questionsObj = [
+{
+  "question": "1. Which of the following is an example of a machine-readable format?",
+  "answers:": {
+    "A. Carbonite-frozen format": false,
+    "B. JabbaScript Object Notation": false,
+    "C. Comma-separated file": true,
+    "D. None of them, these aren't the formats you're looking for.": false
+  }
+}, {
+  "question": "2. Which one is not an open election data principle?",
+  "answers:": {
+    "A. Complete and in bulk, there is no try": false,
+    "B. Hyperspace compatibility": true,
+    "C. Non-proprietary &mdash; the Rebel Alliance answers to no evil overlord": false,
+    "D. Non-discriminatory, even for half-witted, scruffy-looking Nerf herders.": false
+  }
+}, {
+  "question": "3. When should election results be released to be considered timely?",
+  "answers:": {
+    "A. A long time ago in a galaxy far far away": false,
+    "B. As quickly as necessary for it to be useful": true,
+    "C. Never, it's a trap.": false,
+    "D. Whenever Darth Vader says they're good and ready.": false
+  }
+}];
 
 console.log(questionsObj);
 
