@@ -59,7 +59,7 @@ function checkAnswer(question) {
     numQuestionsCorrect += 1;
     questionNumber += 1;
 
-    $("#quiz .result").removeClass("wrong").addClass("right").html('Nice job! "'+correctAnswer.toUpperCase()+'" was the correct answer. Find a matching bubble below to earn an extra life and move on.');
+    $("#quiz .result").removeClass("wrong").addClass("right").html('Nice job! "'+correctAnswer.toUpperCase()+'" was the correct answer. Find a matching bubble below to earn an extra life and move on, but watch out for the sharks!');
 
     // Start looping through draw();
     loop();
