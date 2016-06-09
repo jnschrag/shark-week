@@ -81,7 +81,7 @@ function setup()
 
     // Show 1st question; hide result
     $(".questions .q0").show();
-    $("#quiz .result").hide();
+    $("#quiz .result").empty();
     $("#game-over-results").hide().empty();
 
     // Don't loop draw();
@@ -564,7 +564,7 @@ Dot.prototype.display = function()
 function nextQuestion() {
 
   // Hide the result if it was correct
-  $("#quiz .result.right").hide();
+  $("#quiz .result.right").empty();
 
   // reset lives
   lives = 3;
