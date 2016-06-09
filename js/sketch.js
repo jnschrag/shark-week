@@ -93,6 +93,10 @@ function setup()
     // Set Flags
     quizFlag = false;
     freePlayModeFlag = true;
+
+    // Set our lives to livesEarned
+    lives = livesEarned;
+
     startGame();
   });
   
@@ -119,21 +123,12 @@ function draw()
     text("Score: " + score, 30, 50);
   
     // display number of lives  (upper right)
-    switch(lives)
-    {
-      case 3:
-        image(heart, 650, 30);
-        image(heart, 690, 30);
-        image(heart, 730, 30);
-      break;
-      case 2:
-        image(heart, 690, 30);
-        image(heart, 730, 30);
-      break;
-      case 1:
-        image(heart, 730, 30);
-      break;
+    var heartXPos = 730;
+    for(var heartNum = 1; heartNum <= lives; heartNum++) {
+      image(heart, heartXPos, 30);
+      heartXPos += -40;
     }
+
 
     // quizFlag = true, only show the quiz
     if(quizFlag == true) {
