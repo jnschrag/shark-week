@@ -82,12 +82,14 @@ function setup()
     // Show 1st question; hide result
     $(".questions .q0").show();
     $("#quiz .result").hide();
+    $("#game-over-results").hide().empty();
 
     // Don't loop draw();
     noLoop();
     startGame();
   });
   $("#free-play").click(function() {
+    $("#game-over-results").hide().empty();
     // Set Flags
     quizFlag = false;
     freePlayModeFlag = true;
@@ -283,7 +285,7 @@ function gameOver() {
   document.cookie = "numQuestionsCorrect="+numQuestionsCorrect;
   document.cookie = "numQuestionsIncorrect="+numQuestionsIncorrect;
 
-  // Update the leaderboard and reset the score
+  // Update the leaderboard
   fb_updateLeaderboard(score, freePlayModeFlag);
 
   // reset lives
@@ -302,6 +304,20 @@ function gameOver() {
   
   // set gameStarted to false
   gameStarted = false;
+
+  // Game Over Screen: if freePlayModeFlag = false, show # of bonus lives earned and option for free play; else game over & personal high score
+  if(freePlayModeFlag == false) {
+    if(score > 0) {
+      $("#game-over-results").show().html("FIN-tastic! You have successfully completed our quiz. You have earned "+score+" bonus lives for the free play version of the game that is now available.");
+    }
+    else {
+      $("#game-over-results").show().html("Uh oh, looks like the sharks got the better of you this time. Better luck next time!");
+    }
+  }
+  else {
+    $("#game-over-results").show().html("Game Over! You earned a score of "+score+"!");
+  }
+
 
   // Reset Flags
   quizFlag = false;
