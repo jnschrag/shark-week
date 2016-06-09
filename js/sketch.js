@@ -3,12 +3,19 @@ var player;
 var sharks = [];
 var dots = [];
 var lives;
+var livesEarned;
 var score;
 var sharkRed, sharkGreen, sharkBlue, sharkOrange;
 var playerLeft1, playerLeft2, playerLeft3, playerRight1, playerRight2, playerRight3;
 var heart;
 var biteSound, gameoverSound, startSound, scoreSound;
 var gameStarted;
+var quizFlag, pausedFlag, freePlayModeFlag;
+var letters = ["a","b","c","d"];
+var correctAnswer;
+var numQuestions = Object.keys(questionsObj).length;
+var numQuestionsCorrect;
+var numQuestionsIncorrect;
 
 function preload()
 {
@@ -57,13 +64,35 @@ function setup()
   lives = 3;
   score = 0;
   
-  // When we click this button, start the game
-  $("#start-game").click(function() {
-    startGame();
-  })
-  
   // set gameStarted equal to false
   gameStarted = false;
+
+  // Clicking either the start-quiz or free-play buttons starts the game
+  $("#start-quiz").click(function() {
+    // Set Flags
+    quizFlag = true;
+    freePlayModeFlag = false;
+
+    // Set Question Counters
+    questionNumber = 0;
+    correctAnswer = "";
+    numQuestionsCorrect = 0;
+    numQuestionsIncorrect = 0;
+
+    // Show 1st question; hide result
+    $(".questions .q0").show();
+    $("#quiz .result").hide();
+
+    // Don't loop draw();
+    noLoop();
+    startGame();
+  });
+  $("#free-play").click(function() {
+    // Set Flags
+    quizFlag = false;
+    freePlayModeFlag = true;
+    startGame();
+  });
   
 }
 
@@ -74,8 +103,10 @@ function draw()
   if(gameStarted == true)
   {
 
-    // hide start button
-    $("#start-game").hide();
+    // hide start buttons
+    $("#start-quiz").hide();
+    $("#free-play").hide();
+
     //hide beginning text
     $("#instructions").hide();
   
@@ -102,49 +133,67 @@ function draw()
       break;
     }
 
-    // display player
-    player.display();
-  
-    // random shark hatching
-    var sharkHatch = Math.ceil(random(50));
-    if(sharkHatch == 1)
-    {
-      sharks.push(new Shark());
+    // quizFlag = true, only show the quiz
+    if(quizFlag == true) {
+      $("#quiz").show();
+      $("#quiz .questions").show();
     }
-  
-    // random dot hatching
-    var dotHatch = Math.ceil(random(30));
-    if(dotHatch == 1)
-    {
-      dots.push(new Dot());
-    }
-  
-    // loop through each shark
-    for (var i=0; i<sharks.length; i++) 
-    {
-      // display shark
-      sharks[i].display();
+    // quizFlag = false, hide the quiz, show OEDI, Sharks, & Bubbles
+    else {
+
+      // freePlayModeFlag = false, hide only the questions; else hide the whole quiz
+      if(freePlayModeFlag == false) {
+        $("#quiz .questions").hide();
+      }
+      else {
+        // Hide the quiz
+        $("#quiz").hide();
+      }
+
+      // display player
+      player.display();
     
-      // check if shark reaches top of the screen         
-      if(sharks[i].ypos < 50)                               
+      // random shark hatching
+      var sharkHatch = Math.ceil(random(50));
+      if(sharkHatch == 1)
       {
-        // if does, remove shark
-        sharks.splice(i, 1);
+        sharks.push(new Shark());
+      }
+    
+      // random dot hatching
+      var dotHatch = Math.ceil(random(30));
+      if(dotHatch == 1)
+      {
+        dots.push(new Dot());
+      }
+    
+      // loop through each shark
+      for (var i=0; i<sharks.length; i++) 
+      {
+        // display shark
+        sharks[i].display();
       
-      } else {
-      
-        // check if player is touching shark
-        var d1 = dist(sharks[i].xpos, sharks[i].ypos, player.xpos, player.ypos);
-        if(d1 < 50)
+        // check if shark reaches top of the screen         
+        if(sharks[i].ypos < 50)                               
         {
-          // remove shark
+          // if does, remove shark
           sharks.splice(i, 1);
-         
-          // decrease lives by one
-          lives --;
-         
-          // play bite sound
-          biteSound.play();
+        
+        } else {
+        
+          // check if player is touching shark
+          var d1 = dist(sharks[i].xpos, sharks[i].ypos, player.xpos, player.ypos);
+          if(d1 < 50)
+          {
+            // remove shark
+            sharks.splice(i, 1);
+           
+            // decrease lives by one
+            lives --;
+           
+            // play bite sound
+            biteSound.play();
+          }
         }
       }
     }
@@ -162,61 +211,106 @@ function draw()
         dots.splice(j, 1);
     
       } else {
-    
-        // check if player is touching dot
+
+        // If freePlayModeFlag = false, only count the score when we hit the correct bubble; else count every bubble
         var d2 = dist(dots[j].xpos, dots[j].ypos, player.xpos, player.ypos);
-        if(d2 < 25)
-        {
-          // remove dot
-          dots.splice(j, 1);
-        
-          // increase score by one
-          score++;
-        
-          // play score sound
-          scoreSound.play();
+        if(freePlayModeFlag == false) {
+          // check if player is touching dot & the letter is correct
+          if(d2 < 25 && dots[j].letter == correctAnswer)
+          {
+            // remove dot
+            dots.splice(j, 1);
+          
+            // increase score by one
+            score++;
+          
+            // play score sound
+            scoreSound.play();
+
+            // Stop game, move to next question if this is not the last question
+            if(questionNumber != numQuestions) {
+              nextQuestion();
+            }
+            else {
+              gameOver();
+            }
+          }
+        }
+        else {
+          // check if player is touching dot
+          if(d2 < 25)
+          {
+            // remove dot
+            dots.splice(j, 1);
+          
+            // increase score by one
+            score++;
+          
+            // play score sound
+            scoreSound.play();
+          }
         }
       }
     }
   
-    // check for game over
-    if(lives <= 0)
-    {
-      // Save the score as a cookie
-      document.cookie = "anonScore="+score;
-
-      // Update the leaderboard and reset the score
-      fb_updateLeaderboard(score);
-
-      // reset lives
-      lives = 3;
-      
-      // reset player's position
-      player.xpos = width*.5;
-      player.direction = "stopped";
-    
-      // remove sharks and dots
-      sharks = [];
-      dots = [];
-      
-      // play gameover sound
-      gameoverSound.play();
-      
-      // set gameStarted to false
-      gameStarted = false;
+    // check for losing game over; If freePlayModeFlag = true, base it on lives; if freePlayModeFlag = false, base it on lives and questions answered correctly
+    if(freePlayModeFlag == true && lives <= 0) {
+      gameOver();
+    }
+    else if(freePlayModeFlag == false && (lives <= 0 || numQuestionsIncorrect == numQuestions)) {
+      gameOver();
     }
   
   } else {
 	  
     // show start button
-    $("#start-game").show();
+    $("#start-quiz").show();
+    if(livesEarned != null) {
+      $("#free-play").show();
+    }
     //show instructions again
 	   $("#instructions").show();
   }
 }
 
+function gameOver() {
+
+  // Hide the Quiz
+  $("#quiz").hide();
+
+  // Save the score as a cookie
+  document.cookie = "anonScore="+score;
+  document.cookie = "numQuestionsCorrect="+numQuestionsCorrect;
+  document.cookie = "numQuestionsIncorrect="+numQuestionsIncorrect;
+
+  // Update the leaderboard and reset the score
+  fb_updateLeaderboard(score, freePlayModeFlag);
+
+  // reset lives
+  lives = 3;
+  
+  // reset player's position
+  player.xpos = width*.5;
+  player.direction = "stopped";
+
+  // remove sharks and dots
+  sharks = [];
+  dots = [];
+  
+  // play gameover sound
+  gameoverSound.play();
+  
+  // set gameStarted to false
+  gameStarted = false;
+
+  // Reset Flags
+  quizFlag = false;
+  freePlayModeFlag = false;
+}
+
 function startGame()
 {
+
   // change gameStarted variable
   gameStarted = true;
   
@@ -226,35 +320,56 @@ function startGame()
   // reset score
   score = 0;
 
-  // Delete anonScore cookie
+  // Delete cookies
   document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "numQuestionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "numQuestionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   
 }
 
 function keyPressed()
 {
-  // if the right arrow was pressed
-  if(keyCode == RIGHT_ARROW)
-  {
-    // change player's direction property
-    player.direction = 'right';
-  }
-  
-  // if the left arrow was pressed
-  if(keyCode == LEFT_ARROW)
-  {
-    // change player's direction property
-    player.direction = 'left';
+
+  // Only respond if quizFlag = false
+  if(quizFlag == false) {
+
+    // if the right arrow was pressed
+    if(keyCode == RIGHT_ARROW)
+    {
+      // change player's direction property
+      player.direction = 'right';
+    }
+    
+    // if the left arrow was pressed
+    if(keyCode == LEFT_ARROW)
+    {
+      // change player's direction property
+      player.direction = 'left';
+    }
+
+    // if spacebar was pressed
+    if(keyCode == 32) {
+      // If game is paused
+      if(pausedFlag == true) {
+        pausedFlag = false;
+        loop();
+      }
+      else {
+        pausedFlag = true;
+        noLoop();
+      }
+    }
   }
 }
 
 function touchStarted() {
+
   // Calculate difference between displayWidth and width. This becomes our touchX multiplier
   var touchDiff = round(width/displayWidth);
   var touchCalc = touchX * touchDiff;
 
-  // Only move if the game has started. Necessary to avoid moving when touching the play button
-  if(gameStarted == true) {
+  // Only move if the game has started. Necessary to avoid moving when touching the play button or quiz answers
+  if(gameStarted == true && quizFlag == false) {
 
     if(player.xpos >= touchCalc) {
       player.direction = 'left';
@@ -395,7 +510,7 @@ Shark.prototype.display = function()
     case 3: image(sharkOrange, this.xpos, this.ypos, 46, 100); break;
     case 4: image(sharkBlue, this.xpos, this.ypos, 46, 100); break; 
   }
-  this.ypos = this.ypos - this.speed;         //subtracts speed intead of adds
+  this.ypos = this.ypos - this.speed;         //subtracts speed instead of adds
 }
 
 /* O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O /
@@ -406,8 +521,9 @@ function Dot()
 {
   // set default properties
   this.xpos = random(0, width);
-  this.ypos = height;                            
+  this.ypos = height;                        
   this.speed = random(1, 4);
+  this.letter = letters[Math.floor(Math.random() * letters.length)];
 }
 
 Dot.prototype.display = function()
@@ -416,5 +532,35 @@ Dot.prototype.display = function()
   fill(255);
   noStroke();
   ellipse(this.xpos, this.ypos, 25, 25);
+
+  // Add the randomized letter if freePlayModeFlag = false
+  if(freePlayModeFlag == false) {
+    fill(5);
+    textSize(18);
+    text(String(this.letter), this.xpos - 6.5, this.ypos - 10, 25, 25);
+  }
   this.ypos = this.ypos - this.speed;       
+}
+
+/*===================================================================
+// Quiz Mode Functions
+/*==================================================================*/
+function nextQuestion() {
+
+  // Hide the result if it was correct
+  $("#quiz .result.right").hide();
+
+  // reset lives
+  lives = 3;
+      
+  // reset player's position
+  player.xpos = width*.5;
+  player.direction = "stopped";
+    
+  // remove sharks and dots
+  sharks = [];
+  dots = [];
+
+  // set gameStarted to false
+  quizFlag = true;
 }

@@ -69,21 +69,19 @@ function initApp() {
       displayName = user.displayName;
       uid = user.uid;
       var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
       var isAnonymous = user.isAnonymous;
       var refreshToken = user.refreshToken;
       var providerData = user.providerData;
+      firebase.database().ref("scoreList/"+uid+"/lives").once('value').then(function(snapshot) {
+        livesEarned = snapshot.val();
+        // If the player has no livesEarned, hide the free play option
+        console.log(livesEarned);
+        if(livesEarned != null && livesEarned != 0) {
+          $("#free-play").show();
+        }
+      });
       if(isAnonymous == false) {
         displayName = user.displayName;
-      }
-
-      // Update the leaderboard now that they've logged in with the stored cookie score
-      if(redirect == true) {
-        console.log("Redirect is true:");
-        var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        console.log("Cookie Value: "+cookieValue);
-        fb_updateLeaderboard(cookieValue);
       }
 
       $("#welcomeMessage").html("Welcome back, <strong>"+user.displayName+"</strong>!");
@@ -93,12 +91,22 @@ function initApp() {
         authenticateSignOut();
       });
       $("#authentication").hide();
+      console.log("signed in");
+
+      // Update the leaderboard now that they've logged in with the stored cookie score
+      if(redirect == true) {
+        var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        numQuestionsCorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        numQuestionsIncorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        fb_updateLeaderboard(cookieValue, false);
+      }
 
     } else {
       // User is signed out.
       console.log("signed out");
       $("#welcomeMessage").html("You're not currently logged in. Your high score will not be saved. You will be able to log in after the game and save your score.");
       $(".sign-out").hide();
+      $("#free-play").hide();
       $("#authentication").show();
       $(".btn-twitter").click(function() {
         authenticateUser("Twitter");
@@ -123,7 +131,7 @@ window.onload = function() {
 };
 
 // Update the leaderboard with the new score; replace preexisting score if there is one
-function fb_updateLeaderboard(score) {
+function fb_updateLeaderboard(score, freePlay) {
 
     var name = displayName;
     var newScore = Number(score);
@@ -139,17 +147,30 @@ function fb_updateLeaderboard(score) {
     firebase.database().ref("scoreList/"+uid).once('value').then(function(snapshot) {
       if(snapshot.val() != null) {
         var oldScore = snapshot.val().score;
-        if(oldScore === null || newScore > oldScore) {
-          // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-          userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+        if(oldScore === undefined || newScore > oldScore) {
+          // Update the old score; use setPriority to reset the priority to the new score
+          userScoreRef.update({score:newScore});
+          userScoreRef.setPriority(newScore);
+          // Update the user's lives earned if freePlay = false
+          if(freePlay == false) {
+            userScoreRef.update({lives:newScore, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+          }
         }
         else {
+          // Update the user's lives earned if freePlay = false
+          if(freePlay == false) {
+            userScoreRef.update({lives:newScore, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+          }
           return;
         }
       }
       else {
         // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
         userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+        // Update the user's lives earned if freePlay = false
+        if(freePlay == false) {
+          userScoreRef.update({lives:newScore, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+        }
       }
 
     });

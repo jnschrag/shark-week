@@ -9,14 +9,57 @@
   border-bottom:1px solid #ccc;
 }
 
-button#start-game {
-  position: absolute;
-  top: 50%;
-  left: 45%;
+.start-buttons-container {
+  position:absolute;
+  top:50%;
+  left:40%;
+}
+
+button#free-play {
+  display:none;
 }
 
 .game-canvas {
   width:100% !important;
   height:100% !important;
   max-height:500px;
+}
+
+section#quiz {
+	display:none;
+	background-color:#17EDFA;
+}
+
+.questions .q1, .questions .q2 {
+  display: none;
+}
+.questions .questions span {
+  font-weight: bold;
+}
+.questions label {
+  margin-left: 5px;
+  font-weight: normal;
+  display: inline;
+}
+.questions .submit {
+  margin-top: 10px;
+}
+#quiz .result {
+  font-weight: bold;
+}
+#quiz .result.right {
+  color: green;
+}
+#quiz .result.wrong {
+  color: red;
+}
+#quiz .result.congratulations {
+  font-size: 1.5em;
+}
+
+.bubble {
+	border-radius:50%;
+	color:red;
+	width:25px;
+	height:25px;
 }
