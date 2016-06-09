@@ -7,7 +7,7 @@
 <meta name="twitter:creator" content="@animatedroamer">
 <meta name="twitter:title" content="May the Fourth Be With You!">
 <meta name="twitter:description" content="This May the Fourth the OEDI team challenges you to grab your blaster and have some Star Wars-themed fun with our latest open data game.  Beware... Mind tricks don't work on us.">
-<meta name="twitter:image" content="http://openelectiondata.net/holiday/img/hantest.png">    
+<meta name="twitter:image" content="http://openelectiondata.net/holidayhttp://openelectiondata.net/img/hantest.png">    
 <!-- END Twitter Card info ====================-->    
 
 <!--FAcebook open graph tags BEGIN -->
@@ -17,11 +17,11 @@
   <meta property="og:type"          content="website" />
   <meta property="og:title"         content="Open Election Data Initiative" />
   <meta property="og:description"   content="May the Fourth Be With You!" />
-  <meta property="og:image"         content="http://openelectiondata.net/holiday/img/hantest.png" />
+  <meta property="og:image"         content="http://openelectiondata.net/holidayhttp://openelectiondata.net/img/hantest.png" />
 
 <!-- Facebook Open graph END -->
 
-  <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="http://openelectiondata.net/img/favicon.png"/>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
@@ -92,18 +92,6 @@
 
 </head>
 <body>
-<!---  ADDED JS for FACEBook share -->
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<!-- ENd of JS for facebook share button -->
-
 <nav class="navbar navbar-default navbar-static-top">
   <div class="container">
     <div class="navbar-header">
@@ -176,6 +164,7 @@
 
           <!-- START: Quiz -->
           <section id="quiz">
+            <div class="result"></div>
             <div class="questions">
               <div class="q0">
                 <span>1. Which of the following is an example of a machine-readable format?</span>
@@ -218,7 +207,6 @@
               </div>
               <div class="submit">
                 <button name="quizsubmit" class="btn btn-primary">Submit</button>
-                <div class="result"></div>
               </div>
             </div>
           </section>
@@ -281,14 +269,14 @@
       </div>
       <div class="col-md-4">
         <div class="row logo-container">
-          <div class="col-xs-6"><a target="_blank" href="https://www.ndi.org/"><img src="/img/ndi-logo.png" alt="National Democratic Institute"></a></div>
-          <div class="col-xs-6"><a target="_blank" href="http://google.org/"><img src="/img/google-org-logo.png" alt="Google.org"></a></div>
+          <div class="col-xs-6"><a target="_blank" href="https://www.ndi.org/"><img src="http://openelectiondata.net/img/ndi-logo.png" alt="National Democratic Institute"></a></div>
+          <div class="col-xs-6"><a target="_blank" href="http://google.org/"><img src="http://openelectiondata.net/img/google-org-logo.png" alt="Google.org"></a></div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <p class="copyright small white"><a target="_blank" href="http://opendefinition.org/"><img src="/img/oc_80x15_orange_grey.png" alt="Open Content" style="width:80px;height:15px;"></a> - <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Content licensed under a CC Attribution 4.0 International License</a></p>
+        <p class="copyright small white"><a target="_blank" href="http://opendefinition.org/"><img src="http://openelectiondata.net/img/oc_80x15_orange_grey.png" alt="Open Content" style="width:80px;height:15px;"></a> - <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Content licensed under a CC Attribution 4.0 International License</a></p>
       </div>
     </div>
   </div>
@@ -306,6 +294,18 @@
   <script language="javascript" src="js/p5.sound.js"></script>
   <script language="javascript" src="js/sketch.js"></script>
 <!-- SHARK WEEK -->
+
+<!---  ADDED JS for FACEBook share -->
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- ENd of JS for facebook share button -->
 
 </body>
 </html>

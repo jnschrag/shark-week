@@ -25,20 +25,16 @@ var questionsObj = [
   }
 }];
 
-console.log(questionsObj);
-
-
 // Process Quiz Answers
 var answers = ["c","b","b"], 
     tot = answers.length - 1;
     score = 0;
     questionNumber = 0;
-    tries = 0;
 
 // Click Answer Question Button
 $("button[name=quizsubmit]").click(function(){
   // Hide Results Div
-  $(".questions .result").removeClass("wrong").empty();
+  $("#quiz .result").removeClass("wrong").removeClass("right").empty();
 
   var question = "q"+questionNumber;
   checkAnswer(question);
@@ -51,19 +47,19 @@ function checkAnswer(question) {
   // If Correct Answer
   if(selected === answers[questionNumber]) {
     // Change the Question
-    $(".q"+questionNumber).hide().remove();
+    $(".q"+questionNumber).hide();
     $(".q"+(questionNumber + 1)).show();
 
     // Update quizFlag & correctAnswer
     quizFlag = false;
     correctAnswer = String(answers[questionNumber]);
-    console.log(correctAnswer);
 
     // Update the counters
     score += 1;
     numQuestionsCorrect += 1;
     questionNumber += 1;
-    tries = 0;
+
+    $("#quiz .result").removeClass("wrong").addClass("right").html('Nice job! "'+correctAnswer.toUpperCase()+'" was the correct answer. Find a matching bubble below to earn an extra life and move on.');
 
     // Start looping through draw();
     loop();
@@ -75,20 +71,23 @@ function checkAnswer(question) {
   }
   //If Wrong Answer
   else {
-    tries += 1;
-    if(tries == 3) {
-      // Select the right answer for the user
-      var answer = answers[questionNumber];
-      var radioID = $("input[value="+answer+"]").attr("id");
-      $("input[name=q"+questionNumber+"]").not("input[value="+answer+"]").prop("disabled", true);
-      $("#"+radioID).prop("checked", true);
+    // Change the Question
+    $(".q"+questionNumber).hide();
+    $(".q"+(questionNumber + 1)).show();
+
+    console.log("questionNumber: "+questionNumber);
+    console.log("numQuestions: "+numQuestions);
+
+    numQuestionsIncorrect += 1;
+    questionNumber += 1;
+
+    if(questionNumber == numQuestions) {
+      console.log("Game over");
+      gameOver();
+      loop();
     }
-    else {
-      var incorrectResponseArray = [
-          "That's incorrect. Try again!",
-          "Hmm, that's still not right. Give it one more try!"
-      ];
-      $(".questions .result").addClass("wrong").html(incorrectResponseArray[tries-1]);
-    }
+
+    // Incorrect answer result text
+    $("#quiz .result").addClass("wrong").html("That answer is incorrect. Try again with the next question below.");
   }
 }

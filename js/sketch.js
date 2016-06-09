@@ -3,19 +3,19 @@ var player;
 var sharks = [];
 var dots = [];
 var lives;
+var livesEarned;
 var score;
 var sharkRed, sharkGreen, sharkBlue, sharkOrange;
 var playerLeft1, playerLeft2, playerLeft3, playerRight1, playerRight2, playerRight3;
 var heart;
 var biteSound, gameoverSound, startSound, scoreSound;
 var gameStarted;
-var quizFlag;
-var pausedFlag;
-var freePlayModeFlag;
+var quizFlag, pausedFlag, freePlayModeFlag;
 var letters = ["a","b","c","d"];
 var correctAnswer;
-var numQuestions = Object.keys(questionsObj).length
+var numQuestions = Object.keys(questionsObj).length;
 var numQuestionsCorrect;
+var numQuestionsIncorrect;
 
 function preload()
 {
@@ -72,6 +72,17 @@ function setup()
     // Set Flags
     quizFlag = true;
     freePlayModeFlag = false;
+
+    // Set Question Counters
+    questionNumber = 0;
+    correctAnswer = "";
+    numQuestionsCorrect = 0;
+    numQuestionsIncorrect = 0;
+
+    // Show 1st question; hide result
+    $(".questions .q0").show();
+    $("#quiz .result").hide();
+
     // Don't loop draw();
     noLoop();
     startGame();
@@ -125,11 +136,19 @@ function draw()
     // quizFlag = true, only show the quiz
     if(quizFlag == true) {
       $("#quiz").show();
+      $("#quiz .questions").show();
     }
     // quizFlag = false, hide the quiz, show OEDI, Sharks, & Bubbles
     else {
-      // Hide the quiz
-      $("#quiz").hide();
+
+      // freePlayModeFlag = false, hide only the questions; else hide the whole quiz
+      if(freePlayModeFlag == false) {
+        $("#quiz .questions").hide();
+      }
+      else {
+        // Hide the quiz
+        $("#quiz").hide();
+      }
 
       // display player
       player.display();
@@ -208,8 +227,13 @@ function draw()
             // play score sound
             scoreSound.play();
 
-            // Stop game, move to next question
-            nextQuestion();
+            // Stop game, move to next question if this is not the last question
+            if(questionNumber != numQuestions) {
+              nextQuestion();
+            }
+            else {
+              gameOver();
+            }
           }
         }
         else {
@@ -229,41 +253,59 @@ function draw()
       }
     }
   
-    // check for game over
-    if(lives <= 0)
-    {
-      // Save the score as a cookie
-      document.cookie = "anonScore="+score;
-
-      // Update the leaderboard and reset the score
-      fb_updateLeaderboard(score);
-
-      // reset lives
-      lives = 3;
-      
-      // reset player's position
-      player.xpos = width*.5;
-      player.direction = "stopped";
-    
-      // remove sharks and dots
-      sharks = [];
-      dots = [];
-      
-      // play gameover sound
-      gameoverSound.play();
-      
-      // set gameStarted to false
-      gameStarted = false;
+    // check for losing game over; If freePlayModeFlag = true, base it on lives; if freePlayModeFlag = false, base it on lives and questions answered correctly
+    if(freePlayModeFlag == true && lives <= 0) {
+      gameOver();
+    }
+    else if(freePlayModeFlag == false && (lives <= 0 || numQuestionsIncorrect == numQuestions)) {
+      gameOver();
     }
   
   } else {
 	  
     // show start button
     $("#start-quiz").show();
-    $("#free-play").show();
+    if(livesEarned != null) {
+      $("#free-play").show();
+    }
     //show instructions again
 	   $("#instructions").show();
   }
+}
+
+function gameOver() {
+
+  // Hide the Quiz
+  $("#quiz").hide();
+
+  // Save the score as a cookie
+  document.cookie = "anonScore="+score;
+  document.cookie = "numQuestionsCorrect="+numQuestionsCorrect;
+  document.cookie = "numQuestionsIncorrect="+numQuestionsIncorrect;
+
+  // Update the leaderboard and reset the score
+  fb_updateLeaderboard(score, freePlayModeFlag);
+
+  // reset lives
+  lives = 3;
+  
+  // reset player's position
+  player.xpos = width*.5;
+  player.direction = "stopped";
+
+  // remove sharks and dots
+  sharks = [];
+  dots = [];
+  
+  // play gameover sound
+  gameoverSound.play();
+  
+  // set gameStarted to false
+  gameStarted = false;
+
+  // Reset Flags
+  quizFlag = false;
+  freePlayModeFlag = false;
 }
 
 function startGame()
@@ -278,8 +320,10 @@ function startGame()
   // reset score
   score = 0;
 
-  // Delete anonScore cookie
+  // Delete cookies
   document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "numQuestionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "numQuestionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   
 }
 
@@ -502,6 +546,10 @@ Dot.prototype.display = function()
 // Quiz Mode Functions
 /*==================================================================*/
 function nextQuestion() {
+
+  // Hide the result if it was correct
+  $("#quiz .result.right").hide();
+
   // reset lives
   lives = 3;
       

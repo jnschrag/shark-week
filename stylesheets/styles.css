@@ -15,6 +15,10 @@
   left:40%;
 }
 
+button#free-play {
+  display:none;
+}
+
 .game-canvas {
   width:100% !important;
   height:100% !important;
@@ -40,18 +44,16 @@ section#quiz {
 .questions .submit {
   margin-top: 10px;
 }
-.questions .result {
-  display: inline-block;
-  margin-left: 25px;
+#quiz .result {
   font-weight: bold;
 }
-.questions .right {
+#quiz .result.right {
   color: green;
 }
-.questions .wrong {
+#quiz .result.wrong {
   color: red;
 }
-.questions .congratulations {
+#quiz .result.congratulations {
   font-size: 1.5em;
 }
 
