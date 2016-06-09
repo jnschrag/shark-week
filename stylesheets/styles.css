@@ -57,9 +57,7 @@ section#quiz {
   font-size: 1.5em;
 }
 
-.bubble {
-	border-radius:50%;
-	color:red;
-	width:25px;
-	height:25px;
+#game-over-results {
+  display:none;
+  background-color:#17EDFA;
 }
