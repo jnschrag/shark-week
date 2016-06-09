@@ -4,6 +4,7 @@ var sharks = [];
 var dots = [];
 var lives;
 var livesEarned;
+var defaultLives = 1;
 var score;
 var sharkRed, sharkGreen, sharkBlue, sharkOrange;
 var playerLeft1, playerLeft2, playerLeft3, playerRight1, playerRight2, playerRight3;
@@ -61,7 +62,7 @@ function setup()
   player = new Player();
   
   // default lives and score values
-  lives = 3;
+  lives = defaultLives;
   score = 0;
   
   // set gameStarted equal to false
@@ -122,11 +123,13 @@ function draw()
     textSize(24);
     text("Score: " + score, 30, 50);
   
-    // display number of lives  (upper right)
-    var heartXPos = 730;
-    for(var heartNum = 1; heartNum <= lives; heartNum++) {
-      image(heart, heartXPos, 30);
-      heartXPos += -40;
+    // display number of lives  (upper right) if we're playing the free version
+    if(freePlayModeFlag == true) {
+      var heartXPos = 730;
+      for(var heartNum = 1; heartNum <= lives; heartNum++) {
+        image(heart, heartXPos, 30);
+        heartXPos += -40;
+      }
     }
 
 
@@ -284,7 +287,7 @@ function gameOver() {
   fb_updateLeaderboard(score, freePlayModeFlag);
 
   // reset lives
-  lives = 3;
+  lives = defaultLives;
   
   // reset player's position
   player.xpos = width*.5;
@@ -562,7 +565,7 @@ function nextQuestion() {
   $("#quiz .result.right").empty();
 
   // reset lives
-  lives = 3;
+  lives = defaultLives;
       
   // reset player's position
   player.xpos = width*.5;
