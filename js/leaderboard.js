@@ -75,7 +75,6 @@ function initApp() {
       firebase.database().ref("scoreList/"+uid+"/lives").once('value').then(function(snapshot) {
         livesEarned = snapshot.val();
         // If the player has no livesEarned, hide the free play option
-        console.log(livesEarned);
         if(livesEarned != null && livesEarned != 0) {
           $("#free-play").show();
         }
