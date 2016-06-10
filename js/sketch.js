@@ -17,6 +17,7 @@ var correctAnswer;
 var numQuestions = Object.keys(questionsObj).length;
 var numQuestionsCorrect;
 var numQuestionsIncorrect;
+var freePlayCounter = 0;
 
 function preload()
 {
@@ -68,6 +69,11 @@ function setup()
   // set gameStarted equal to false
   gameStarted = false;
 
+  // Show start buttons once the canvas has loaded
+  $(".game-canvas").load(function() {
+    $(".start-buttons-container").show();
+  });
+
   // Clicking either the start-quiz or free-play buttons starts the game
   $("#start-quiz").click(function() {
     // Set Flags
@@ -79,6 +85,7 @@ function setup()
     correctAnswer = "";
     numQuestionsCorrect = 0;
     numQuestionsIncorrect = 0;
+    freePlayCounter = 0;
 
     // Show 1st question; hide result
     $(".questions .q0").show();
@@ -101,8 +108,15 @@ function setup()
     quizFlag = false;
     freePlayModeFlag = true;
 
-    // Set our lives to livesEarned
-    lives = livesEarned;
+    // Set our lives to livesEarned or score cookie depending on logged in status
+    if(livesEarned > 0) {
+      lives = livesEarned;
+    }
+    else {
+      // Increase counter
+      freePlayCounter++;
+      lives = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    }
 
     startGame();
   });
@@ -117,24 +131,36 @@ function draw()
   {
 
     // hide start buttons
-    $("#start-quiz").hide();
-    $("#free-play").hide();
+    $(".start-buttons-container").hide();
 
     //hide beginning text
     $("#instructions").hide();
   
-    // display score 
+    // Display number of lives (upper right) & the score if we're playing the free play version; else show bonus lives earned
     fill(5);
     noStroke();
     textSize(24);
-    text("Score: " + score, 30, 50);
-  
-    // display number of lives  (upper right) if we're playing the free version
     if(freePlayModeFlag == true) {
+      // Display score 
+      text("Ballots Collected: " + score, 30, 50);
+
+      // Display Lives/Hearts
       var heartXPos = 730;
       for(var heartNum = 1; heartNum <= lives; heartNum++) {
         image(heart, heartXPos, 30);
         heartXPos += -40;
+      }
+    }
+    else {
+      // Display score 
+      text("Lives Earned: ", 20, 50);
+      // Display Lives/Hearts if we have at least one
+      if(score >= 1) {
+        var heartXPos = 170;
+        for(var heartNum = 1; heartNum <= score; heartNum++) {
+          image(heart, heartXPos, 30);
+          heartXPos += 40;
+        }
       }
     }
 
@@ -284,13 +310,32 @@ function draw()
   } else {
 	  
     // show start button
-    $("#start-quiz").show();
-    if(livesEarned != null) {
-      $("#free-play").show();
+    $(".start-buttons-container").show();
+    if(!livesEarned && freePlayCounter > 0 ) {
+      $("#free-play").hide();
     }
     //show instructions again
 	   $("#instructions").show();
   }
+}
+
+function startGame()
+{
+
+  // change gameStarted variable
+  gameStarted = true;
+  
+  // play starting sound
+  startSound.play();
+
+  // reset score
+  score = 0;
+
+  // Delete cookies
+  document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "numQuestionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "numQuestionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  
 }
 
 function gameOver() {
@@ -327,38 +372,25 @@ function gameOver() {
   if(freePlayModeFlag == false) {
     if(score > 0) {
       $("#game-over-results").show().html("FIN-tastic! You have successfully completed our quiz. You have earned "+score+" bonus lives for the free play version of the game that is now available.");
+      $("#free-play").show();
     }
     else {
-      $("#game-over-results").show().html("Uh oh, looks like the sharks got the better of you this time. Better luck next time!");
+      $("#game-over-results").show().html("Uh-oh, it looks like that quiz took a byte out of you. Give it another try to unlock the free play version of the game!");
     }
   }
   else {
-    $("#game-over-results").show().html("Game Over! You earned a score of "+score+"!");
+    // If freePlayCounter > 0, tell them to take the quiz again
+    if(freePlayCounter > 0) {
+      $("#game-over-results").show().html("Game Over! You earned a score of "+score+"! To play again, take our quiz or sign in!");
+    }
+    else {
+      $("#game-over-results").show().html("Game Over! You earned a score of "+score+"!");
+    }
   }
-
 
   // Reset Flags
   quizFlag = false;
   freePlayModeFlag = false;
-}
-
-function startGame()
-{
-
-  // change gameStarted variable
-  gameStarted = true;
-  
-  // play starting sound
-  startSound.play();
-
-  // reset score
-  score = 0;
-
-  // Delete cookies
-  document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = "numQuestionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = "numQuestionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  
 }
 
 function keyPressed()

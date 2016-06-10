@@ -72,13 +72,6 @@ function initApp() {
       var isAnonymous = user.isAnonymous;
       var refreshToken = user.refreshToken;
       var providerData = user.providerData;
-      firebase.database().ref("scoreList/"+uid+"/lives").once('value').then(function(snapshot) {
-        livesEarned = snapshot.val();
-        // If the player has no livesEarned, hide the free play option
-        if(livesEarned != null && livesEarned != 0) {
-          $("#free-play").show();
-        }
-      });
       if(isAnonymous == false) {
         displayName = user.displayName;
       }
@@ -99,6 +92,18 @@ function initApp() {
         numQuestionsIncorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
         fb_updateLeaderboard(cookieValue, false);
       }
+
+      firebase.database().ref("scoreList/"+uid+"/lives").once('value').then(function(snapshot) {
+        livesEarned = snapshot.val();
+        // If the player has no livesEarned, hide the free play option
+        console.log("livesEarned: "+livesEarned);
+        if(livesEarned != null && livesEarned != 0) {
+          $("#free-play").show();
+        }
+        else {
+          $("#free-play").hide();
+        }
+      });
 
     } else {
       // User is signed out.
