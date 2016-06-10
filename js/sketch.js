@@ -69,6 +69,11 @@ function setup()
   // set gameStarted equal to false
   gameStarted = false;
 
+  // Show start buttons once the canvas has loaded
+  $(".game-canvas").load(function() {
+    $(".start-buttons-container").show();
+  });
+
   // Clicking either the start-quiz or free-play buttons starts the game
   $("#start-quiz").click(function() {
     // Set Flags
@@ -98,9 +103,6 @@ function setup()
     startGame();
   });
   $("#free-play").click(function() {
-    // Increase counter
-    freePlayCounter++;
-
     $("#game-over-results").hide().empty();
     // Set Flags
     quizFlag = false;
@@ -111,6 +113,8 @@ function setup()
       lives = livesEarned;
     }
     else {
+      // Increase counter
+      freePlayCounter++;
       lives = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     }
 

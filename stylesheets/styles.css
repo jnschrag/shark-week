@@ -13,9 +13,8 @@
   position:absolute;
   top:50%;
   left:40%;
+  display:none;
 }
-
-button#free-play {}
 
 .game-canvas {
   width:100% !important;
