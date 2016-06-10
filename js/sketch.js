@@ -188,11 +188,25 @@ function draw()
             // remove shark
             sharks.splice(i, 1);
            
-            // decrease lives by one
-            lives --;
-           
             // play bite sound
             biteSound.play();
+
+            // If freePlayModeFlag = false, then move to the next question; else lose a life
+            if(freePlayModeFlag == false) {
+              // Stop game, move to next question if this is not the last question; else lose a life
+              if(questionNumber != numQuestions) {
+                nextQuestion();
+              }
+              else {
+                // decrease lives by one
+                lives --;
+              }
+            }
+            else {
+              // decrease lives by one
+              lives --;
+            }
+
           }
         }
       }

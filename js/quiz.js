@@ -63,11 +63,6 @@ function checkAnswer(question) {
 
     // Start looping through draw();
     loop();
-
-    // If We've Answered All the Questions, Celebrate
-    if(questionNumber == tot) {
-      console.log("You win!");
-    }
   }
   //If Wrong Answer
   else {
@@ -75,14 +70,10 @@ function checkAnswer(question) {
     $(".q"+questionNumber).hide();
     $(".q"+(questionNumber + 1)).show();
 
-    console.log("questionNumber: "+questionNumber);
-    console.log("numQuestions: "+numQuestions);
-
     numQuestionsIncorrect += 1;
     questionNumber += 1;
 
     if(questionNumber == numQuestions) {
-      console.log("Game over");
       gameOver();
       loop();
     }
