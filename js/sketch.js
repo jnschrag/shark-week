@@ -85,6 +85,12 @@ function setup()
     $("#quiz .result").empty();
     $("#game-over-results").hide().empty();
 
+    // Uncheck any answers from previous games
+    var ele = $(".questions input[type=radio]");
+    for(var i=0;i<ele.length;i++) {
+      ele[i].checked = false;
+    }
+
     // Don't loop draw();
     noLoop();
     startGame();
