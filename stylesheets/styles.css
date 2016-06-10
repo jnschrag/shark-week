@@ -15,9 +15,7 @@
   left:40%;
 }
 
-button#free-play {
-  display:none;
-}
+button#free-play {}
 
 .game-canvas {
   width:100% !important;

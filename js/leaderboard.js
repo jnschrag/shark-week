@@ -78,6 +78,9 @@ function initApp() {
         if(livesEarned != null && livesEarned != 0) {
           $("#free-play").show();
         }
+        else {
+          $("#free-play").hide();
+        }
       });
       if(isAnonymous == false) {
         displayName = user.displayName;

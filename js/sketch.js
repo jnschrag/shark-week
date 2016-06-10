@@ -17,6 +17,7 @@ var correctAnswer;
 var numQuestions = Object.keys(questionsObj).length;
 var numQuestionsCorrect;
 var numQuestionsIncorrect;
+var freePlayCounter = 0;
 
 function preload()
 {
@@ -79,6 +80,7 @@ function setup()
     correctAnswer = "";
     numQuestionsCorrect = 0;
     numQuestionsIncorrect = 0;
+    freePlayCounter = 0;
 
     // Show 1st question; hide result
     $(".questions .q0").show();
@@ -96,13 +98,21 @@ function setup()
     startGame();
   });
   $("#free-play").click(function() {
+    // Increase counter
+    freePlayCounter++;
+
     $("#game-over-results").hide().empty();
     // Set Flags
     quizFlag = false;
     freePlayModeFlag = true;
 
-    // Set our lives to livesEarned
-    lives = livesEarned;
+    // Set our lives to livesEarned or score cookie depending on logged in status
+    if(livesEarned > 0) {
+      lives = livesEarned;
+    }
+    else {
+      lives = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    }
 
     startGame();
   });
@@ -117,8 +127,7 @@ function draw()
   {
 
     // hide start buttons
-    $("#start-quiz").hide();
-    $("#free-play").hide();
+    $(".start-buttons-container").hide();
 
     //hide beginning text
     $("#instructions").hide();
@@ -297,9 +306,9 @@ function draw()
   } else {
 	  
     // show start button
-    $("#start-quiz").show();
-    if(livesEarned != null) {
-      $("#free-play").show();
+    $(".start-buttons-container").show();
+    if(!livesEarned && freePlayCounter > 0 ) {
+      $("#free-play").hide();
     }
     //show instructions again
 	   $("#instructions").show();
@@ -359,13 +368,20 @@ function gameOver() {
   if(freePlayModeFlag == false) {
     if(score > 0) {
       $("#game-over-results").show().html("FIN-tastic! You have successfully completed our quiz. You have earned "+score+" bonus lives for the free play version of the game that is now available.");
+      $("#free-play").show();
     }
     else {
       $("#game-over-results").show().html("Uh-oh, it looks like that quiz took a byte out of you. Give it another try to unlock the free play version of the game!");
     }
   }
   else {
-    $("#game-over-results").show().html("Game Over! You earned a score of "+score+"!");
+    // If freePlayCounter > 0, tell them to take the quiz again
+    if(freePlayCounter > 0) {
+      $("#game-over-results").show().html("Game Over! You earned a score of "+score+"! To play again, take our quiz or sign in!");
+    }
+    else {
+      $("#game-over-results").show().html("Game Over! You earned a score of "+score+"!");
+    }
   }
 
   // Reset Flags
