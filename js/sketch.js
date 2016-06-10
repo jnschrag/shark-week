@@ -124,11 +124,11 @@ function draw()
     $("#instructions").hide();
   
     // Display number of lives (upper right) & the score if we're playing the free play version; else show bonus lives earned
+    fill(5);
+    noStroke();
+    textSize(24);
     if(freePlayModeFlag == true) {
       // Display score 
-      fill(5);
-      noStroke();
-      textSize(24);
       text("Ballots Collected: " + score, 30, 50);
 
       // Display Lives/Hearts
@@ -140,9 +140,6 @@ function draw()
     }
     else {
       // Display score 
-      fill(5);
-      noStroke();
-      textSize(24);
       text("Lives Earned: ", 20, 50);
       // Display Lives/Hearts if we have at least one
       if(score >= 1) {
