@@ -123,18 +123,34 @@ function draw()
     //hide beginning text
     $("#instructions").hide();
   
-    // display score 
-    fill(5);
-    noStroke();
-    textSize(24);
-    text("Score: " + score, 30, 50);
-  
-    // display number of lives  (upper right) if we're playing the free version
+    // Display number of lives (upper right) & the score if we're playing the free play version; else show bonus lives earned
     if(freePlayModeFlag == true) {
+      // Display score 
+      fill(5);
+      noStroke();
+      textSize(24);
+      text("Ballots Collected: " + score, 30, 50);
+
+      // Display Lives/Hearts
       var heartXPos = 730;
       for(var heartNum = 1; heartNum <= lives; heartNum++) {
         image(heart, heartXPos, 30);
         heartXPos += -40;
+      }
+    }
+    else {
+      // Display score 
+      fill(5);
+      noStroke();
+      textSize(24);
+      text("Lives Earned: ", 20, 50);
+      // Display Lives/Hearts if we have at least one
+      if(score >= 1) {
+        var heartXPos = 170;
+        for(var heartNum = 1; heartNum <= score; heartNum++) {
+          image(heart, heartXPos, 30);
+          heartXPos += 40;
+        }
       }
     }
 
