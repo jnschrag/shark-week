@@ -293,6 +293,25 @@ function draw()
   }
 }
 
+function startGame()
+{
+
+  // change gameStarted variable
+  gameStarted = true;
+  
+  // play starting sound
+  startSound.play();
+
+  // reset score
+  score = 0;
+
+  // Delete cookies
+  document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "numQuestionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "numQuestionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  
+}
+
 function gameOver() {
 
   // Hide the Quiz
@@ -329,36 +348,16 @@ function gameOver() {
       $("#game-over-results").show().html("FIN-tastic! You have successfully completed our quiz. You have earned "+score+" bonus lives for the free play version of the game that is now available.");
     }
     else {
-      $("#game-over-results").show().html("Uh oh, looks like the sharks got the better of you this time. Better luck next time!");
+      $("#game-over-results").show().html("Uh-oh, it looks like that quiz took a byte out of you. Give it another try to unlock the free play version of the game!");
     }
   }
   else {
     $("#game-over-results").show().html("Game Over! You earned a score of "+score+"!");
   }
 
-
   // Reset Flags
   quizFlag = false;
   freePlayModeFlag = false;
-}
-
-function startGame()
-{
-
-  // change gameStarted variable
-  gameStarted = true;
-  
-  // play starting sound
-  startSound.play();
-
-  // reset score
-  score = 0;
-
-  // Delete cookies
-  document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = "numQuestionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = "numQuestionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  
 }
 
 function keyPressed()
