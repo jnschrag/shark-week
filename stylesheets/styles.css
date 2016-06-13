@@ -25,6 +25,7 @@
 section#quiz {
 	display:none;
 	background-color:#17EDFA;
+  padding:15px;
 }
 
 .questions .q1, .questions .q2 {
@@ -38,17 +39,17 @@ section#quiz {
   font-weight: normal;
   display: inline;
 }
-.questions .submit {
+#quiz .submit {
   margin-top: 10px;
 }
 #quiz .result {
   font-weight: bold;
 }
 #quiz .result.right {
-  color: green;
+  color: #227A23;
 }
 #quiz .result.wrong {
-  color: red;
+  color: #AC3737;
 }
 #quiz .result.congratulations {
   font-size: 1.5em;

@@ -172,6 +172,7 @@ function draw()
     if(quizFlag == true) {
       $("#quiz").show();
       $("#quiz .questions").show();
+      $("#quiz .submit").show();
     }
     // quizFlag = false, hide the quiz, show OEDI, Sharks, & Bubbles
     else {
@@ -179,6 +180,7 @@ function draw()
       // freePlayModeFlag = false, hide only the questions; else hide the whole quiz
       if(freePlayModeFlag == false) {
         $("#quiz .questions").hide();
+        $("#quiz .submit").hide();
       }
       else {
         // Hide the quiz
@@ -602,8 +604,29 @@ Dot.prototype.display = function()
   // noStroke();
   // ellipse(this.xpos, this.ypos, 25, 25);
 
-  imageMode(CENTER);
-  image(ballot, this.xpos, this.ypos, 25, 32);
+  rectMode(CENTER);
+  strokeWeight(2);
+  stroke(0,0,0);
+  fill(255);
+  rect(this.xpos, this.ypos, 20, 30);
+
+  rectMode(CORNER);
+  strokeWeight(1);
+  fill('red');
+  rect(this.xpos - 8, this.ypos - 4, 5, 5);
+
+  rectMode(CORNER);
+  strokeWeight(1);
+  noFill();
+  rect(this.xpos - 8, this.ypos - 11, 5, 5);
+
+  rectMode(CORNER);
+  strokeWeight(1);
+  noFill();
+  rect(this.xpos - 8, this.ypos + 4, 5, 5);
+
+  // imageMode(CENTER);
+  // image(ballot, this.xpos, this.ypos, 25, 32);
 
   // Add the randomized letter if freePlayModeFlag = false
   if(freePlayModeFlag == false) {
