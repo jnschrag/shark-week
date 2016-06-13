@@ -595,6 +595,7 @@ function Dot()
   this.ypos = height;                        
   this.speed = random(1, 4);
   this.letter = letters[Math.floor(Math.random() * letters.length)];
+  this.boxFilled = Math.random() < 0.5 ? 0 : 1;
 }
 
 Dot.prototype.display = function()
@@ -608,31 +609,49 @@ Dot.prototype.display = function()
   strokeWeight(2);
   stroke(0,0,0);
   fill(255);
-  rect(this.xpos, this.ypos, 20, 30);
-
-  rectMode(CORNER);
-  strokeWeight(1);
-  fill('red');
-  rect(this.xpos - 8, this.ypos - 4, 5, 5);
-
-  rectMode(CORNER);
-  strokeWeight(1);
-  noFill();
-  rect(this.xpos - 8, this.ypos - 11, 5, 5);
-
-  rectMode(CORNER);
-  strokeWeight(1);
-  noFill();
-  rect(this.xpos - 8, this.ypos + 4, 5, 5);
+  rect(this.xpos, this.ypos, 25, 29);
 
   // imageMode(CENTER);
   // image(ballot, this.xpos, this.ypos, 25, 32);
 
-  // Add the randomized letter if freePlayModeFlag = false
+  // Add the randomized letter if freePlayModeFlag = false; else show the boxes
   if(freePlayModeFlag == false) {
+    strokeWeight(1);
     fill(5);
     textSize(18);
-    text(String(this.letter), this.xpos - 6.5, this.ypos - 10, 25, 25);
+    text(String(this.letter), this.xpos + 7.5, this.ypos + 4, 25, 29);
+  }
+  else {
+    // 1st box & line
+    rectMode(CORNER);
+    strokeWeight(1);
+    if(this.boxFilled == 0) {
+      fill('red');
+    }
+    else {
+      noFill();
+    }
+    rect(this.xpos - 9, this.ypos - 9, 7, 7);
+
+    stroke(0,0,0);
+    strokeWeight(2);
+    line(this.xpos + 2, this.ypos - 5, this.xpos + 8, this.ypos - 5);
+
+    // 2nd box & line
+    rectMode(CORNER);
+    strokeWeight(1);
+    if(this.boxFilled == 1) {
+      fill('red');
+    }
+    else {
+      noFill();
+    }
+    rect(this.xpos - 9, this.ypos + 1, 7, 7);
+
+    stroke(0,0,0);
+    strokeWeight(2);
+    line(this.xpos + 2, this.ypos + 5, this.xpos + 8, this.ypos + 5);
+
   }
   this.ypos = this.ypos - this.speed;       
 }
