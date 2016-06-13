@@ -41,6 +41,9 @@ function preload()
   
   // load in heart image
   heart = loadImage('assets/heart.png');
+
+  // load in ballot image
+  ballot = loadImage('assets/ballot.png');
   
   // load in sounds
   soundFormats('mp3', 'ogg');
@@ -594,10 +597,13 @@ function Dot()
 
 Dot.prototype.display = function()
 {
-  ellipseMode(CENTER);
-  fill(255);
-  noStroke();
-  ellipse(this.xpos, this.ypos, 25, 25);
+  // ellipseMode(CENTER);
+  // fill(255);
+  // noStroke();
+  // ellipse(this.xpos, this.ypos, 25, 25);
+
+  imageMode(CENTER);
+  image(ballot, this.xpos, this.ypos, 25, 32);
 
   // Add the randomized letter if freePlayModeFlag = false
   if(freePlayModeFlag == false) {
