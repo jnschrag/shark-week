@@ -43,7 +43,7 @@ function preload()
   heart = loadImage('assets/heart.png');
 
   // load in ballot image
-  ballot = loadImage('assets/ballot.png');
+  ballot = loadImage('assets/ballot-1.png');
   
   // load in sounds
   soundFormats('mp3', 'ogg');
