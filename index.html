@@ -152,7 +152,6 @@
       <!-- START: Welcome & Instructions -->
       <section id="welcome">
         <h1>Shark Week Interactive</h1>
-        <div id="welcomeMessage"></div>
         <div id="instructions"><p><b>Some intro text. Help the robot</b> <br> Use the left and right arrows to swim.<br> Get the bubbles to score but avoid the sharks</p></div>
       </section>
       <!-- END: Welcome & Leaderboard -->
@@ -186,10 +185,14 @@
           <section>
             <h2>Leaderboard</h2>
             <div id="highestscore">
-              Highest Score so Far: <span id="highestScoreDiv"></span>
+              Overall High Score: <span id="highestScoreDiv"></span>
             </div><br />
-            <table id="leaderboardTable"></table>
-            <br />
+            <table id="leaderboardTable"></table><br />
+            <div id="welcomeMessage">
+              <span id="currentRanking"></span>
+              <span id="personalHighScore"></span>
+              <span id="livesEarned"></span>
+            </div>
             <a class="btn btn-primary sign-out">
               Sign Out
             </a>      
@@ -197,7 +200,6 @@
           </section>
           <!-- START: Authentication Screen -->
           <section id="authentication">
-            To save your high score, sign in!<br />
             <a class="btn btn-block btn-social btn-twitter">
               <span class="fa fa-twitter"></span> Sign in with Twitter
             </a>

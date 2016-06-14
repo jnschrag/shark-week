@@ -15,6 +15,7 @@ var LEADERBOARD_SIZE = 5;
 var provider;
 var user = firebase.auth().currentUser;
 var displayName = "";
+var prevScore;
 var uid, isAnonymous;
 var redirect = false;
 
@@ -76,7 +77,20 @@ function initApp() {
         displayName = user.displayName;
       }
 
-      $("#welcomeMessage").html("Welcome back, <strong>"+user.displayName+"</strong>!");
+      // Update the leaderboard now that they've logged in with the stored cookie score; else get their existing info
+      if(redirect == true) {
+        var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        numQuestionsCorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        numQuestionsIncorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        fb_updateLeaderboard(cookieValue, false);
+      }
+      else {
+        fb_setUserEarnedInfo();
+      }
+
+      // Set Welcome Message
+      $("#welcomeMessage").prepend("Welcome back, <strong>"+user.displayName+"</strong>!<br />");
+
       // Sign Out Option
       $(".sign-out").show();
       $(".sign-out").click(function() {
@@ -85,30 +99,10 @@ function initApp() {
       $("#authentication").hide();
       console.log("signed in");
 
-      // Update the leaderboard now that they've logged in with the stored cookie score
-      if(redirect == true) {
-        var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        numQuestionsCorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        numQuestionsIncorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        fb_updateLeaderboard(cookieValue, false);
-      }
-
-      firebase.database().ref("scoreList/"+uid+"/lives").once('value').then(function(snapshot) {
-        livesEarned = snapshot.val();
-        // If the player has no livesEarned, hide the free play option
-        console.log("livesEarned: "+livesEarned);
-        if(livesEarned != null && livesEarned != 0) {
-          $("#free-play").show();
-        }
-        else {
-          $("#free-play").hide();
-        }
-      });
-
     } else {
       // User is signed out.
       console.log("signed out");
-      $("#welcomeMessage").html("You're not currently logged in. Your high score will not be saved. You will be able to log in after the game and save your score.");
+      $("#welcomeMessage").prepend("To save your high score, sign in!");
       $(".sign-out").hide();
       $("#free-play").hide();
       $("#authentication").show();
@@ -133,6 +127,39 @@ function initApp() {
 window.onload = function() {
   initApp();
 };
+
+// Set livesEarned & prevScore global variables
+function fb_setUserEarnedInfo() {
+  firebase.database().ref("scoreList/"+uid).once("value").then(function(snapshot) {
+    livesEarned = snapshot.child("lives").val(); // Lives Earned
+    prevScore = snapshot.child("score").val(); // Current Personal High Score
+    var priority = snapshot.getPriority();
+
+    var scoreListing = scoreListRef.orderByPriority().startAt(priority);
+    scoreListing.once("value").then(function(snapshot) {
+      var currentRank = snapshot.numChildren();
+      $("#currentRanking").html("Current Overall Ranking: "+getOrdinal(currentRank)+"<br />");
+    });
+
+    // If user has a previous score
+    if(prevScore != null) {
+      $("#personalHighScore").html("Personal High Score: "+prevScore+"<br />");
+    }
+    // If user has bonus lives
+    if(livesEarned != null && livesEarned != 0) {
+      $("#free-play").show();
+      $("#livesEarned").html("Lives Earned: "+livesEarned+"<br /><br />");
+
+    }
+    else {
+      $("#free-play").hide();
+    }
+
+
+  });
+}
+
+
 
 // Update the leaderboard with the new score; replace preexisting score if there is one
 function fb_updateLeaderboard(score, freePlay) {
@@ -176,6 +203,9 @@ function fb_updateLeaderboard(score, freePlay) {
           userScoreRef.update({lives:newScore, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
         }
       }
+
+      // Update our earned values to reflect what was just added to the database
+      fb_setUserEarnedInfo();
 
     });
 
@@ -246,3 +276,9 @@ scoreListView.on('child_changed', changedCallback);
 highestScoreRef.on('value', function (newHighestScore) {
   $("#highestScoreDiv").text(newHighestScore.val());
 });
+
+function getOrdinal(n) {
+  var s=["th","st","nd","rd"],
+  v=n%100;
+  return n+(s[(v-20)%10]||s[v]||s[0]);
+}
