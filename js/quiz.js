@@ -60,11 +60,8 @@ $.each(questionsObj,function(key,valueObj) {
   $(".questions").append(returnHTML);
 });
 
-console.log(answers);
-
 // Process Quiz Answers
-// var answers = ["c","b","b"], 
-    tot = answers.length - 1;
+  var tot = answers.length - 1;
     score = 0;
     questionNumber = 0;
 

@@ -11,7 +11,8 @@ var playerLeft1, playerLeft2, playerLeft3, playerRight1, playerRight2, playerRig
 var heart;
 var biteSound, gameoverSound, startSound, scoreSound;
 var gameStarted;
-var quizFlag, pausedFlag, freePlayModeFlag;
+var quizFlag, pausedFlag;
+var freePlayModeFlag = false;
 var letters = ["a","b","c","d"];
 var correctAnswer;
 var numQuestions = Object.keys(questionsObj).length;
@@ -41,9 +42,6 @@ function preload()
   
   // load in heart image
   heart = loadImage('assets/heart.png');
-
-  // load in ballot image
-  ballot = loadImage('assets/ballot-1.png');
   
   // load in sounds
   soundFormats('mp3', 'ogg');
@@ -51,6 +49,7 @@ function preload()
   gameoverSound = loadSound('assets/game_over.mp3');
   scoreSound = loadSound('assets/pop.mp3');
   startSound = loadSound('assets/intro.mp3');
+  soundArray = [biteSound,gameoverSound,scoreSound,startSound];
   
 }
 
@@ -72,7 +71,7 @@ function setup()
   // set gameStarted equal to false
   gameStarted = false;
 
-  // Show start buttons once the canvas has loaded
+  // // Show start buttons once the canvas has loaded
   $(".game-canvas").load(function() {
     $(".start-buttons-container").show();
   });
@@ -595,6 +594,7 @@ function Dot()
   this.ypos = height;                        
   this.speed = random(1, 4);
   this.letter = letters[Math.floor(Math.random() * letters.length)];
+  this.boxFilled = Math.random() < 0.5 ? 0 : 1;
 }
 
 Dot.prototype.display = function()
@@ -608,31 +608,46 @@ Dot.prototype.display = function()
   strokeWeight(2);
   stroke(0,0,0);
   fill(255);
-  rect(this.xpos, this.ypos, 20, 30);
+  rect(this.xpos, this.ypos, 25, 29);
 
-  rectMode(CORNER);
-  strokeWeight(1);
-  fill('red');
-  rect(this.xpos - 8, this.ypos - 4, 5, 5);
-
-  rectMode(CORNER);
-  strokeWeight(1);
-  noFill();
-  rect(this.xpos - 8, this.ypos - 11, 5, 5);
-
-  rectMode(CORNER);
-  strokeWeight(1);
-  noFill();
-  rect(this.xpos - 8, this.ypos + 4, 5, 5);
-
-  // imageMode(CENTER);
-  // image(ballot, this.xpos, this.ypos, 25, 32);
-
-  // Add the randomized letter if freePlayModeFlag = false
+  // Add the randomized letter if freePlayModeFlag = false; else show the boxes
   if(freePlayModeFlag == false) {
+    strokeWeight(1);
     fill(5);
     textSize(18);
-    text(String(this.letter), this.xpos - 6.5, this.ypos - 10, 25, 25);
+    text(String(this.letter), this.xpos + 7.5, this.ypos + 4, 25, 29);
+  }
+  else {
+    // 1st box & line
+    rectMode(CORNER);
+    strokeWeight(1);
+    if(this.boxFilled == 0) {
+      fill('red');
+    }
+    else {
+      noFill();
+    }
+    rect(this.xpos - 9, this.ypos - 9, 7, 7);
+
+    stroke(0,0,0);
+    strokeWeight(2);
+    line(this.xpos + 2, this.ypos - 5, this.xpos + 8, this.ypos - 5);
+
+    // 2nd box & line
+    rectMode(CORNER);
+    strokeWeight(1);
+    if(this.boxFilled == 1) {
+      fill('red');
+    }
+    else {
+      noFill();
+    }
+    rect(this.xpos - 9, this.ypos + 1, 7, 7);
+
+    stroke(0,0,0);
+    strokeWeight(2);
+    line(this.xpos + 2, this.ypos + 5, this.xpos + 8, this.ypos + 5);
+
   }
   this.ypos = this.ypos - this.speed;       
 }
@@ -659,3 +674,22 @@ function nextQuestion() {
   // set gameStarted to false
   quizFlag = true;
 }
+
+/*===================================================================
+// Sound Control
+/*==================================================================*/
+$(".sound-play").click(function() {
+  $.each(soundArray, function(key,value) {
+    value.setVolume(0);
+  })
+  $(this).hide();
+  $(".sound-mute").show();
+});
+
+$(".sound-mute").click(function() {
+  $.each(soundArray, function(key,value) {
+    value.setVolume(1);
+  })
+  $(this).hide();
+  $(".sound-play").show();
+});
