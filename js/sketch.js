@@ -375,20 +375,29 @@ function gameOver() {
   // Game Over Screen: if freePlayModeFlag = false, show # of bonus lives earned and option for free play; else game over & personal high score
   if(freePlayModeFlag == false) {
     if(score > 0) {
-      $("#game-over-results").show().html("FIN-tastic! You have successfully completed our quiz. You have earned "+score+" bonus lives for the free play version of the game that is now available.");
+      $("#game-over-results").show().html("<span class='right'>FIN-tastic!</span><br />You earned <strong>"+score+" lives</strong> to help you and OEDI collect the missing ballots in our free play game!");
       $("#free-play").show();
     }
     else {
-      $("#game-over-results").show().html("Uh-oh, it looks like that quiz took a byte out of you. Give it another try to unlock the free play version of the game!");
+      $("#game-over-results").show().html("<span class='wrong'>Uh-oh!</span><br />It looks like that quiz took a byte out of you.<br />Give it another try to unlock the free play version of the game!");
     }
   }
   else {
     // If freePlayCounter > 0, tell them to take the quiz again
     if(freePlayCounter > 0) {
-      $("#game-over-results").show().html("Game Over! You earned a score of "+score+"! To play again, take our quiz or sign in!");
+      $("#game-over-results").show().html("<span>Game Over!</span><br />You collected <strong>"+score+" missing ballots</strong>! To play again, take our quiz or sign in!");
     }
     else {
-      $("#game-over-results").show().html("Game Over! You earned a score of "+score+"!");
+      // Personal High Score
+      if(score > prevScore) {
+        var bonus = "That’s a JAWSdropping new personal high score!";
+      }
+      // Overall High Score
+      if(score > highScore) {
+        var bonus = "JAWesome! You have set the record with the highest score so far!";
+      }
+
+      $("#game-over-results").show().html("<span>Game Over!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />"+bonus);
     }
   }
 
