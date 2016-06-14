@@ -12,8 +12,9 @@
 .start-buttons-container {
   position:absolute;
   top:50%;
-  left:40%;
   display:none;
+  width: 100%;
+  text-align: center;
 }
 
 .sound-buttons-container {
