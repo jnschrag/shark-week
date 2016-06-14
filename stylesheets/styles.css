@@ -16,6 +16,20 @@
   display:none;
 }
 
+.sound-buttons-container {
+  position:absolute;
+  bottom:3%;
+  right:3%;
+}
+
+.sound-mute {
+  display:none;
+}
+
+.sound-buttons-container:hover {
+  cursor:pointer;
+}
+
 .game-canvas {
   width:100% !important;
   height:100% !important;

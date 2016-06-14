@@ -42,9 +42,6 @@ function preload()
   
   // load in heart image
   heart = loadImage('assets/heart.png');
-
-  // load in ballot image
-  ballot = loadImage('assets/ballot-1.png');
   
   // load in sounds
   soundFormats('mp3', 'ogg');
@@ -52,6 +49,7 @@ function preload()
   gameoverSound = loadSound('assets/game_over.mp3');
   scoreSound = loadSound('assets/pop.mp3');
   startSound = loadSound('assets/intro.mp3');
+  soundArray = [biteSound,gameoverSound,scoreSound,startSound];
   
 }
 
@@ -73,7 +71,7 @@ function setup()
   // set gameStarted equal to false
   gameStarted = false;
 
-  // Show start buttons once the canvas has loaded
+  // // Show start buttons once the canvas has loaded
   $(".game-canvas").load(function() {
     $(".start-buttons-container").show();
   });
@@ -612,9 +610,6 @@ Dot.prototype.display = function()
   fill(255);
   rect(this.xpos, this.ypos, 25, 29);
 
-  // imageMode(CENTER);
-  // image(ballot, this.xpos, this.ypos, 25, 32);
-
   // Add the randomized letter if freePlayModeFlag = false; else show the boxes
   if(freePlayModeFlag == false) {
     strokeWeight(1);
@@ -679,3 +674,22 @@ function nextQuestion() {
   // set gameStarted to false
   quizFlag = true;
 }
+
+/*===================================================================
+// Sound Control
+/*==================================================================*/
+$(".sound-play").click(function() {
+  $.each(soundArray, function(key,value) {
+    value.setVolume(0);
+  })
+  $(this).hide();
+  $(".sound-mute").show();
+});
+
+$(".sound-mute").click(function() {
+  $.each(soundArray, function(key,value) {
+    value.setVolume(1);
+  })
+  $(this).hide();
+  $(".sound-play").show();
+});
