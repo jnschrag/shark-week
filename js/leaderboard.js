@@ -80,9 +80,14 @@ function initApp() {
       // Update the leaderboard now that they've logged in with the stored cookie score; else get their existing info
       if(redirect == true) {
         var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        numQuestionsCorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        numQuestionsIncorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        fb_updateLeaderboard(cookieValue, false);
+        if(cookieValue) {
+          numQuestionsCorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+          numQuestionsIncorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+          fb_updateLeaderboard(cookieValue, false);
+        }
+        else {
+          fb_setUserEarnedInfo();
+        }
       }
       else {
         fb_setUserEarnedInfo();
