@@ -11,7 +11,8 @@ var playerLeft1, playerLeft2, playerLeft3, playerRight1, playerRight2, playerRig
 var heart;
 var biteSound, gameoverSound, startSound, scoreSound;
 var gameStarted;
-var quizFlag, pausedFlag, freePlayModeFlag;
+var quizFlag, pausedFlag;
+var freePlayModeFlag = false;
 var letters = ["a","b","c","d"];
 var correctAnswer;
 var numQuestions = Object.keys(questionsObj).length;
