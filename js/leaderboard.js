@@ -89,7 +89,8 @@ function initApp() {
       }
 
       // Set Welcome Message
-      $("#welcomeMessage").prepend("Welcome back, <strong>"+user.displayName+"</strong>!<br />");
+      $("#welcomeUser").html("Welcome back, <strong>"+user.displayName+"</strong>!<br />");
+      $("#userInfo").show();
 
       // Sign Out Option
       $(".sign-out").show();
@@ -102,7 +103,8 @@ function initApp() {
     } else {
       // User is signed out.
       console.log("signed out");
-      $("#welcomeMessage").prepend("To save your high score, sign in!");
+      $("#welcomeUser").html("To save your high score, sign in!");
+      $("#userInfo").hide();
       $(".sign-out").hide();
       $("#free-play").hide();
       $("#authentication").show();
@@ -192,7 +194,7 @@ function fb_updateLeaderboard(score, freePlay) {
           if(freePlay == false) {
             userScoreRef.update({lives:newScore, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
           }
-          return;
+          //return;
         }
       }
       else {
