@@ -18,6 +18,7 @@ var displayName = "";
 var prevScore;
 var uid, isAnonymous;
 var redirect = false;
+var highScore;
 
 // Build some firebase references.
 var rootRef = firebase.database().ref();
@@ -282,6 +283,7 @@ scoreListView.on('child_changed', changedCallback);
 // Add a callback to the highest score in Firebase so we can update the GUI any time it changes.
 highestScoreRef.on('value', function (newHighestScore) {
   $("#highestScoreDiv").text(newHighestScore.val());
+  highScore = newHighestScore.val();
 });
 
 function getOrdinal(n) {

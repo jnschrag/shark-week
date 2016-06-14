@@ -59,10 +59,10 @@ section#quiz {
 #quiz .result {
   font-weight: bold;
 }
-#quiz .result.right {
+.right {
   color: #227A23;
 }
-#quiz .result.wrong {
+.wrong {
   color: #AC3737;
 }
 #quiz .result.congratulations {
@@ -72,4 +72,12 @@ section#quiz {
 #game-over-results {
   display:none;
   background-color:#17EDFA;
+  text-align:center;
+  padding:15px;
+  font-size:1.3em;
+}
+
+#game-over-results span {
+  font-weight:bold;
+  font-size:1.5em;
 }
