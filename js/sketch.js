@@ -389,6 +389,7 @@ function gameOver() {
     }
     else {
       // Personal High Score
+      var bonus = "";
       if(score > prevScore) {
         var bonus = "That’s a JAWSdropping new personal high score!";
       }
