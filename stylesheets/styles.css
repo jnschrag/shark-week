@@ -31,6 +31,16 @@
   cursor:pointer;
 }
 
+.btn-instructions {
+  position:absolute;
+  bottom:3%;
+  right:6%;
+  background-color:transparent;
+  border:0px;
+  border-radius:0;
+  padding:0px;
+}
+
 .game-canvas {
   width:100% !important;
   height:100% !important;
