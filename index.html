@@ -180,6 +180,9 @@
               <img src="assets/sound-play-1.png" title="Mute Sound" class="sound-play" />
               <img src="assets/sound-mute-1.png" title="Play Sound" class="sound-mute" />
             </div>
+            <button type="button" class="btn btn-instructions" data-toggle="modal" data-target="#game_instructions_modal">
+              <img src="assets/help.png" title="Help" />
+            </button>
             <div id="game-over-results"></div>
           </section>
         </div>
@@ -224,6 +227,46 @@
       </div>
 
 
+      </div>
+
+      <div id="game_instructions_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <p class="modal-title blue"><strong>Help &amp; Instructions</strong></p>
+            </div>
+            <div id="game_modal_result" class="modal-body">
+            <strong>Game Play: Quiz</strong><br />
+            <ul>
+              <li>Earn <strong>1</strong> life for every question answered correctly</li>
+              <li>For every question answered correctly, you get an opportunity to earn <strong>1</strong> life by getting the ballot with the correct letter</li>
+              <li>Hitting a shark moves you to the next question without earning an extra life.</li>
+            </ul>
+            <strong>Game Play: Free Play</strong><br />
+            <ul>
+              <li>Lives earned from taking the quiz are the number of lives for free play</li>
+              <li>Earn more lives by taking the quiz again; maximum number of lives is <strong>6</strong></li>
+              <li>Collect as many ballots as possible</li>
+              <li>Hitting a shark costs <strong>1</strong> life</li>
+              <li>Game Over when all lives lost</li>
+            </ul>
+            <strong>Controls</strong><br />
+              <dl class="dl-horizontal">
+                <dt>Left Arrow</dt>
+                <dd>Move Left</dd>
+                <dt>Right Arrow</dt>
+                <dd>Move Right</dd>
+                <dt>Mobile/Touch Screen</dt>
+                <dd>Touch left or right of OEDI to change directions</dd>
+                <dt>Spacebar</dt>
+                <dd>Pause/Play Game</dd>
+                <dt><img src="assets/sound-play-1.png" title="Mute Sound" class="sound-play" style="display:inline" />/<img src="assets/sound-mute-1.png" title="Play Sound" class="sound-mute" style="display:inline" /></dt>
+                <dd>Mute/Play Sound</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
       </div>
   
   <!--END the Main Container=================================================
