@@ -20,7 +20,7 @@
 .sound-buttons-container {
   position:absolute;
   bottom:3%;
-  right:3%;
+  right:4%;
 }
 
 .sound-mute {
@@ -34,7 +34,17 @@
 .btn-instructions {
   position:absolute;
   bottom:3%;
-  right:6%;
+  right:2%;
+  background-color:transparent;
+  border:0px;
+  border-radius:0;
+  padding:0px;
+}
+
+.btn-pause {
+  position:absolute;
+  bottom:3%;
+  right:7%;
   background-color:transparent;
   border:0px;
   border-radius:0;
