@@ -429,15 +429,7 @@ function keyPressed()
 
     // if spacebar was pressed
     if(keyCode == 32) {
-      // If game is paused
-      if(pausedFlag == true) {
-        pausedFlag = false;
-        loop();
-      }
-      else {
-        pausedFlag = true;
-        noLoop();
-      }
+      pauseGame();
     }
   }
 }
@@ -457,6 +449,18 @@ function touchStarted() {
     else {
       player.direction = 'right';
     }
+  }
+}
+
+function pauseGame() {
+  // If game is paused
+  if(pausedFlag == true) {
+    pausedFlag = false;
+    loop();
+  }
+  else {
+    pausedFlag = true;
+    noLoop();
   }
 }
 
@@ -702,4 +706,19 @@ $(".sound-mute").click(function() {
   })
   $(this).hide();
   $(".sound-play").show();
+});
+
+// Pause Game: Call pauseGame() function when pause button clicked or modal is active
+$(".btn-pause").click(function() {
+  pauseGame();
+});
+
+$(".btn-instructions").click(function() {
+  if(($("#game_instructions_modal").data('bs.modal') || {}).isShown == (false || undefined)) {
+    pauseGame();
+  }
+});
+
+$("#game_instructions_modal .close").click(function() {
+    pauseGame();
 });
