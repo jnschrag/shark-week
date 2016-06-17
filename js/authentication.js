@@ -43,7 +43,15 @@ function cleanDisplayName(name) {
 		cleanedName = firstName;
 	}
 
-	//cleanedName = firstName+" "+lastName.charAt(0)+".";
-	console.log(cleanedName);
+	// console.log(cleanedName);
+
+	// // Change the replacement from astrisks (*) to random words
+	// cleanedName = profanityFilter(cleanedName, {
+	// 	externalSwears: 'swearWords.json',
+	//     replaceWith: ['fiddle', 'fun', 'stupendous']
+	// });
+
+	// //cleanedName = firstName+" "+lastName.charAt(0)+".";
+	// console.log(cleanedName);
 	return cleanedName;
 }

@@ -282,12 +282,29 @@ scoreListView.on('child_changed', changedCallback);
 
 // Add a callback to the highest score in Firebase so we can update the GUI any time it changes.
 highestScoreRef.on('value', function (newHighestScore) {
-  $("#highestScoreDiv").text(newHighestScore.val());
+  $(".highestScoreDiv").text(newHighestScore.val());
   highScore = newHighestScore.val();
 });
+
+// Get Full Leaderboard
+$("#fullLeaderboardLink").click(function() {
+  fb_leaderboardFull();
+});
+
+function fb_leaderboardFull() {
+  firebase.database().ref("scoreList").orderByPriority().once("value").then(function(snapshot) {
+    $.each(snapshot.val(), function(child_id,child_value) {
+      var newScoreRow = $("<tr/>");
+      newScoreRow.append($("<td/>").append($("<em/>").text(snapshot.child(child_id).child("name").val())));
+      newScoreRow.append($("<td/>").text(snapshot.child(child_id).child("score").val()));
+
+      $("#leaderboardTableFull").prepend(newScoreRow);
+    });
+  });
+};
 
 function getOrdinal(n) {
   var s=["th","st","nd","rd"],
   v=n%100;
   return n+(s[(v-20)%10]||s[v]||s[0]);
-}
+};
