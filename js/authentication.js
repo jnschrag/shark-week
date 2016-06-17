@@ -7,6 +7,7 @@ function authenticateUser(chosenProvider) {
       break;
       case "Facebook":
         provider = new firebase.auth.FacebookAuthProvider();
+        provider.addScope('public_profile');
       break;
       case "Google":
         provider = new firebase.auth.GoogleAuthProvider();
@@ -14,25 +15,6 @@ function authenticateUser(chosenProvider) {
     }
 
     firebase.auth().signInWithRedirect(provider);
-    firebase.auth().getRedirectResult().then(function(result) {
-	  if (result.credential) {
-	    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-	    var token = result.credential.accessToken;
-	    // ...
-	  }
-	  // The signed-in user info.
-	  var user = result.user;
-	}).catch(function(error) {
-	  // Handle Errors here.
-	  var errorCode = error.code;
-	  var errorMessage = error.message;
-	  // The email of the user's account used.
-	  var email = error.email;
-	  // The firebase.auth.AuthCredential type that was used.
-	  var credential = error.credential;
-	  // ...
-	});
-
 }
 
 // Give the user an option to sign out
@@ -44,4 +26,24 @@ function authenticateSignOut() {
 	}, function(error) {
 	  // An error happened.
 	});
+}
+
+// Display Name Parser
+function cleanDisplayName(name) {
+	fullName = name.split(/\s+/);
+	count = fullName.length;
+	firstName = fullName[0];
+	lastName = fullName[1];
+
+	// If we have a first & last name
+	if(count > 1) {
+		cleanedName = firstName+" "+lastName.charAt(0)+".";
+	}
+	else {
+		cleanedName = firstName;
+	}
+
+	//cleanedName = firstName+" "+lastName.charAt(0)+".";
+	console.log(cleanedName);
+	return cleanedName;
 }

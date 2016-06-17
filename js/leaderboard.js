@@ -31,7 +31,6 @@ var highestScoreRef = firebase.database().ref("highestScore");
  */
 function initApp() {
   // Result from Redirect auth flow.
-  // [START getidptoken]
   firebase.auth().getRedirectResult().then(function(result) {
     if (result.credential) {
       // This gives you an Access Token
@@ -48,35 +47,32 @@ function initApp() {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
     var credential = error.credential;
-    // [START_EXCLUDE]
     if (errorCode === 'auth/account-exists-with-different-credential') {
-      alert('You have already signed up with a different auth provider for that email.');
-      // If you are using multiple auth providers on your app you should handle linking
-      // the user's accounts here.
+      alert('You have already signed up with a different social media site for that email.');
     } else {
       console.error(error);
     }
-    // [END_EXCLUDE]
   });
-  // [END getidptoken]
+
   // Listening for auth state changes.
-  // [START authstatelistener]
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
-      displayName = user.displayName;
       uid = user.uid;
       var email = user.email;
       var isAnonymous = user.isAnonymous;
       var refreshToken = user.refreshToken;
       var providerData = user.providerData;
+
       if(isAnonymous == false) {
         displayName = user.displayName;
       }
+      else {
+        displayName = "";
+      }
+
+      displayName = cleanDisplayName(displayName);
 
       // Update the leaderboard now that they've logged in with the stored cookie score; else get their existing info
       if(redirect == true) {
@@ -95,7 +91,7 @@ function initApp() {
       }
 
       // Set Welcome Message
-      $("#welcomeUser").html("Welcome back, <strong>"+user.displayName+"</strong>!<br />");
+      $("#welcomeUser").html("Welcome back, <strong>"+displayName+"</strong>!<br />");
       $("#userInfo").show();
 
       // Sign Out Option
@@ -129,7 +125,6 @@ function initApp() {
       
     }
   });
-  // [END authstatelistener]
 
 }
 window.onload = function() {
@@ -156,7 +151,7 @@ function fb_setUserEarnedInfo() {
     // If user has bonus lives
     if(livesEarned != null && livesEarned != 0) {
       $("#free-play").show();
-      $("#livesEarned").html("Lives Earned: "+livesEarned+"<br /><br />");
+      $("#livesEarnedContainer").html("Lives Earned: "+livesEarned+"<br /><br />");
 
     }
     else {
@@ -174,6 +169,11 @@ function fb_updateLeaderboard(score, freePlay) {
 
     var name = displayName;
     var newScore = Number(score);
+    var newLives = Number(score);
+
+    if(newLives > (numQuestions * 2)) {
+      return;
+    }
 
     if (name.length === 0)
       return;
@@ -192,13 +192,13 @@ function fb_updateLeaderboard(score, freePlay) {
           userScoreRef.setPriority(newScore);
           // Update the user's lives earned if freePlay = false
           if(freePlay == false) {
-            userScoreRef.update({lives:newScore, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+            userScoreRef.update({lives:newLives, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
           }
         }
         else {
           // Update the user's lives earned if freePlay = false
           if(freePlay == false) {
-            userScoreRef.update({lives:newScore, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+            userScoreRef.update({lives:newLives, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
           }
           //return;
         }
@@ -208,7 +208,7 @@ function fb_updateLeaderboard(score, freePlay) {
         userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
         // Update the user's lives earned if freePlay = false
         if(freePlay == false) {
-          userScoreRef.update({lives:newScore, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+          userScoreRef.update({lives:newLives, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
         }
       }
 
