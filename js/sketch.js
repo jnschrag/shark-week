@@ -117,7 +117,13 @@ function setup()
     else {
       // Increase counter
       freePlayCounter++;
-      lives = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+      if(document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1") <= (numQuestions * 2)) {
+        lives = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      }
+      else {
+        return;
+      }
     }
 
     startGame();
@@ -317,6 +323,7 @@ function draw()
     $(".start-buttons-container").show();
     if(!livesEarned && freePlayCounter > 0 ) {
       $("#free-play").hide();
+      freePlayCounter = 0;
     }
     //show instructions again
 	   $("#instructions").show();
@@ -384,6 +391,7 @@ function gameOver() {
   }
   else {
     // If freePlayCounter > 0, tell them to take the quiz again
+    console.log("Game Over freePlayCounter: "+freePlayCounter);
     if(freePlayCounter > 0) {
       $("#game-over-results").show().html("<span>Game Over!</span><br />You collected <strong>"+score+" missing ballots</strong>! To play again, take our quiz or sign in!");
     }
