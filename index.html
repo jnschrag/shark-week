@@ -197,9 +197,10 @@
           <section>
             <h2>Leaderboard</h2>
             <div id="highestscore">
-              Overall High Score: <span id="highestScoreDiv"></span>
+              Overall High Score: <span class="highestScoreDiv"></span>
             </div><br />
-            <table id="leaderboardTable"></table><br />
+            <table id="leaderboardTable" class="leaderboard"></table>
+            <a id="fullLeaderboardLink" href="#" data-toggle="modal" data-target="#leaderboard_modal">View Full Leaderboard</a><br /><br />
             <div id="welcomeMessage">
               <span id="welcomeUser"></span>
               <div id="userInfo">
@@ -273,6 +274,23 @@
           </div>
         </div>
       </div>
+
+      <div id="leaderboard_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <p class="modal-title blue"><strong>Complete Leaderboard</strong></p>
+            </div>
+            <div id="leaderboard_modal_result" class="modal-body">
+              <div id="highestscore">
+                Overall High Score: <span class="highestScoreDiv"></span>
+              </div><br />
+              <table id="leaderboardTableFull" class="leaderboard"></table><br />
+            </div>
+          </div>
+        </div>
+      </div>
   
   <!--END the Main Container=================================================
 ===========================================================================
@@ -304,6 +322,7 @@
 <!-- SHARK WEEK -->
   <script src="https://www.gstatic.com/firebasejs/3.0.2/firebase.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script language="javascript" src="js/jquery.profanityfilter.min.js"></script>
   <script language="javascript" src="js/leaderboard.js"></script>
   <script language="javascript" src="js/authentication.js"></script>
   <script language="javascript" src="js/quiz.js"></script>

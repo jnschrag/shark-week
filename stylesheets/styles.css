@@ -2,10 +2,10 @@
   display:none;
 }
 
-#leaderboardTable {
+.leaderboard {
   width:100%;
 }
-#leaderboardTable td {
+.leaderboard td {
   border-bottom:1px solid #ccc;
 }
 
