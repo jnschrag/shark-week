@@ -292,6 +292,10 @@ $("#fullLeaderboardLink").click(function() {
 });
 
 function fb_leaderboardFull() {
+  // Clear Previous Table Results
+  $("#leaderboardTableFull").empty();
+
+  // Get scores ordered by priority
   firebase.database().ref("scoreList").orderByPriority().once("value").then(function(snapshot) {
     $.each(snapshot.val(), function(child_id,child_value) {
       var newScoreRow = $("<tr/>");
