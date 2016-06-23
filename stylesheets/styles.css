@@ -59,7 +59,7 @@
 
 section#quiz {
 	display:none;
-	background-color:#17EDFA;
+	background-color:#25A8E0;
   padding:15px;
 }
 
@@ -92,7 +92,7 @@ section#quiz {
 
 #game-over-results {
   display:none;
-  background-color:#17EDFA;
+  background-color:#25A8E0;
   text-align:center;
   padding:15px;
   font-size:1.3em;
@@ -105,7 +105,7 @@ section#quiz {
 
 #game-over-sharebuttons {
   display:none;
-  background-color:#17EDFA;
+  background-color:#25A8E0;
   text-align:center;
   padding:15px;
   font-size:1.3em;
