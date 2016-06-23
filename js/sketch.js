@@ -135,7 +135,7 @@ function setup()
 
 function draw() 
 {
-  background(23,237,250);
+  background(37,168,224);
 
   if(gameStarted == true)
   {
@@ -400,7 +400,7 @@ function gameOver() {
     // If freePlayCounter > 0, tell them to take the quiz again
     console.log("Game Over freePlayCounter: "+freePlayCounter);
     if(freePlayCounter > 0) {
-      $("#game-over-results").show().html("<span>Game Over!</span><br />You collected <strong>"+score+" missing ballots</strong>! To play again, take our quiz or sign in!");
+      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You collected <strong>"+score+" missing ballots</strong>! To play again, take our quiz or sign in!");
     }
     else {
       // Personal High Score
@@ -413,7 +413,7 @@ function gameOver() {
         var bonus = "JAWesome! You have set the record with the highest score so far!";
       }
 
-      $("#game-over-results").show().html("<span>Game Over!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />"+bonus);
+      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />"+bonus);
     }
 
     // Show the share buttons
