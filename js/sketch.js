@@ -93,6 +93,7 @@ function setup()
     $(".questions .q0").show();
     $("#quiz .result").empty();
     $("#game-over-results").hide().empty();
+    $("#game-over-sharebuttons").hide().empty();
 
     // Uncheck any answers from previous games
     var ele = $(".questions input[type=radio]");
@@ -106,6 +107,7 @@ function setup()
   });
   $("#free-play").click(function() {
     $("#game-over-results").hide().empty();
+    $("#game-over-sharebuttons").hide().empty();
     // Set Flags
     quizFlag = false;
     freePlayModeFlag = true;
@@ -383,6 +385,11 @@ function gameOver() {
   if(freePlayModeFlag == false) {
     if(score > 0) {
       $("#game-over-results").show().html("<span class='right'>FIN-tastic!</span><br />You earned <strong>"+score+" lives</strong> to help you and OEDI collect the missing ballots in our free play game!");
+
+      // Show the share buttons
+      shareButtons("I earned "+score+" extra lives in Ballot Byter!");
+
+      // Show the Free Play Button
       $("#free-play").show();
     }
     else {
@@ -408,6 +415,10 @@ function gameOver() {
 
       $("#game-over-results").show().html("<span>Game Over!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />"+bonus);
     }
+
+    // Show the share buttons
+    shareButtons("I rescued "+score+" missing ballots in Ballot Byter!");
+
   }
 
   // Reset Flags

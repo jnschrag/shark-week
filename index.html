@@ -189,6 +189,7 @@
             
 
             <div id="game-over-results"></div>
+            <div id="game-over-sharebuttons"></div>
           </section>
         </div>
         <!-- END: Game Canvas -->
@@ -212,7 +213,6 @@
             <a class="btn btn-primary sign-out">
               Sign Out
             </a>      
-            <br />
           </section>
           <!-- START: Authentication Screen -->
           <section id="authentication">
@@ -322,7 +322,6 @@
 <!-- SHARK WEEK -->
   <script src="https://www.gstatic.com/firebasejs/3.0.2/firebase.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script language="javascript" src="js/jquery.profanityfilter.min.js"></script>
   <script language="javascript" src="js/leaderboard.js"></script>
   <script language="javascript" src="js/authentication.js"></script>
   <script language="javascript" src="js/quiz.js"></script>
@@ -334,14 +333,23 @@
 
 <!---  ADDED JS for FACEBook share -->
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '144243785989962',
+      xfbml      : true,
+      version    : 'v2.0'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <!-- ENd of JS for facebook share button -->
 
 </body>
