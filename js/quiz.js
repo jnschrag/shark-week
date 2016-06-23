@@ -127,3 +127,16 @@ function shuffleArray(array) {
   }
   return array;
 }
+
+/**
+ * shareButtons: Display share buttons after completing the quiz/game
+ * @param {string} text The message to be shared, also contains the score
+ * @return {element} Shows and populates the html of #game-over-sharebuttons
+ */
+function shareButtons (text) {
+  // Show & Populate the Share Buttons Text
+      var messageText = text;
+      var messageURL = "http://openelectiondata.net/holiday";
+      var messageHashtag = "SharkWeek";
+      return $("#game-over-sharebuttons").show().html("Share Your Score!<br /><a href='https://twitter.com/share?url="+messageURL+"&via=openelectdata&hashtags="+messageHashtag+"&text="+messageText+"' class='btn btn-social btn-twitter' target='_blank'><span class='fa fa-twitter'></span> Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> <div id='shareBtn' class='btn btn-social btn-facebook'><span class='fa fa-facebook'></span> Share</div><script>document.getElementById('shareBtn').onclick = function() {FB.ui({display: 'iframe', method: 'share', href: '"+messageURL+"', hashtag: '#"+messageHashtag+"', quote: '"+messageText+"'}, function(response){});}</script> <a href='https://plus.google.com/share?url="+messageURL+"' target='_blank' class='btn btn-social btn-google'> <span class='fa fa-google'></span> Share</a>");
+}

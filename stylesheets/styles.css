@@ -102,3 +102,11 @@ section#quiz {
   font-weight:bold;
   font-size:1.5em;
 }
+
+#game-over-sharebuttons {
+  display:none;
+  background-color:#17EDFA;
+  text-align:center;
+  padding:15px;
+  font-size:1.3em;
+}
