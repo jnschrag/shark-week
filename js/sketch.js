@@ -16,7 +16,8 @@ var freePlayModeFlag = false;
 var letters = ["a","b","c","d"];
 var correctAnswer;
 var numQuestions = Object.keys(questionsObj).length;
-var numQuestionsCorrect;
+var questionsCorrect = {};
+var questionsIncorrect = {};
 var numQuestionsIncorrect;
 var freePlayCounter = 0;
 
@@ -85,9 +86,12 @@ function setup()
     // Set Question Counters
     questionNumber = 0;
     correctAnswer = "";
-    numQuestionsCorrect = 0;
     numQuestionsIncorrect = 0;
     freePlayCounter = 0;
+
+    // Reset questionsCorrect & questionsIncorrect
+    questionsCorrect = {};
+    questionsIncorrect = {};
 
     // Show 1st question; hide result
     $(".questions .q0").show();
@@ -341,8 +345,8 @@ function startGame()
 
   // Delete cookies
   document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = "numQuestionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = "numQuestionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "questionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "questionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   
 }
 
@@ -353,8 +357,8 @@ function gameOver() {
 
   // Save the score as a cookie
   document.cookie = "anonScore="+score;
-  document.cookie = "numQuestionsCorrect="+numQuestionsCorrect;
-  document.cookie = "numQuestionsIncorrect="+numQuestionsIncorrect;
+  bake_cookie("questionsCorrect",questionsCorrect);
+  bake_cookie("questionsIncorrect",questionsIncorrect);
 
   // Update the leaderboard
   fb_updateLeaderboard(score, freePlayModeFlag);

@@ -78,8 +78,8 @@ function initApp() {
       if(redirect == true) {
         var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
         if(cookieValue) {
-          numQuestionsCorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-          numQuestionsIncorrect = document.cookie.replace(/(?:(?:^|.*;\s*)numQuestionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+          questionsCorrect = JSON.parse(document.cookie.replace(/(?:(?:^|.*;\s*)questionsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+          questionsIncorrect = JSON.parse(document.cookie.replace(/(?:(?:^|.*;\s*)questionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
           fb_updateLeaderboard(cookieValue, false);
         }
         else {
@@ -190,13 +190,13 @@ function fb_updateLeaderboard(score, freePlay) {
           userScoreRef.setPriority(newScore);
           // Update the user's lives earned if freePlay = false
           if(freePlay == false) {
-            userScoreRef.update({lives:newLives, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+            userScoreRef.update({lives:newLives});
           }
         }
         else {
           // Update the user's lives earned if freePlay = false
           if(freePlay == false) {
-            userScoreRef.update({lives:newLives, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+            userScoreRef.update({lives:newLives});
           }
           //return;
         }
@@ -206,9 +206,14 @@ function fb_updateLeaderboard(score, freePlay) {
         userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
         // Update the user's lives earned if freePlay = false
         if(freePlay == false) {
-          userScoreRef.update({lives:newLives, questionsCorrect: numQuestionsCorrect, questionsIncorrect: numQuestionsIncorrect});
+          userScoreRef.update({lives:newLives});
         }
       }
+
+      // Push new game_played for user
+      var userGamesPlayedRef = firebase.database().ref("scoreList/"+uid+"/games_played");
+      var newUserGamesPlayedRef = userGamesPlayedRef.push();
+      newUserGamesPlayedRef.set({ 'timestamp': Date.now(), 'score': newScore, 'lives': newLives, 'questionsCorrect': questionsCorrect, 'questionsIncorrect': questionsIncorrect });
 
       // Update our earned values to reflect what was just added to the database
       fb_setUserEarnedInfo();
@@ -320,4 +325,9 @@ function fb_updateCorrectIncorrectAnswers(answersRef) {
   answersRef.transaction(function(currentValue) {
     return currentValue + 1;
   });
+}
+
+function bake_cookie(name, value) {
+  var cookie = [name, '=', JSON.stringify(value), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
+  document.cookie = cookie;
 }
