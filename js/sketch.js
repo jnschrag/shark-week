@@ -116,6 +116,10 @@ function setup()
     quizFlag = false;
     freePlayModeFlag = true;
 
+    // Reset questionsCorrect & questionsIncorrect
+    questionsCorrect = {};
+    questionsIncorrect = {};
+
     // Set our lives to livesEarned or score cookie depending on logged in status
     if(livesEarned > 0) {
       lives = livesEarned;
@@ -345,8 +349,6 @@ function startGame()
 
   // Delete cookies
   document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = "questionsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = "questionsIncorrect=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   
 }
 
@@ -357,8 +359,14 @@ function gameOver() {
 
   // Save the score as a cookie
   document.cookie = "anonScore="+score;
-  bake_cookie("questionsCorrect",questionsCorrect);
-  bake_cookie("questionsIncorrect",questionsIncorrect);
+
+  // Update the Games Played node
+  if(freePlayModeFlag == true) {
+    fb_updateGamesPlayed(livesEarned, false);
+  }
+  else {
+    fb_updateGamesPlayed(score, true);
+  }
 
   // Update the leaderboard
   fb_updateLeaderboard(score, freePlayModeFlag);

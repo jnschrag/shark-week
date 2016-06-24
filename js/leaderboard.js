@@ -78,8 +78,6 @@ function initApp() {
       if(redirect == true) {
         var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
         if(cookieValue) {
-          questionsCorrect = JSON.parse(document.cookie.replace(/(?:(?:^|.*;\s*)questionsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
-          questionsIncorrect = JSON.parse(document.cookie.replace(/(?:(?:^|.*;\s*)questionsIncorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
           fb_updateLeaderboard(cookieValue, false);
         }
         else {
@@ -186,34 +184,29 @@ function fb_updateLeaderboard(score, freePlay) {
         var oldScore = snapshot.val().score;
         if(oldScore === undefined || newScore > oldScore) {
           // Update the old score; use setPriority to reset the priority to the new score
-          userScoreRef.update({score:newScore});
+          userScoreRef.update({score:newScore, timestamp:Date.now()});
           userScoreRef.setPriority(newScore);
           // Update the user's lives earned if freePlay = false
           if(freePlay == false) {
-            userScoreRef.update({lives:newLives});
+            userScoreRef.update({lives:newLives, timestamp:Date.now()});
           }
         }
         else {
           // Update the user's lives earned if freePlay = false
           if(freePlay == false) {
-            userScoreRef.update({lives:newLives});
+            userScoreRef.update({lives:newLives, timestamp:Date.now()});
           }
           //return;
         }
       }
       else {
         // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-        userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+        userScoreRef.setWithPriority({ name:name, score:newScore, timestamp:Date.now() }, newScore);
         // Update the user's lives earned if freePlay = false
         if(freePlay == false) {
-          userScoreRef.update({lives:newLives});
+          userScoreRef.update({lives:newLives, timestamp:Date.now()});
         }
       }
-
-      // Push new game_played for user
-      var userGamesPlayedRef = firebase.database().ref("scoreList/"+uid+"/games_played");
-      var newUserGamesPlayedRef = userGamesPlayedRef.push();
-      newUserGamesPlayedRef.set({ 'timestamp': Date.now(), 'score': newScore, 'lives': newLives, 'questionsCorrect': questionsCorrect, 'questionsIncorrect': questionsIncorrect });
 
       // Update our earned values to reflect what was just added to the database
       fb_setUserEarnedInfo();
@@ -231,6 +224,22 @@ function fb_updateLeaderboard(score, freePlay) {
       // if we return with no arguments, it cancels the transaction.
       return;
     }); 
+}
+
+/**
+ * Update the Games Played Node for all users
+ * @param  {string} lives     # of lives either earned (in quiz mode) or started out with (in free play)
+ * @param  {flag} freePlay    true or false
+ * @return none
+ */ 
+function fb_updateGamesPlayed(lives, freePlay) {
+  // Push new game_played
+  if(!uid) {
+    uid = "null";
+  }
+  var gamesPlayedRef = firebase.database().ref("gamesPlayed");
+  var newGamesPlayedRef = gamesPlayedRef.push();
+  newGamesPlayedRef.set({ 'uid': uid, 'timestamp': Date.now(), 'score': score, 'lives': lives, 'questionsCorrect': questionsCorrect, 'questionsIncorrect': questionsIncorrect, 'quiz': freePlay });
 }
 
 // Keep a mapping of firebase locations to HTML elements, so we can move / remove elements as necessary.
@@ -325,9 +334,4 @@ function fb_updateCorrectIncorrectAnswers(answersRef) {
   answersRef.transaction(function(currentValue) {
     return currentValue + 1;
   });
-}
-
-function bake_cookie(name, value) {
-  var cookie = [name, '=', JSON.stringify(value), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
-  document.cookie = cookie;
 }
