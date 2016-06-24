@@ -24,32 +24,32 @@ var freePlayCounter = 0;
 function preload()
 {
   // load in shark images
-  sharkRed = loadImage('assets/shark_red.png');
-  sharkGreen = loadImage('assets/shark_purple.png');
-  sharkOrange = loadImage('assets/shark_orange.png');
-  sharkBlue = loadImage('assets/shark_blue.png');
+  sharkRed = loadImage('sharkweek-assets/assets/shark_red.png');
+  sharkGreen = loadImage('sharkweek-assets/assets/shark_purple.png');
+  sharkOrange = loadImage('sharkweek-assets/assets/shark_orange.png');
+  sharkBlue = loadImage('sharkweek-assets/assets/shark_blue.png');
   
   // load in player images
-  playerLeft1 = loadImage('assets/robot_left_1.png');
-  playerLeft2 = loadImage('assets/robot_left_2.png');
-  playerLeft3 = loadImage('assets/robot_left_3.png');
-  playerLeft4 = loadImage('assets/robot_left_4.png');
-  playerLeft5 = loadImage('assets/robot_left_5.png');
-  playerRight1 = loadImage('assets/robot_right_1.png');
-  playerRight2 = loadImage('assets/robot_right_2.png');
-  playerRight3 = loadImage('assets/robot_right_3.png');
-  playerRight4 = loadImage('assets/robot_right_4.png');
-  playerRight5 = loadImage('assets/robot_right_5.png');
+  playerLeft1 = loadImage('sharkweek-assets/assets/robot_left_1.png');
+  playerLeft2 = loadImage('sharkweek-assets/assets/robot_left_2.png');
+  playerLeft3 = loadImage('sharkweek-assets/assets/robot_left_3.png');
+  playerLeft4 = loadImage('sharkweek-assets/assets/robot_left_4.png');
+  playerLeft5 = loadImage('sharkweek-assets/assets/robot_left_5.png');
+  playerRight1 = loadImage('sharkweek-assets/assets/robot_right_1.png');
+  playerRight2 = loadImage('sharkweek-assets/assets/robot_right_2.png');
+  playerRight3 = loadImage('sharkweek-assets/assets/robot_right_3.png');
+  playerRight4 = loadImage('sharkweek-assets/assets/robot_right_4.png');
+  playerRight5 = loadImage('sharkweek-assets/assets/robot_right_5.png');
   
   // load in heart image
-  heart = loadImage('assets/heart.png');
+  heart = loadImage('sharkweek-assets/assets/heart.png');
   
   // load in sounds
   soundFormats('mp3', 'ogg');
-  biteSound = loadSound('assets/bite.mp3');                 
-  gameoverSound = loadSound('assets/game_over.mp3');
-  scoreSound = loadSound('assets/pop.mp3');
-  startSound = loadSound('assets/intro.mp3');
+  biteSound = loadSound('sharkweek-assets/assets/bite.mp3');                 
+  gameoverSound = loadSound('sharkweek-assets/assets/game_over.mp3');
+  scoreSound = loadSound('sharkweek-assets/assets/pop.mp3');
+  startSound = loadSound('sharkweek-assets/assets/intro.mp3');
   soundArray = [biteSound,gameoverSound,scoreSound,startSound];
   
 }
@@ -325,7 +325,7 @@ function draw()
     }
   
   } else {
-	  
+    
     // show start button
     $(".start-buttons-container").show();
     if(!livesEarned && freePlayCounter > 0 ) {
