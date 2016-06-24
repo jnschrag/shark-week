@@ -142,9 +142,6 @@ function draw()
 
     // hide start buttons
     $(".start-buttons-container").hide();
-
-    //hide beginning text
-    $("#instructions").hide();
   
     // Display number of lives (upper right) & the score if we're playing the free play version; else show bonus lives earned
     fill(5);
@@ -327,8 +324,6 @@ function draw()
       $("#free-play").hide();
       freePlayCounter = 0;
     }
-    //show instructions again
-	   $("#instructions").show();
   }
 }
 
@@ -387,7 +382,7 @@ function gameOver() {
       $("#game-over-results").show().html("<span class='right'>FIN-tastic!</span><br />You earned <strong>"+score+" lives</strong> to help you and OEDI collect the missing ballots in our free play game!");
 
       // Show the share buttons
-      shareButtons("I earned "+score+" extra lives in Ballot Byter!");
+      shareButtons("I earned "+score+" extra lives in Ballots: Casted Away!");
 
       // Show the Free Play Button
       $("#free-play").show();
@@ -417,7 +412,7 @@ function gameOver() {
     }
 
     // Show the share buttons
-    shareButtons("I rescued "+score+" missing ballots in Ballot Byter!");
+    shareButtons("I rescued "+score+" missing ballots in Ballots: Casted Away!");
 
   }
 
