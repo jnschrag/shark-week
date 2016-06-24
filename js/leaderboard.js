@@ -162,8 +162,6 @@ function fb_setUserEarnedInfo() {
   });
 }
 
-
-
 // Update the leaderboard with the new score; replace preexisting score if there is one
 function fb_updateLeaderboard(score, freePlay) {
 
@@ -312,3 +310,14 @@ function getOrdinal(n) {
   v=n%100;
   return n+(s[(v-20)%10]||s[v]||s[0]);
 };
+
+/**
+ * Updates the Total Correct/Incorrect Answers Counter
+ * @param  {string} answersRef  Firebase reference
+ * @return {value}              The new total Correct/Incorrect answer count
+ */
+function fb_updateCorrectIncorrectAnswers(answersRef) {
+  answersRef.transaction(function(currentValue) {
+    return currentValue + 1;
+  });
+}
