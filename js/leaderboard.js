@@ -132,8 +132,9 @@ window.onload = function() {
 // Set livesEarned & prevScore global variables
 function fb_setUserEarnedInfo() {
   firebase.database().ref("scoreList/"+uid).once("value").then(function(snapshot) {
-    livesEarned = snapshot.child("lives").val(); // Lives Earned
+    livesEarned = snapshot.child("lives").val(); // Current Lives Earned
     prevScore = snapshot.child("score").val(); // Current Personal High Score
+    var timestamp = snapshot.child("timestamp").val(); // Timestamp of last game
     var priority = snapshot.getPriority();
 
     var scoreListing = scoreListRef.orderByPriority().startAt(priority);
@@ -141,6 +142,30 @@ function fb_setUserEarnedInfo() {
       var currentRank = snapshot.numChildren();
       $("#currentRanking").html("Current Overall Ranking: "+getOrdinal(currentRank)+"<br />");
     });
+
+    // Update Lives Counter if timestamp is from previous days, only if date is before 7/1/16
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if( dd<10 ) { dd='0'+dd } 
+    if( mm<10 ) { mm='0'+mm } 
+    var currentDate = mm+'/'+dd+'/'+yyyy;
+
+    var userDate = new Date(timestamp);
+    var userdd = userDate.getDate();
+    var usermm = userDate.getMonth()+1; //January is 0!
+    var useryyyy = userDate.getFullYear();
+    if( userdd<10 ) { userdd='0'+userdd } 
+    if( usermm<10 ) { usermm='0'+usermm } 
+    var currentUserDate = usermm+'/'+userdd+'/'+useryyyy;
+
+    if(currentDate < "07/01/2016") {
+      if(currentUserDate < currentDate) {
+        livesEarned = 0;
+        firebase.database().ref("scoreList/"+uid).update({lives: 0});
+      }
+    }
 
     // If user has a previous score
     if(prevScore != null) {
