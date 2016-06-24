@@ -360,6 +360,9 @@ function gameOver() {
   // Save the score as a cookie
   document.cookie = "anonScore="+score;
 
+  // Update the leaderboard
+  fb_updateLeaderboard(score, freePlayModeFlag);
+
   // Update the Games Played node
   if(freePlayModeFlag == true) {
     fb_updateGamesPlayed(livesEarned, false);
@@ -367,9 +370,6 @@ function gameOver() {
   else {
     fb_updateGamesPlayed(score, true);
   }
-
-  // Update the leaderboard
-  fb_updateLeaderboard(score, freePlayModeFlag);
 
   // reset lives
   lives = defaultLives;
