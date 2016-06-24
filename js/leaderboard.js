@@ -167,10 +167,6 @@ function fb_updateLeaderboard(score, freePlay) {
     var newScore = Number(score);
     var newLives = Number(score);
 
-    console.log("newLives: "+newLives);
-    console.log((numQuestions * 2));
-    console.log(name);
-
     if(freePlay == false) {
       if(newLives > (numQuestions * 2)) {
         return;
@@ -183,8 +179,6 @@ function fb_updateLeaderboard(score, freePlay) {
     console.log("Update Leaderboard Function");
 
     var userScoreRef = scoreListRef.child(uid);
-
-    console.log("newsScore: "+newScore);
 
     // Check what the current score is if the user already has a record. If the new score is greater, update it.
     firebase.database().ref("scoreList/"+uid).once('value').then(function(snapshot) {
