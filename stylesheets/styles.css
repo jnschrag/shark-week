@@ -1,3 +1,8 @@
+#instructions .directions {
+  font-style:italic;
+  font-size:0.8em;
+}
+
 #authentication {
   display:none;
 }
