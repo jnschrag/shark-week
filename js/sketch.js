@@ -391,7 +391,7 @@ function gameOver() {
   // Game Over Screen: if freePlayModeFlag = false, show # of bonus lives earned and option for free play; else game over & personal high score
   if(freePlayModeFlag == false) {
     if(score > 0) {
-      $("#game-over-results").show().html("<span class='right'>FIN-tastic!</span><br />You earned <strong>"+score+" lives</strong> to help you and OEDI collect the missing ballots in our free play game!");
+      $("#game-over-results").show().html("<span class='right'>FIN-tastic!</span><br />You earned <strong>"+score+" lives</strong> to help you and OEDI collect the missing ballots in our free play game! Check back tomorrow for new questions!");
 
       // Show the share buttons
       shareButtons("I earned "+score+" extra lives in Ballots: Casted Away!");
@@ -407,7 +407,7 @@ function gameOver() {
     // If freePlayCounter > 0, tell them to take the quiz again
     console.log("Game Over freePlayCounter: "+freePlayCounter);
     if(freePlayCounter > 0) {
-      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You collected <strong>"+score+" missing ballots</strong>! To play again, take our quiz or sign in!");
+      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You collected <strong>"+score+" missing ballots</strong>! To play again, take our quiz or sign in! Be sure to check back tomorrow for new questions!");
     }
     else {
       // Personal High Score
@@ -420,7 +420,7 @@ function gameOver() {
         var bonus = "JAWesome! You have set the record with the highest score so far!";
       }
 
-      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />"+bonus);
+      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />"+bonus+"<br />Check back tomorrow for new quiz questions!");
     }
 
     // Show the share buttons

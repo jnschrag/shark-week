@@ -135,3 +135,22 @@ section#quiz {
   background-color: #AA351A;
   border-color: #072147;
 }
+
+#feedback {
+  display:none;
+  height:600px;
+  right: 4rem;
+  overflow-y: scroll;
+  padding: 0px;
+  position: fixed;
+  z-index: 9000000;
+  bottom:0px;
+  border:1px solid #003768;
+}
+.btn-feedback {
+  bottom: 0;
+  border-radius: 2px 2px 0 0;
+  position: fixed;
+  right: 4rem;
+  z-index: 9000000;
+}
