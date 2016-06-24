@@ -1,27 +1,123 @@
 var questionsObj = [
 {
-  "question": "Which of the following is an example of a machine-readable format?",
+  "question": "Polling station data may include all of the following EXCEPT:",
   "answers": [
-    {"answer": "Carbonite-frozen format", "correctAnswer": false},
-    {"answer": "JabbaScript Object Notation", "correctAnswer": false},
-    {"answer": "Comma-separated file", "correctAnswer": true},
-    {"answer": "None of them, these aren't the formats you're looking for.", "correctAnswer": false}
+    {"answer": "The address of polling stations", "correctAnswer": false},
+    {"answer": "The number of registered voters per polling station", "correctAnswer": false},
+    {"answer": "The names and titles on the electoral officials per polling station", "correctAnswer": false},
+    {"answer": "The methods for stealing ballot boxes", "correctAnswer": true}
   ]
 }, {
-  "question": "Which one is not an open election data principle?",
+  "question": "Before election day, an example of important election data is:",
   "answers": [
-    {"answer": "Complete and in bulk, there is no try", "correctAnswer": false},
-    {"answer": "Hyperspace compatibility", "correctAnswer": true},
-    {"answer": "Non-proprietary &mdash; the Rebel Alliance answers to no evil overlord", "correctAnswer": false},
-    {"answer": "Non-discriminatory, even for half-witted, scruffy-looking Nerf herders.", "correctAnswer": false}
+    {"answer": "Voters list", "correctAnswer": false},
+    {"answer": "Polling station list", "correctAnswer": false},
+    {"answer": "Both A & B", "correctAnswer": true},
+    {"answer": "Shark list", "correctAnswer": false}
   ]
 }, {
-  "question": "When should election results be released to be considered timely?",
+  "question": "Which is NOT a goal of voter registration?",
   "answers": [
-    {"answer": "A long time ago in a galaxy far far away", "correctAnswer": false},
-    {"answer": "As quickly as necessary for it to be useful", "correctAnswer": true},
-    {"answer": "Never, it's a trap.", "correctAnswer": false},
-    {"answer": "Whenever Darth Vader says they're good and ready.", "correctAnswer": false}
+    {"answer": "To make sure eligible citizens have the real opportunity to vote", "correctAnswer": false},
+    {"answer": "Prevents ineligible people from voting", "correctAnswer": false},
+    {"answer": "Prevents multiple voting", "correctAnswer": false},
+    {"answer": "Allows great white sharks to vote more than hammerhead sharks", "correctAnswer": true}
+  ]
+}, {
+  "question": "What is NOT an example of information that may be found on a voters list?",
+  "answers": [
+    {"answer": "Date of registration", "correctAnswer": false},
+    {"answer": "Gender", "correctAnswer": false},
+    {"answer": "Address", "correctAnswer": false},
+    {"answer": "Fin size", "correctAnswer": true}
+  ]
+}, {
+  "question": "What are the entities called with the mandate of administering electoral processes?",
+  "answers": [
+    {"answer": "Election management bodies", "correctAnswer": true},
+    {"answer": "Election movement buoys", "correctAnswer": false},
+    {"answer": "Everyday management beaches", "correctAnswer": false},
+    {"answer": "Elusive mediary bodies", "correctAnswer": false}
+  ]
+}, {
+  "question": "Which is NOT an example of electoral complaints, disputes and resolutions data?",
+  "answers": [
+    {"answer": "Parties filing complaints", "correctAnswer": false},
+    {"answer": "How to file a complaint", "correctAnswer": false},
+    {"answer": "Type of complaint or dispute", "correctAnswer": false},
+    {"answer": "Number of shark bytes", "correctAnswer": true}
+  ]
+}, {
+  "question": "The \"rules of the game\" for conducting Sharkville’s elections are determined by the ____?",
+  "answers": [
+    {"answer": "Legal Framework", "correctAnswer": true},
+    {"answer": "Great White Shark Wikipedia Page", "correctAnswer": false},
+    {"answer": "Message in a Bottle", "correctAnswer": false},
+    {"answer": "Individual election commissioners", "correctAnswer": false}
+  ]
+}, {
+  "question": "Which one of these groups is NOT responsible for providing election security?",
+  "answers": [
+    {"answer": "The Dolphin Defenders", "correctAnswer": true},
+    {"answer": "The Police", "correctAnswer": false},
+    {"answer": "The Election Management Body", "correctAnswer": false},
+    {"answer": "The Media", "correctAnswer": false}
+  ]
+}, {
+  "question": "Which of these is not a source of campaign financing?",
+  "answers": [
+    {"answer": "Loan sharks", "correctAnswer": true},
+    {"answer": "Private donations", "correctAnswer": false},
+    {"answer": "Allocated state funding", "correctAnswer": false},
+    {"answer": "Equal access to public media", "correctAnswer": false}
+  ]
+}, {
+  "question": "When should voter education initiatives take place?",
+  "answers": [
+    {"answer": "In the months leading up to the election", "correctAnswer": true},
+    {"answer": "Only the day before the election", "correctAnswer": false},
+    {"answer": "Only during Shark Week", "correctAnswer": false},
+    {"answer": "Never", "correctAnswer": false}
+  ]
+}, {
+  "question": "Which is an acceptable example of a usage restriction on data?",
+  "answers": [
+    {"answer": "Data restricted to those who pay", "correctAnswer": false},
+    {"answer": "Data restricted to the residents of Sharkville", "correctAnswer": false},
+    {"answer": "Data restricted to political parties", "correctAnswer": false},
+    {"answer": "None; data should be non-discriminatory", "correctAnswer": true}
+  ]
+}, {
+  "question": "What should guide procurement decisions in election management bodies’ decision-making processes?",
+  "answers": [
+    {"answer": "Transparency and objective criteria", "correctAnswer": true},
+    {"answer": "Competition", "correctAnswer": false},
+    {"answer": "All of the above", "correctAnswer": false},
+    {"answer": "None of these; procurement decisions are made by sharkuitous logic", "correctAnswer": false}
+  ]
+}, {
+  "question": "Which is NOT an example of useful data related to election campaigns?",
+  "answers": [
+    {"answer": "Campaign regulations", "correctAnswer": false},
+    {"answer": "Media allocations for candidates", "correctAnswer": false},
+    {"answer": "Applications for rally permits", "correctAnswer": false},
+    {"answer": "The mayor of Sharkville’s vacation schedule", "correctAnswer": true}
+  ]
+}, {
+  "question": "Which is an example of a non-proprietary file format?",
+  "answers": [
+    {"answer": "CSV", "correctAnswer": true},
+    {"answer": "DOC", "correctAnswer": false},
+    {"answer": "XLS", "correctAnswer": false},
+    {"answer": "JAWS", "correctAnswer": false}
+  ]
+}, {
+  "question": "When considering electoral boundaries, what data should be made available?",
+  "answers": [
+    {"answer": "Number of registered voters", "correctAnswer": true},
+    {"answer": "Number of sharks", "correctAnswer": false},
+    {"answer": "Information on the nearest beach", "correctAnswer": false},
+    {"answer": "None of the above", "correctAnswer": false}
   ]
 }];
 
