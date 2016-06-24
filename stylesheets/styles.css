@@ -115,3 +115,20 @@ section#quiz {
   padding:15px;
   font-size:1.3em;
 }
+
+.btn-orange {
+  color: #fff;
+  background-color: #CC4627;
+  border-color: #aa351a;
+}
+
+.btn-orange:hover,
+.btn-orange:focus,
+.btn-orange.focus,
+.btn-orange:active,
+.btn-orange.active,
+.open > .dropdown-toggle.btn-orange {
+  color: #fff;
+  background-color: #AA351A;
+  border-color: #072147;
+}
