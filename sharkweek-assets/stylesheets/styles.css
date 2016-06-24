@@ -154,3 +154,7 @@ section#quiz {
   right: 4rem;
   z-index: 9000000;
 }
+
+.credits {
+  font-size: 0.8em;
+}
