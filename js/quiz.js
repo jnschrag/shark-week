@@ -3,138 +3,153 @@
 =============================================*/
 var sundayQuestions = [
 {
+  "question_id" : 1,
   "question": "Polling station data may include all of the following EXCEPT:",
   "answers": [
-    {"answer": "The address of polling stations", "correctAnswer": false},
-    {"answer": "The number of registered voters per polling station", "correctAnswer": false},
-    {"answer": "The names and titles on the electoral officials per polling station", "correctAnswer": false},
-    {"answer": "The methods for stealing ballot boxes", "correctAnswer": true}
+    {"answer": "The address of polling stations", "correctAnswer": false, "answer_id": 1},
+    {"answer": "The number of registered voters per polling station", "correctAnswer": false, "answer_id": 2},
+    {"answer": "The names and titles on the electoral officials per polling station", "correctAnswer": false, "answer_id": 3},
+    {"answer": "The methods for stealing ballot boxes", "correctAnswer": true, "answer_id": 4}
   ]
 },
 {
+  "question_id" : 2,
   "question": "What is NOT an example of information that may be found on a voters list?",
   "answers": [
-    {"answer": "Date of registration", "correctAnswer": false},
-    {"answer": "Gender", "correctAnswer": false},
-    {"answer": "Address", "correctAnswer": false},
-    {"answer": "Fin size", "correctAnswer": true}
+    {"answer": "Date of registration", "correctAnswer": false, "answer_id": 1},
+    {"answer": "Gender", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Address", "correctAnswer": false, "answer_id": 3},
+    {"answer": "Fin size", "correctAnswer": true, "answer_id": 4}
   ]
 },
 {
+  "question_id" : 3,
   "question": "When should voter education initiatives take place?",
   "answers": [
-    {"answer": "In the months leading up to the election", "correctAnswer": true},
-    {"answer": "Only the day before the election", "correctAnswer": false},
-    {"answer": "Only during Shark Week", "correctAnswer": false},
-    {"answer": "Never", "correctAnswer": false}
+    {"answer": "In the months leading up to the election", "correctAnswer": true, "answer_id": 1},
+    {"answer": "Only the day before the election", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Only during Shark Week", "correctAnswer": false, "answer_id": 3},
+    {"answer": "Never", "correctAnswer": false, "answer_id": 4}
   ]
 }];
 
 var mondayQuestions = [
 {
+  "question_id" : 4,
   "question": "Which is an acceptable example of a usage restriction on data?",
   "answers": [
-    {"answer": "Data restricted to those who pay", "correctAnswer": false},
-    {"answer": "Data restricted to the residents of Sharkville", "correctAnswer": false},
-    {"answer": "Data restricted to political parties", "correctAnswer": false},
-    {"answer": "None; data should be non-discriminatory", "correctAnswer": true}
+    {"answer": "Data restricted to those who pay", "correctAnswer": false, "answer_id": 1},
+    {"answer": "Data restricted to the residents of Sharkville", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Data restricted to political parties", "correctAnswer": false, "answer_id": 3},
+    {"answer": "None; data should be non-discriminatory", "correctAnswer": true, "answer_id": 4}
   ]
 }, {
+  "question_id" : 5,
   "question": "Which is NOT an example of useful data related to election campaigns?",
   "answers": [
-    {"answer": "Campaign regulations", "correctAnswer": false},
-    {"answer": "Media allocations for candidates", "correctAnswer": false},
-    {"answer": "Applications for rally permits", "correctAnswer": false},
-    {"answer": "The mayor of Sharkville’s vacation schedule", "correctAnswer": true}
+    {"answer": "Campaign regulations", "correctAnswer": false, "answer_id": 1},
+    {"answer": "Media allocations for candidates", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Applications for rally permits", "correctAnswer": false, "answer_id": 3},
+    {"answer": "The mayor of Sharkville’s vacation schedule", "correctAnswer": true, "answer_id": 4}
   ]
 }, {
+  "question_id" : 6,
   "question": "When considering electoral boundaries, what data should be made available?",
   "answers": [
-    {"answer": "Number of registered voters", "correctAnswer": true},
-    {"answer": "Number of sharks", "correctAnswer": false},
-    {"answer": "Information on the nearest beach", "correctAnswer": false},
-    {"answer": "None of the above", "correctAnswer": false}
+    {"answer": "Number of registered voters", "correctAnswer": true, "answer_id": 1},
+    {"answer": "Number of sharks", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Information on the nearest beach", "correctAnswer": false, "answer_id": 3},
+    {"answer": "None of the above", "correctAnswer": false, "answer_id": 4}
   ]
 }];
 
 var tuesdayQuestions = [
 {
+  "question_id" : 7,
   "question": "Which is NOT a goal of voter registration?",
   "answers": [
-    {"answer": "To make sure eligible citizens have the real opportunity to vote", "correctAnswer": false},
-    {"answer": "Prevents ineligible people from voting", "correctAnswer": false},
-    {"answer": "Prevents multiple voting", "correctAnswer": false},
-    {"answer": "Allows great white sharks to vote more than hammerhead sharks", "correctAnswer": true}
+    {"answer": "To make sure eligible citizens have the real opportunity to vote", "correctAnswer": false, "answer_id": 1},
+    {"answer": "Prevents ineligible people from voting", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Prevents multiple voting", "correctAnswer": false, "answer_id": 3},
+    {"answer": "Allows great white sharks to vote more than hammerhead sharks", "correctAnswer": true, "answer_id": 4}
   ]
 }, {
+  "question_id" : 8,
   "question": "Which is NOT an example of electoral complaints, disputes and resolutions data?",
   "answers": [
-    {"answer": "Parties filing complaints", "correctAnswer": false},
-    {"answer": "How to file a complaint", "correctAnswer": false},
-    {"answer": "Type of complaint or dispute", "correctAnswer": false},
-    {"answer": "Number of shark bytes", "correctAnswer": true}
+    {"answer": "Parties filing complaints", "correctAnswer": false, "answer_id": 1},
+    {"answer": "How to file a complaint", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Type of complaint or dispute", "correctAnswer": false, "answer_id": 3},
+    {"answer": "Number of shark bytes", "correctAnswer": true, "answer_id": 4}
   ]
 }, {
+  "question_id" : 9,
   "question": "Before election day, an example of important election data is:",
   "answers": [
-    {"answer": "Voters list", "correctAnswer": false},
-    {"answer": "Polling station list", "correctAnswer": false},
-    {"answer": "Both A & B", "correctAnswer": true},
-    {"answer": "Shark list", "correctAnswer": false}
+    {"answer": "Voters list", "correctAnswer": false, "answer_id": 1},
+    {"answer": "Polling station list", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Both A & B", "correctAnswer": true, "answer_id": 3},
+    {"answer": "Shark list", "correctAnswer": false, "answer_id": 4}
   ]
 }];
 
 var wednesdayQuestions = [
 {
+  "question_id" : 10,
   "question": "Which one of these groups is NOT responsible for providing election security?",
   "answers": [
-    {"answer": "The Dolphin Defenders", "correctAnswer": true},
-    {"answer": "The Police", "correctAnswer": false},
-    {"answer": "The Election Management Body", "correctAnswer": false},
-    {"answer": "The Media", "correctAnswer": false}
+    {"answer": "The Dolphin Defenders", "correctAnswer": true, "answer_id": 1},
+    {"answer": "The Police", "correctAnswer": false, "answer_id": 2},
+    {"answer": "The Election Management Body", "correctAnswer": false, "answer_id": 3},
+    {"answer": "The Media", "correctAnswer": false, "answer_id": 4}
   ]
 }, {
+  "question_id" : 11,
   "question": "What should guide procurement decisions in election management bodies’ decision-making processes?",
   "answers": [
-    {"answer": "Transparency and objective criteria", "correctAnswer": true},
-    {"answer": "Competition", "correctAnswer": false},
-    {"answer": "All of the above", "correctAnswer": false},
-    {"answer": "None of these; procurement decisions are made by sharkuitous logic", "correctAnswer": false}
+    {"answer": "Transparency and objective criteria", "correctAnswer": true, "answer_id": 1},
+    {"answer": "Competition", "correctAnswer": false, "answer_id": 2},
+    {"answer": "All of the above", "correctAnswer": false, "answer_id": 3},
+    {"answer": "None of these; procurement decisions are made by sharkuitous logic", "correctAnswer": false, "answer_id": 4}
   ]
 }, {
+  "question_id" : 12,
   "question": "What are the entities called with the mandate of administering electoral processes?",
   "answers": [
-    {"answer": "Election management bodies", "correctAnswer": true},
-    {"answer": "Election movement buoys", "correctAnswer": false},
-    {"answer": "Everyday management beaches", "correctAnswer": false},
-    {"answer": "Elusive mediary bodies", "correctAnswer": false}
+    {"answer": "Election management bodies", "correctAnswer": true, "answer_id": 1},
+    {"answer": "Election movement buoys", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Everyday management beaches", "correctAnswer": false, "answer_id": 3},
+    {"answer": "Elusive mediary bodies", "correctAnswer": false, "answer_id": 4}
   ]
 }];
 
 var thursdayQuestions = [
 {
+  "question_id" : 13,
   "question": "The \"rules of the game\" for conducting Sharkville’s elections are determined by the ____?",
   "answers": [
-    {"answer": "Legal Framework", "correctAnswer": true},
-    {"answer": "Great White Shark Wikipedia Page", "correctAnswer": false},
-    {"answer": "Message in a Bottle", "correctAnswer": false},
-    {"answer": "Individual election commissioners", "correctAnswer": false}
+    {"answer": "Legal Framework", "correctAnswer": true, "answer_id": 1},
+    {"answer": "Great White Shark Wikipedia Page", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Message in a Bottle", "correctAnswer": false, "answer_id": 3},
+    {"answer": "Individual election commissioners", "correctAnswer": false, "answer_id": 4}
   ]
 },  {
+  "question_id" : 14,
   "question": "Which of these is not a source of campaign financing?",
   "answers": [
-    {"answer": "Loan sharks", "correctAnswer": true},
-    {"answer": "Private donations", "correctAnswer": false},
-    {"answer": "Allocated state funding", "correctAnswer": false},
-    {"answer": "Equal access to public media", "correctAnswer": false}
+    {"answer": "Loan sharks", "correctAnswer": true, "answer_id": 1},
+    {"answer": "Private donations", "correctAnswer": false, "answer_id": 2},
+    {"answer": "Allocated state funding", "correctAnswer": false, "answer_id": 3},
+    {"answer": "Equal access to public media", "correctAnswer": false, "answer_id": 4}
   ]
-},     {
+}, {
+  "question_id" : 15,
   "question": "Which is an example of a non-proprietary file format?",
   "answers": [
-    {"answer": "CSV", "correctAnswer": true},
-    {"answer": "DOC", "correctAnswer": false},
-    {"answer": "XLS", "correctAnswer": false},
-    {"answer": "JAWS", "correctAnswer": false}
+    {"answer": "CSV", "correctAnswer": true, "answer_id": 1},
+    {"answer": "DOC", "correctAnswer": false, "answer_id": 2},
+    {"answer": "XLS", "correctAnswer": false, "answer_id": 3},
+    {"answer": "JAWS", "correctAnswer": false, "answer_id": 4}
   ]
 }];
 
@@ -185,12 +200,15 @@ var answerLetterOptions = ["a","b","c","d"];
 
 /*----------  Randomly Order & Loop Through Questions  ----------*/
 shuffleArray(questionsObj); // Shuffle Question order
+var questionsID = new Array();
 var answers = new Array();
+var answersID = new Array();
 var qCounter = 1;
 $.each(questionsObj,function(key,valueObj) {
   if(qCounter > 3) {
     return;
   }
+  questionsID[key] = valueObj.question_id;
   var qNumber = key + 1;
   var returnHTML = '<div class="q'+key+'">';
   returnHTML += '<span>'+qNumber+'. '+valueObj.question+'</span>';
@@ -208,6 +226,7 @@ $.each(questionsObj,function(key,valueObj) {
     // If this is the correct answer, add it to the answers array
     if(answer.correctAnswer == true) {
       answers[key] = answerLetterOptions[i];
+      answersID[key] = answer.answer_id;
     }
     returnHTML += '<input type="radio" name="q'+key+'" id="q'+key+i+'" value="'+answerLetterOptions[i]+'"> <label for="q'+key+i+'">'+answerLetterOptions[i].toUpperCase()+'. '+answer.answer+'</label><br />';
     i++;
@@ -230,10 +249,10 @@ function shuffleArray(array) {
 }
 /*=====  End of Select Quiz Questions  ======*/
 
-
-
-// Process Quiz Answers
-  var tot = answers.length - 1;
+/*====================================
+=            Process Quiz            =
+====================================*/
+var tot = answers.length - 1;
     score = 0;
     questionNumber = 0;
 
@@ -250,8 +269,17 @@ $("button[name=quizsubmit]").click(function(){
 function checkAnswer(question) {
   var selected = $("input[name="+question+"]:checked").val();
 
+  var questionID = questionsID[questionNumber];
+
   // If Correct Answer
   if(selected === answers[questionNumber]) {
+    // Update Firebase Correct Counters Total & User
+    var correctRef = firebase.database().ref('correctAnswers/'+questionID);
+    fb_updateCorrectIncorrectAnswers(correctRef);
+
+    // Update questionsCorrect Array
+    questionsCorrect[questionID] = answersID[questionNumber];
+
     // Change the Question
     $(".q"+questionNumber).hide();
     $(".q"+(questionNumber + 1)).show();
@@ -262,7 +290,6 @@ function checkAnswer(question) {
 
     // Update the counters
     score += 1;
-    numQuestionsCorrect += 1;
     questionNumber += 1;
 
     $("#quiz .result").removeClass("wrong").addClass("right").html('Nice job! "'+correctAnswer.toUpperCase()+'" was the correct answer. Find a matching bubble below to earn an extra life and move on, but watch out for the sharks!');
@@ -272,6 +299,13 @@ function checkAnswer(question) {
   }
   //If Wrong Answer
   else {
+    // Update Firebase Incorrect Counters Total & User
+    var incorrectRef = firebase.database().ref('incorrectAnswers/'+questionID);
+    fb_updateCorrectIncorrectAnswers(incorrectRef);
+
+    // Update questionsIncorrect Array
+    questionsIncorrect[questionID] = answersID[questionNumber];
+
     // Change the Question
     $(".q"+questionNumber).hide();
     $(".q"+(questionNumber + 1)).show();
@@ -288,6 +322,7 @@ function checkAnswer(question) {
     $("#quiz .result").addClass("wrong").html("That answer is incorrect. Try again with the next question below.");
   }
 }
+/*=====  End of Process Quiz  ======*/
 
 /**
  * shareButtons: Display share buttons after completing the quiz/game
