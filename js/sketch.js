@@ -144,7 +144,7 @@ function draw()
     $(".start-buttons-container").hide();
   
     // Display number of lives (upper right) & the score if we're playing the free play version; else show bonus lives earned
-    fill(5);
+    fill('#FFFFFF');
     noStroke();
     textSize(24);
     if(freePlayModeFlag == true) {
@@ -627,10 +627,6 @@ function Dot()
 
 Dot.prototype.display = function()
 {
-  // ellipseMode(CENTER);
-  // fill(255);
-  // noStroke();
-  // ellipse(this.xpos, this.ypos, 25, 25);
 
   rectMode(CENTER);
   strokeWeight(2);

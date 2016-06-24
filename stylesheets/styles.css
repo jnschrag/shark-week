@@ -66,6 +66,7 @@ section#quiz {
 	display:none;
 	background-color:#25A8E0;
   padding:15px;
+  color:#fbfbfb;
 }
 
 .questions .q1, .questions .q2 {
@@ -86,10 +87,10 @@ section#quiz {
   font-weight: bold;
 }
 .right {
-  color: #227A23;
+  color: #085d09;
 }
 .wrong {
-  color: #AC3737;
+  color: #7d1717;
 }
 #quiz .result.congratulations {
   font-size: 1.5em;
@@ -101,6 +102,7 @@ section#quiz {
   text-align:center;
   padding:15px;
   font-size:1.3em;
+  color:#fff;
 }
 
 #game-over-results span {
@@ -114,4 +116,22 @@ section#quiz {
   text-align:center;
   padding:15px;
   font-size:1.3em;
+  color:#fff;
+}
+
+.btn-orange {
+  color: #fff;
+  background-color: #CC4627;
+  border-color: #aa351a;
+}
+
+.btn-orange:hover,
+.btn-orange:focus,
+.btn-orange.focus,
+.btn-orange:active,
+.btn-orange.active,
+.open > .dropdown-toggle.btn-orange {
+  color: #fff;
+  background-color: #AA351A;
+  border-color: #072147;
 }
