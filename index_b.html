@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Shark Week - Open Election Data Initiative</title>
+<!-- BEGIN Twitter Card info here = ============--><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@openelectdata">
+<meta name="twitter:creator" content="@animatedroamer">
+<meta name="twitter:title" content="Ballots: Casted Away!">
+<meta name="twitter:description" content="Avoid the Sharks. Gather the Ballots. Save the Election.">
+<meta name="twitter:image" content="http://openelectiondata.net/holiday/sharkweek-assets/assets/oedi-shark-week.png?4362984378">    
+<!-- END Twitter Card info ====================-->    
+
+<!--FAcebook open graph tags BEGIN -->
+    <!-- You can use Open Graph tags to customize link previews.
+    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+  <meta property="og:url"           content="http://openelectiondata.net/holiday/" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Open Election Data Initiative" />
+  <meta property="og:description"   content="Ballots: Casted Away! Avoid the Sharks. Gather the Ballots. Save the Election." />
+  <meta property="og:image"         content="http://openelectiondata.net/holiday/sharkweek-assets/assets/oedi-shark-week.png" />
+
+<!-- Facebook Open graph END -->
+
+  <link rel="shortcut icon" type="image/png" href="http://openelectiondata.net/img/favicon.png"/>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="http://fonts.googleapis.com/css?family=Raleway:800" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Merriweather:400,700" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="http://openelectiondata.net/css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit&hl=en" async defer></script>
+  <script type="text/javascript">
+    var CaptchaCallback = function(){
+      grecaptcha.render('RecaptchaField1', {'sitekey' : '6Lc3TwcTAAAAAFij4KZfHONeWS0RYaerbJgXVg14'});
+      grecaptcha.render('RecaptchaField2', {'sitekey' : '6Lc3TwcTAAAAAFij4KZfHONeWS0RYaerbJgXVg14'});
+    };
+  </script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $($(location).attr("hash")).addClass("anchor-active");
+       
+      $("a[href*=\"#\"]").click(function(){
+        $(".anchor-active").removeClass("anchor-active");
+        $($(this).attr("href")).addClass("anchor-active");
+      });
+      
+      $(function () {
+        $('[data-toggle="popover"]').popover()
+      });
+      
+      $('#tabs').tab();
+
+      $('form[data-async]').on('submit', function(event) {
+        var $form = $(this);
+            var $target = $($form.attr('data-target'));
+
+            $.ajax({
+                type: $form.attr('method'),
+                url: $form.attr('action'),
+                data: $form.serialize(),
+
+                success: function(data, status) {
+                    $target.html(data);
+                }
+            });
+
+            event.preventDefault();
+        });
+        
+              
+    });
+    </script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-62841086-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<!-- SHARK WEEK -->
+<link rel="stylesheet" type="text/css" href="sharkweek-assets/stylesheets/styles.css" media="screen">
+<link rel="stylesheet" type="text/css" href="sharkweek-assets/stylesheets/bootstrap-social.css" media="screen">
+<script src="https://use.fontawesome.com/908da1ccad.js"></script>
+
+<!-- SHARK WEEK -->
+
+</head>
+<body>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PLJKLK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PLJKLK');</script>
+<!-- End Google Tag Manager -->
+
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a class="navbar-brand" href="/en/"><img src="http://openelectiondata.net/img/oedi-logo-en.png" style="width:220px;height:50px;" alt="Open Election Data Initiative"></a>   </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/en/guide/">Election<br>Data Guide</a></li><li class="active"><a href="/en/academy/">Data<br>Academy</a></li><li><a href="/en/contact/">Contact</a></li><li><button type="button" class="btn btn-signup" data-toggle="modal" data-target="#signup_modal">Sign up for updates</button></li>     </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">English          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/ar/academy/">العربية</a></li><li><a href="/es/academy/">Español</a></li>          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="signup_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <p class="modal-title blue"><strong>Sign up for updates</strong></p>
+      </div>
+      <div id="signup_modal_result" class="modal-body">
+        <p class="blue">Please enter your email to receive updates when new modules or tools are added</p>
+        <form name="signup_modal" method="post" action="/signup_for_updates.php" data-async data-target="#signup_modal_result">
+          <div class="form-group">
+            <input type="hidden" name="lang" value="en">
+            <div class="form-group">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <p class="blue">To reassure us that you are human:</p>
+                            <div id="RecaptchaField1"></div>
+            </div>
+            <button type="submit" class="btn btn-primary" name="signup" value="true">Sign up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- BEGIN Main Content container===========================================
+===========================================================================
+===========================================================================
+ -->
+
+    <div class="container">
+
+      <!-- START: Welcome & Instructions -->
+      <section id="welcome">
+        <h1>Ballots: Casted Away</h1>
+        <div id="instructions" class="row col-xs-12 col-md-9">
+          <p>Someone's thrown a Sharkville ballot box overboard! Take the bait and help OEDI retrieve the missing ballots! Test your knowledge of the election process, but watch out for the sharks! Check back daily for new quiz questions!</p>
+          <p class="directions">Use the left and right arrows to swim.<br />Collect the ballots to score, but avoid the sharks.<br />Each day, answer the quiz questions to earn more lives.</p>
+        </div>
+      </section>
+      <!-- END: Welcome & Leaderboard -->
+
+      <div class="row">
+
+        <!-- START: Game Canvas -->
+        <div class="col-xs-12 col-md-9">
+
+          <!-- START: Quiz -->
+          <section id="quiz">
+            <div class="result"></div>
+            <div class="questions"></div>
+            <div class="submit">
+                <button name="quizsubmit" class="btn btn-orange">Submit</button>
+              </div>
+          </section>
+          <!-- END: Quiz -->
+
+          <section id="game-holder">
+            <div class="start-buttons-container">
+              <button id="play-game" class="btn btn-orange">Play Game</button>
+              <button id="start-quiz" class="btn btn-orange" style="display:none;">Take Quiz</button>
+              <button id="free-play" class="btn btn-orange">Free Play</button>
+            </div>
+            <button type="button" class="btn btn-instructions" data-toggle="modal" data-target="#game_instructions_modal">
+              <img src="sharkweek-assets/assets/help.png" title="Help" />
+            </button>
+            <div class="sound-buttons-container">
+              <img src="sharkweek-assets/assets/sound-play-1.png" title="Mute Sound" class="sound-play" />
+              <img src="sharkweek-assets/assets/sound-mute-1.png" title="Play Sound" class="sound-mute" />
+            </div>
+            <button type="button" class="btn btn-pause">
+              <img src="sharkweek-assets/assets/pause.png" title="Pause Game" />
+            </button>
+            
+
+            <div id="game-over-results"></div>
+            <div id="game-over-sharebuttons"></div>
+          </section>
+        </div>
+        <!-- END: Game Canvas -->
+
+        <div class="col-xs-12 col-md-3">
+          <section>
+            <h2>Leaderboard</h2>
+            <div id="highestscore">
+              Overall High Score: <span class="highestScoreDiv"></span>
+            </div><br />
+            <table id="leaderboardTable" class="leaderboard"></table>
+            <a id="fullLeaderboardLink" href="#" data-toggle="modal" data-target="#leaderboard_modal">View Full Leaderboard</a><br /><br />
+            <div id="welcomeMessage">
+              <span id="welcomeUser"></span>
+              <div id="userInfo">
+                <span id="currentRanking"></span>
+                <span id="personalHighScore"></span>
+                <span id="livesEarnedContainer"></span>
+              </div>
+            </div>
+            <a class="btn btn-orange sign-out">
+              Sign Out
+            </a>     
+          </section>
+          <!-- START: Authentication Screen -->
+          <section id="authentication">
+            <a class="btn btn-block btn-social btn-twitter">
+              <span class="fa fa-twitter"></span> Sign in with Twitter
+            </a>
+            <a class="btn btn-block btn-social btn-facebook">
+              <span class="fa fa-facebook"></span> Sign in with Facebook
+            </a>
+            <a class="btn btn-block btn-social btn-google">
+              <span class="fa fa-google"></span> Sign in with Google
+            </a>
+          </section>
+          <br />
+          <span class="sw_credits"><a href="sw_credits.html">Credits</a></span>
+          <!-- END: Authentication Screen -->
+        </div>
+
+      </div>
+
+
+      </div>
+
+      <div id="game_instructions_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <p class="modal-title blue"><strong>Help &amp; Instructions</strong></p>
+            </div>
+            <div id="game_modal_result" class="modal-body">
+            <strong>Game Play: Quiz</strong><br />
+            <ul>
+              <li>Earn <strong>1</strong> life for every question answered correctly</li>
+              <li>For every question answered correctly, you get an opportunity to earn <strong>1</strong> life by getting the ballot with the correct letter</li>
+              <li>Hitting a shark moves you to the next question without earning an extra life.</li>
+              <li>There are new quiz questions every day from 6/26/16 - 6/30/16</li>
+              <li>Your lives earned will reset every day until 7/1/16</li>
+            </ul>
+            <strong>Game Play: Free Play</strong><br />
+            <ul>
+              <li>Lives earned from taking the quiz are the number of lives for free play</li>
+              <li>Earn more lives by taking the quiz again; maximum number of lives is <strong>6</strong></li>
+              <li>Collect as many ballots as possible</li>
+              <li>Hitting a shark costs <strong>1</strong> life</li>
+              <li>Game Over when all lives lost</li>
+            </ul>
+            <strong>Controls</strong><br />
+              <dl class="dl-horizontal">
+                <dt>Left Arrow</dt>
+                <dd>Move Left</dd>
+                <dt>Right Arrow</dt>
+                <dd>Move Right</dd>
+                <dt>Mobile/Touch Screen</dt>
+                <dd>Touch left or right of OEDI to change directions</dd>
+                <dt>Spacebar</dt>
+                <dd>Pause/Play Game</dd>
+                <dt><img src="sharkweek-assets/assets/sound-play-1.png" title="Mute Sound" class="sound-play" style="display:inline" />/<img src="sharkweek-assets/assets/sound-mute-1.png" title="Play Sound" class="sound-mute" style="display:inline" /></dt>
+                <dd>Mute/Play Sound</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="leaderboard_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <p class="modal-title blue"><strong>Complete Leaderboard</strong></p>
+            </div>
+            <div id="leaderboard_modal_result" class="modal-body">
+              <div id="highestscore">
+                Overall High Score: <span class="highestScoreDiv"></span>
+              </div><br />
+              <table id="leaderboardTableFull" class="leaderboard"></table><br />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <iframe id="feedback" src="https://docs.google.com/forms/d/1HN6qJ7dinQV12QEgCPSYDcpJsPPNMpTjgUaKCPT-jQg/viewform?embedded=true" width="760" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+      </div>
+      <button class="btn btn-orange btn-feedback">Give Feedback</button>
+  
+  <!--END the Main Container=================================================
+===========================================================================
+===========================================================================
+ -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <ul class="nav navbar-nav">
+          <li><a href="/en/guide/">Election<br>Data Guide</a></li><li class="active"><a href="/en/academy/">Data<br>Academy</a></li><li><a href="/en/contact/">Contact</a></li>       </ul>
+      </div>
+      <div class="col-md-4">
+        <div class="row logo-container">
+          <div class="col-xs-6"><a target="_blank" href="https://www.ndi.org/"><img src="http://openelectiondata.net/img/ndi-logo.png" alt="National Democratic Institute"></a></div>
+          <div class="col-xs-6"><a target="_blank" href="http://google.org/"><img src="http://openelectiondata.net/img/google-org-logo.png" alt="Google.org"></a></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="copyright small white"><a target="_blank" href="http://opendefinition.org/"><img src="http://openelectiondata.net/img/oc_80x15_orange_grey.png" alt="Open Content" style="width:80px;height:15px;"></a> - <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Content licensed under a CC Attribution 4.0 International License</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--0.012305974960327-->
+
+<!-- SHARK WEEK -->
+  <script src="https://www.gstatic.com/firebasejs/3.0.2/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script language="javascript" src="sharkweek-assets/js/leaderboard.js"></script>
+  <script language="javascript" src="sharkweek-assets/js/authentication.js"></script>
+  <script language="javascript" src="sharkweek-assets/js/quiz.js"></script>
+  <script language="javascript" src="sharkweek-assets/js/p5.js"></script>
+  <script language="javascript" src="sharkweek-assets/js/p5.dom.js"></script>
+  <script language="javascript" src="sharkweek-assets/js/p5.sound.js"></script>
+  <script language="javascript" src="sharkweek-assets/js/sketch_b.js"></script>
+<!-- SHARK WEEK -->
+
+<!---  ADDED JS for FACEBook share -->
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '144243785989962',
+      xfbml      : true,
+      version    : 'v2.0'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+<!-- ENd of JS for facebook share button -->
+
+</body>
+</html>
