@@ -401,6 +401,9 @@ function gameOver() {
   if(teaserFlag == true) {
     livesEarned = 1;
   }
+  if(!livesEarned) {
+    livesEarned = lives;
+  }
   
   if(freePlayModeFlag == true) {
     fb_updateGamesPlayed(livesEarned, false);
