@@ -263,10 +263,11 @@ function fb_updateGamesPlayed(lives, freePlay) {
   // Push new game_played
   if(!uid) {
     uid = "null";
+    displayName = "null";
   }
   var gamesPlayedRef = firebase.database().ref("gamesPlayed");
   var newGamesPlayedRef = gamesPlayedRef.push();
-  newGamesPlayedRef.set({ 'uid': uid, 'timestamp': Date.now(), 'score': score, 'lives': lives, 'questionsCorrect': questionsCorrect, 'questionsIncorrect': questionsIncorrect, 'quiz': freePlay });
+  newGamesPlayedRef.set({ 'uid': uid, 'name': displayName, 'timestamp': Date.now(), 'score': score, 'lives': lives, 'questionsCorrect': questionsCorrect, 'questionsIncorrect': questionsIncorrect, 'quiz': freePlay });
 }
 
 // Keep a mapping of firebase locations to HTML elements, so we can move / remove elements as necessary.
