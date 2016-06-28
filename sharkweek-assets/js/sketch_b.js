@@ -349,11 +349,15 @@ function draw()
       $("#free-play").hide();
       freePlayCounter = 0;
     }
+
   }
 }
 
 function startGame()
 {
+
+  // Hide Instructions
+  $(".directions").hide();
 
   // change gameStarted variable
   gameStarted = true;
@@ -373,6 +377,9 @@ function gameOver() {
 
   // Hide the Quiz
   $("#quiz").hide();
+
+  // show instructions
+  $(".directions").css("top","33%").show();
 
   // Save the score as a cookie
   document.cookie = "anonScore="+score;

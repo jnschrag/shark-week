@@ -59,7 +59,7 @@ var mondayQuestions = [
     {"answer": "Number of registered voters", "correctAnswer": true, "answer_id": 1},
     {"answer": "Number of sharks", "correctAnswer": false, "answer_id": 2},
     {"answer": "Information on the nearest beach", "correctAnswer": false, "answer_id": 3},
-    {"answer": "None of the above", "correctAnswer": false, "answer_id": 4}
+    {"answer": "None of the these", "correctAnswer": false, "answer_id": 4}
   ]
 }];
 
@@ -88,7 +88,7 @@ var tuesdayQuestions = [
   "answers": [
     {"answer": "Voters list", "correctAnswer": false, "answer_id": 1},
     {"answer": "Polling station list", "correctAnswer": false, "answer_id": 2},
-    {"answer": "Both A & B", "correctAnswer": true, "answer_id": 3},
+    {"answer": "Both Voters List & Polling Station List", "correctAnswer": true, "answer_id": 3},
     {"answer": "Shark list", "correctAnswer": false, "answer_id": 4}
   ]
 }];
@@ -109,7 +109,7 @@ var wednesdayQuestions = [
   "answers": [
     {"answer": "Transparency and objective criteria", "correctAnswer": true, "answer_id": 1},
     {"answer": "Competition", "correctAnswer": false, "answer_id": 2},
-    {"answer": "All of the above", "correctAnswer": false, "answer_id": 3},
+    {"answer": "All of the these", "correctAnswer": false, "answer_id": 3},
     {"answer": "None of these; procurement decisions are made by sharkuitous logic", "correctAnswer": false, "answer_id": 4}
   ]
 }, {

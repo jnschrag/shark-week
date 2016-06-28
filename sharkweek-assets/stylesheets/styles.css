@@ -1,6 +1,14 @@
-#instructions .directions {
-  font-style:italic;
-  font-size:0.8em;
+.directions {
+  color:#fff;
+  position:absolute;
+  width:100%;
+  top:28%;
+  left:30%;
+}
+
+.directions .heading {
+  font-size:1.2em;
+  font-weight:bold;
 }
 
 #authentication {
