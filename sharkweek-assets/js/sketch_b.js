@@ -388,11 +388,12 @@ function gameOver() {
   fb_updateLeaderboard(score, freePlayModeFlag);
 
   // Update the Games Played node
-  if(freePlayModeFlag == true && teaserFlag == false) {
-    fb_updateGamesPlayed(livesEarned, false);
+  if(teaserFlag == true) {
+    livesEarned = 1;
   }
-  else if(freePlayModeFlag == true && teaserFlag == true) {
-    fb_updateGamesPlayed(1, false);
+  
+  if(freePlayModeFlag == true) {
+    fb_updateGamesPlayed(livesEarned, false);
   }
   else {
     fb_updateGamesPlayed(score, true);
