@@ -209,6 +209,7 @@ $.each(questionsObj,function(key,valueObj) {
     return;
   }
   questionsID[key] = valueObj.question_id;
+  answersID[key] = {};
   var qNumber = key + 1;
   var returnHTML = '<div class="q'+key+'">';
   returnHTML += '<span>'+qNumber+'. '+valueObj.question+'</span>';
@@ -218,6 +219,7 @@ $.each(questionsObj,function(key,valueObj) {
   shuffleArray(valueObj.answers);
   $.each(valueObj.answers, function(index, answer) {
 
+    answersID[key][answerLetterOptions[i]] = answer.answer_id; 
     // If this is the 3rd answer, create a new column
     if(i == 2) {
       returnHTML += '</div><div class="col-xs-12 col-sm-6">';
@@ -226,8 +228,8 @@ $.each(questionsObj,function(key,valueObj) {
     // If this is the correct answer, add it to the answers array
     if(answer.correctAnswer == true) {
       answers[key] = answerLetterOptions[i];
-      answersID[key] = answer.answer_id;
     }
+
     returnHTML += '<input type="radio" name="q'+key+'" id="q'+key+i+'" value="'+answerLetterOptions[i]+'"> <label for="q'+key+i+'">'+answerLetterOptions[i].toUpperCase()+'. '+answer.answer+'</label><br />';
     i++;
   });
@@ -236,6 +238,8 @@ $.each(questionsObj,function(key,valueObj) {
   $(".questions").append(returnHTML);
   qCounter++;
 });
+
+console.log(answersID);
 
 // Shuffle Helper Function
 function shuffleArray(array) {
@@ -278,7 +282,7 @@ function checkAnswer(question) {
     fb_updateCorrectIncorrectAnswers(correctRef);
 
     // Update questionsCorrect Array
-    questionsCorrect[questionID] = answersID[questionNumber];
+    questionsCorrect[questionID] = answersID[questionNumber][selected];
 
     // Change the Question
     $(".q"+questionNumber).hide();
@@ -304,7 +308,7 @@ function checkAnswer(question) {
     fb_updateCorrectIncorrectAnswers(incorrectRef);
 
     // Update questionsIncorrect Array
-    questionsIncorrect[questionID] = answersID[questionNumber];
+    questionsIncorrect[questionID] = answersID[questionNumber][selected];
 
     // Change the Question
     $(".q"+questionNumber).hide();
