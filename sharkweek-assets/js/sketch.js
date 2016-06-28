@@ -45,12 +45,14 @@ function preload()
   heart = loadImage('sharkweek-assets/assets/heart.png');
   
   // load in sounds
-  soundFormats('mp3', 'ogg');
-  biteSound = loadSound('sharkweek-assets/assets/bite.mp3');                 
-  gameoverSound = loadSound('sharkweek-assets/assets/game_over.mp3');
-  scoreSound = loadSound('sharkweek-assets/assets/pop.mp3');
-  startSound = loadSound('sharkweek-assets/assets/intro.mp3');
-  soundArray = [biteSound,gameoverSound,scoreSound,startSound];
+  if (Modernizr.webaudio) {
+    soundFormats('mp3', 'ogg');
+    biteSound = loadSound('sharkweek-assets/assets/bite.mp3');                 
+    gameoverSound = loadSound('sharkweek-assets/assets/game_over.mp3');
+    scoreSound = loadSound('sharkweek-assets/assets/pop.mp3');
+    startSound = loadSound('sharkweek-assets/assets/intro.mp3');
+    soundArray = [biteSound,gameoverSound,scoreSound,startSound];
+  }
   
 }
 
@@ -238,7 +240,9 @@ function draw()
             sharks.splice(i, 1);
            
             // play bite sound
-            biteSound.play();
+            if (Modernizr.webaudio) {
+              biteSound.play();
+            }
 
             // If freePlayModeFlag = false, then move to the next question; else lose a life
             if(freePlayModeFlag == false) {
@@ -288,7 +292,9 @@ function draw()
             score++;
           
             // play score sound
-            scoreSound.play();
+            if (Modernizr.webaudio) {
+              scoreSound.play();
+            }
 
             // Stop game, move to next question if this is not the last question
             if(questionNumber != numQuestions) {
@@ -310,7 +316,9 @@ function draw()
             score++;
           
             // play score sound
-            scoreSound.play();
+            if (Modernizr.webaudio) {
+              scoreSound.play();
+            }
           }
         }
       }
@@ -344,7 +352,9 @@ function startGame()
   gameStarted = true;
   
   // play starting sound
-  startSound.play();
+  if (Modernizr.webaudio) {
+    startSound.play();
+  }
 
   // reset score
   score = 0;
@@ -388,7 +398,9 @@ function gameOver() {
   dots = [];
   
   // play gameover sound
-  gameoverSound.play();
+  if (Modernizr.webaudio) {
+    gameoverSound.play();
+  }
   
   // set gameStarted to false
   gameStarted = false;
