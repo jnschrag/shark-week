@@ -239,8 +239,6 @@ $.each(questionsObj,function(key,valueObj) {
   qCounter++;
 });
 
-console.log(answersID);
-
 // Shuffle Helper Function
 function shuffleArray(array) {
   for (var i = array.length - 1; i > 0; i--) {

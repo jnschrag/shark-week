@@ -20,6 +20,7 @@ var questionsCorrect = {};
 var questionsIncorrect = {};
 var numQuestionsIncorrect;
 var freePlayCounter = 0;
+var livesSaved;
 
 function preload()
 {
@@ -123,8 +124,10 @@ function setup()
     questionsIncorrect = {};
 
     // Set our lives to livesEarned or score cookie depending on logged in status
+    console.log("livesEarned: "+livesEarned);
     if(livesEarned > 0) {
       lives = livesEarned;
+      livesSaved = livesEarned;
     }
     else {
       // Increase counter
@@ -132,6 +135,8 @@ function setup()
 
       if(document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1") <= (numQuestions * 2)) {
         lives = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        console.log("anonScore: "+lives);
+        livesSaved = lives;
       }
       else {
         return;
@@ -397,16 +402,16 @@ function gameOver() {
   // Update the leaderboard
   fb_updateLeaderboard(score, freePlayModeFlag);
 
+  console.log("livesSaved: "+livesSaved);
+
   // Update the Games Played node
-  if(teaserFlag == true) {
-    livesEarned = 1;
-  }
-  if(!livesEarned) {
-    livesEarned = lives;
-  }
-  
   if(freePlayModeFlag == true) {
-    fb_updateGamesPlayed(livesEarned, false);
+    if(teaserFlag == true) {
+      fb_updateGamesPlayed(1, false);
+    }
+    else {
+      fb_updateGamesPlayed(livesSaved, false);
+    }
   }
   else {
     fb_updateGamesPlayed(score, true);

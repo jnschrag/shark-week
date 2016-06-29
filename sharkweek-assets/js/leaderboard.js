@@ -88,6 +88,10 @@ function initApp() {
         fb_setUserEarnedInfo();
       }
 
+      // Hide Play Button; Show Quiz Button
+      $("#play-game").hide();
+      $("#start-quiz").show();
+
       // Set Welcome Message
       $("#welcomeUser").html("Welcome back, <strong>"+displayName+"</strong>!<br />");
       $("#userInfo").show();
