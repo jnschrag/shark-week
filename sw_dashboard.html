@@ -157,7 +157,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 ===========================================================================
  -->
 
-    <div class="container">
+    <div class="container sw_dashboard">
 
       <!--=======================================
       =            Dashboard Welcome            =
@@ -171,26 +171,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!--========================================
       =            Dashboard Overview            =
       =========================================-->
-      <div class="row">
-        <div class="col-xs-6 col-sm-3">
-          <a id="gamesPlayedBreakdownLink"><span id="gamesPlayedNum"></span> Games Played</a>
-        </div>
-        <div class="col-xs-6 col-sm-3">
-          <a id="usersBreakdownLink"><span id="usersNum"></span> Users</a>
-        </div>
-        <div class="col-xs-6 col-sm-3">
-          <a id="correctAnswersLink"><span id="correctAnswersNum"></span> Correctly Answered Questions</a>
-        </div>
-        <div class="col-xs-6 col-sm-3">
-          <a id="incorrectAnswersLink"><span id="incorrectAnswersNum"></span> Incorrectly Answered Questions</a>
-        </div>
-      </div>
-      <!--====  End of DashboardOverview  ====-->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#questionsBreakdown" aria-controls="questionsBreakdown" role="tab" data-toggle="tab">Questions Breakdown</a></li>
+        <li role="presentation"><a href="#gamesPlayedBreakdown" aria-controls="gamesPlayedBreakdown" role="tab" data-toggle="tab"><span id="gamesPlayedNum"></span> Games Played</a></li>
+        <li role="presentation"><a href="#usersBreakdown" aria-controls="usersBreakdown" role="tab" data-toggle="tab"><span id="usersNum"></span> Users</a></li>
+      </ul>
+      <div class="tab-content">
+      <!--====  End of Dashboard Overview  ====-->
 
       <!--==========================================
       =            Section: Games Played           =
       ===========================================-->
-      <section id="gamesPlayedBreakdown">
+      <div role="tabpanel" class="tab-pane" id="gamesPlayedBreakdown">
         <table id="gamesPlayedBreakdownTable" class="table">
           <thead>
             <tr>
@@ -202,48 +194,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </tr>
           </thead>
         </table>
-      </section>
-      <!--====  End of Section: Users  ====-->
+      </div>
+      <!--====  End of Section: Games Played  ====-->
 
       <!--====================================
       =            Section: Users            =
       =====================================-->
-      <section id="usersBreakdown">
+      <div role="tabpanel" class="tab-pane" id="usersBreakdown">
         <table id="usersBreakdownTable" class="table">
         </table>
-      </section>
+      </div>
       <!--====  End of Section: Users  ====-->
 
       <!--===========================================================
       =            Section: Correctly Answered Questions            =
       ============================================================-->
-      <section id="correctlyAnsweredQuestions">
+      <div role="tabpanel" class="tab-pane active" id="questionsBreakdown">
         <table id="correctAnswersTable" class="table">
           <thead>
             <tr>
               <th># Times Answered Correctly</th>
-              <th>Question</th>
-            </tr>
-          </thead>
-        </table>
-      </section>
-      <!--====  End of Section: Correctly Answered Questions  ====-->
-      
-      <!--===========================================================
-      =            Section: Incorrectly Answered Questions            =
-      ============================================================-->
-      <section id="incorrectlyAnsweredQuestions">
-        <table id="incorrectAnswersTable" class="table">
-          <thead>
-            <tr>
               <th># Times Answered Incorrectly</th>
               <th>Question</th>
             </tr>
           </thead>
         </table>
-      </section>
-      <!--====  End of Section: Incorrectly Answered Questions  ====-->
+      </div>
+      <!--====  End of Section: Correctly Answered Questions  ====-->
       
+      </div>
     </div>
 
       

@@ -1,4 +1,5 @@
 var questionsInfoObj = {};
+var staffUIDs = ["F1zqKL0uQWSy7mmeKmek8Du1zIt1","m5Ry2ixq44XiTNBHBZN7qAZYn0E2","6cwe32Uh5cWVcF0nQjzwtrYZYYm1","vZ2UPMDBJ9QqZbSg7N8bMqFHdk13","uw4ps4gMstaI7tMD25P6mJxaTzw2","iJuxwpRvtlZDgfErI1BE6oUBJkq1","LjUSOAk6jBftQiKJHrTX8hG9IjC2","GLo9poPP6PT9dZWJRULDycAhBZ63"];
 
 $(function() {
 
@@ -15,7 +16,7 @@ $(function() {
 	==================================================*/
 
 	fb_overallGamesPlayed(gamesPlayedRef, "#gamesPlayedBreakdownTable", function(){
-		console.log(questionsInfoObj);
+		fb_createAnswersTable();
 	});
 
 	fb_getNumChildren(gamesPlayedRef, "#gamesPlayedNum");
@@ -108,44 +109,101 @@ function fb_overallGamesPlayed(ref, tableID, callback) {
 	    	var questionsIncorrect = value.questionsIncorrect;
 	    	var name = value.name;
 
-	    	if(!name) {
-	    		name = "---";
-	    	}
-			$(tableID).append("<tr><td>"+timestamp+"</td><td>"+isQuiz+"</td><td>"+name+"</td><td>"+score+"</td><td>"+lives+"</td></tr>");
+	    	// if(uid == "F1zqKL0uQWSy7mmeKmek8Du1zIt1") {
+	    	// 	console.log("game_id: "+game_id);
+	    	// 	firebase.database().ref("gamesPlayed/"+game_id).remove().then(function() {
+				  //   console.log("Remove succeeded.")
+				  // }).catch(function(error) {
+				  //   console.log("Remove failed: " + error.message)
+				  // });
+	    	// }
+	    	
+	    	// Filter by Staff IDs; If the UID matches one in the object, do not display it or add it to our counters
+	    	if($.inArray( uid, staffUIDs ) === -1) {
 
-			// Create Correct & Incorrect Answer Objects
-			if(questionsCorrect != undefined) {
-				childSnapshot.child("questionsCorrect").forEach(function(answersSnapshot) {
-					
-					var question_id = answersSnapshot.key;
-					var answer_given = answersSnapshot.val();
-					questionsInfoObj[question_id] = questionsInfoObj[question_id] || {};
-					questionsInfoObj[question_id].numIncorrect = questionsInfoObj[question_id].numIncorrect || 0;
-					questionsInfoObj[question_id].numCorrect = questionsInfoObj[question_id].numCorrect + 1 || 1;
-					
-				});
-			};
-			if(questionsIncorrect != undefined) {
-				childSnapshot.child("questionsIncorrect").forEach(function(answersSnapshot) {
+		    	if(!name) {
+		    		name = "---";
+		    	}
+				$(tableID).append("<tr><td>"+timestamp+"</td><td>"+isQuiz+"</td><td>"+name+"</td><td>"+score+"</td><td>"+lives+"</td></tr>");
 
-					var question_id = answersSnapshot.key;
-					var answer_given = answersSnapshot.val();
-					questionsInfoObj[question_id] = questionsInfoObj[question_id] || {};
-					questionsInfoObj[question_id].numCorrect = questionsInfoObj[question_id].numCorrect || 0;
-					questionsInfoObj[question_id].incorrectAnswers = questionsInfoObj[question_id].incorrectAnswers || {};
+				// Create Correct & Incorrect Answer Objects
+				if(questionsCorrect != undefined) {
+					childSnapshot.child("questionsCorrect").forEach(function(answersSnapshot) {
+						
+						var question_id = answersSnapshot.key;
+						var answer_given = answersSnapshot.val();
+						questionsInfoObj[question_id] = questionsInfoObj[question_id] || {};
+						questionsInfoObj[question_id].numIncorrect = questionsInfoObj[question_id].numIncorrect || 0;
+						questionsInfoObj[question_id].numCorrect = questionsInfoObj[question_id].numCorrect + 1 || 1;
+						
+					});
+				};
+				if(questionsIncorrect != undefined) {
+					childSnapshot.child("questionsIncorrect").forEach(function(answersSnapshot) {
 
-					questionsInfoObj[question_id].numIncorrect = questionsInfoObj[question_id].numIncorrect + 1 || 1;
-					if(value.timestamp > 1467156439999) {
-						questionsInfoObj[question_id].incorrectAnswers[answer_given] = questionsInfoObj[question_id].incorrectAnswers[answer_given] + 1 || 1;
-					}
-				});
-			};
+						var question_id = answersSnapshot.key;
+						var answer_given = answersSnapshot.val();
+						questionsInfoObj[question_id] = questionsInfoObj[question_id] || {};
+						questionsInfoObj[question_id].numCorrect = questionsInfoObj[question_id].numCorrect || 0;
+						questionsInfoObj[question_id].incorrectAnswers = questionsInfoObj[question_id].incorrectAnswers || {};
+
+						questionsInfoObj[question_id].numIncorrect = questionsInfoObj[question_id].numIncorrect + 1 || 1;
+						if(value.timestamp > 1467156439999) {
+							questionsInfoObj[question_id].incorrectAnswers[answer_given] = questionsInfoObj[question_id].incorrectAnswers[answer_given] + 1 || 1;
+						}
+					});
+				};
+
+			}
 
 			itemsProcessed++;
 		    if(itemsProcessed === snapshot.numChildren()) {
 		      callback();
 		    }
 	    });
+	});
+}
+
+function fb_createAnswersTable() {
+	$.each(questionsInfoObj, function(index, information) {
+		var question_id = index;
+    	var numCorrect = information.numCorrect;
+    	var numIncorrect = information.numIncorrect;
+    	var incorrectAnswers = information.incorrectAnswers;
+    	var result = fridayQuestions.filter(function( obj ) {
+		  return obj.question_id == question_id;
+		});
+    	var questionText = result[0].question;
+
+    	// Loop through the incorrect questions
+    	var answerBreakdown = "";
+    	var numIncorrectLink = "";
+    	var containsAnswers = false;
+    	if(incorrectAnswers) {
+    		answerBreakdown += "<ul id='answerInfo"+question_id+"' style='display:none;'>";
+    		$.each(incorrectAnswers, function (answer_id, responseCounter) {
+    			containsAnswers = true;
+    			var answerTextObj = result[0].answers.filter(function( obj ) {
+				  return obj.answer_id == answer_id;
+				});
+				var answerText = answerTextObj[0].answer;
+    			answerBreakdown += "<li><strong>"+responseCounter+"</strong> players answered \""+answerText+"\"</li>";
+    		});
+    		answerBreakdown += "</ul>";
+    	}
+
+    	if(containsAnswers == false) {
+		  numIncorrectLink = numIncorrect;
+		}
+		else {
+			numIncorrectLink = "<a id='answerInfo"+question_id+"Link'>"+numIncorrect+"</a>";
+		}
+
+    	$("#correctAnswersTable").append("<tr><td id='q"+question_id+"_corect'>"+numCorrect+"</td><td id='q"+question_id+"_incorect'>"+numIncorrectLink+"</td><td>"+question_id+". "+questionText+answerBreakdown+"</td></tr>");
+
+    	$("#answerInfo"+question_id+"Link").click(function() {
+    		$("#answerInfo"+question_id).toggle();
+    	});
 	});
 
 }

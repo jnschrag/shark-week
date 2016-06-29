@@ -162,8 +162,14 @@ section#quiz {
 /*=================================
 =            Dashboard            =
 =================================*/
-#gamesPlayedBreakdown, #usersBreakdown, #correctlyAnsweredQuestions, #incorrectlyAnsweredQuestions {
-  display:none;
+.sw_dashboard .nav {
+  padding:0px;
+}
+.sw_dashboard .nav > li > a {
+  color:#cc4627;
+}
+.tab-pane.anchor-active {
+  background-color:transparent;
 }
 
 /*=====  End of Dashboard  ======*/
