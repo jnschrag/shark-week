@@ -148,27 +148,16 @@ function fb_setUserEarnedInfo() {
     });
 
     // Update Lives Counter if timestamp is from previous days, only if date is before 7/1/16
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if( dd<10 ) { dd='0'+dd } 
-    if( mm<10 ) { mm='0'+mm } 
-    var currentDate = mm+'/'+dd+'/'+yyyy;
+    var now               = new Date();
+    var startOfToday      = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var July1             = new Date(2016, 06, 01);
 
-    var userDate = new Date(timestamp);
-    var userdd = userDate.getDate();
-    var usermm = userDate.getMonth()+1; //January is 0!
-    var useryyyy = userDate.getFullYear();
-    if( userdd<10 ) { userdd='0'+userdd } 
-    if( usermm<10 ) { usermm='0'+usermm } 
-    var currentUserDate = usermm+'/'+userdd+'/'+useryyyy;
+    var lastGameTimestamp = new Date(timestamp);
+    var lastGameDay       = new Date(lastGameTimestamp.getFullYear(), lastGameTimestamp.getMonth(), lastGameTimestamp.getDate());
 
-    if(currentDate < "07/01/2016") {
-      if(currentUserDate < currentDate) {
-        livesEarned = 0;
-        firebase.database().ref("scoreList/"+uid).update({lives: 0});
-      }
+    if(startOfToday < July1 && lastGameDay < startOfToday) {
+        livesEarned = 0;
+        firebase.database().ref("scoreList/"+uid).update({lives: 0});
     }
 
     // If user has a previous score
