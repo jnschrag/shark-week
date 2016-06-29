@@ -158,3 +158,12 @@ section#quiz {
 .credits {
   font-size: 0.8em;
 }
+
+/*=================================
+=            Dashboard            =
+=================================*/
+#gamesPlayedBreakdown, #usersBreakdown, #correctlyAnsweredQuestions, #incorrectlyAnsweredQuestions {
+  display:none;
+}
+
+/*=====  End of Dashboard  ======*/
