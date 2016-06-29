@@ -133,9 +133,9 @@ function setup()
       // Increase counter
       freePlayCounter++;
 
-      if(document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1") <= (numQuestions * 2)) {
-        lives = document.cookie.replace(/(?:(?:^|.*;\s*)anonScore\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        console.log("anonScore: "+lives);
+      if(document.cookie.replace(/(?:(?:^|.*;\s*)quizLivesEarned\s*\=\s*([^;]*).*$)|^.*$/, "$1") <= (numQuestions * 2)) {
+        lives = document.cookie.replace(/(?:(?:^|.*;\s*)quizLivesEarned\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        console.log("quizLivesEarned: "+lives);
         livesSaved = lives;
       }
       else {
@@ -385,6 +385,8 @@ function startGame()
 
   // Delete cookies
   document.cookie = "anonScore=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  // document.cookie = "quizLivesEarned=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
   
 }
 
@@ -414,6 +416,7 @@ function gameOver() {
     }
   }
   else {
+    document.cookie = "quizLivesEarned="+score;
     fb_updateGamesPlayed(score, true);
   }
 

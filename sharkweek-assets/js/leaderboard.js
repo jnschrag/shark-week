@@ -197,6 +197,8 @@ function fb_updateLeaderboard(score, freePlay) {
     var newLives = Number(score);
 
     if(freePlay == false) {
+      newLives = Number(document.cookie.replace(/(?:(?:^|.*;\s*)quizLivesEarned\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+      document.cookie = "quizLivesEarned=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       if(newLives > (numQuestions * 2)) {
         return;
       }
