@@ -108,6 +108,9 @@ function setup()
       ele[i].checked = false;
     }
 
+    // Delete quizLivesEarned cookie
+    document.cookie = "quizLivesEarned=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
     // Don't loop draw();
     noLoop();
     startGame();
@@ -400,98 +403,106 @@ function gameOver() {
 
   // Save the score as a cookie
   document.cookie = "anonScore="+score;
+  if(freePlayModeFlag == false){
+    document.cookie = "quizLivesEarned="+score;
+  }
 
-  // Update the leaderboard
-  fb_updateLeaderboard(score, freePlayModeFlag);
 
-  console.log("livesSaved: "+livesSaved);
-
-  // Update the Games Played node
-  if(freePlayModeFlag == true) {
-    if(teaserFlag == true) {
-      fb_updateGamesPlayed(1, false);
-    }
-    else {
-      fb_updateGamesPlayed(livesSaved, false);
-    }
-  }
-  else {
-    document.cookie = "quizLivesEarned="+score;
-    fb_updateGamesPlayed(score, true);
-  }
-
-  // reset lives
-  lives = defaultLives;
   
   // reset player's position
-  player.xpos = width*.5;
+  player.xpos = width*0.5;
   player.direction = "stopped";
 
   // remove sharks and dots
   sharks = [];
   dots = [];
-  
+
   // play gameover sound
   if (Modernizr.webaudio) {
     gameoverSound.play();
   }
-  
+
   // set gameStarted to false
   gameStarted = false;
 
-  // Game Over Screen: if freePlayModeFlag = false, show # of bonus lives earned and option for free play; else game over & personal high score
-  if(freePlayModeFlag == false) {
-    if(score > 0) {
-      $("#game-over-results").show().html("<span class='right'>FIN-tastic!</span><br />You earned <strong>"+score+" lives</strong> to help you and OEDI collect the missing ballots in our free play game! Check back tomorrow for new questions!");
+  // Update the leaderboard
+  fb_updateLeaderboard(score, freePlayModeFlag);
+
+
+  setTimeout(function(){
+    console.log("livesSaved: "+livesSaved);
+
+    // Update the Games Played node
+    if(freePlayModeFlag == true) {
+      if(teaserFlag == true) {
+        fb_updateGamesPlayed(1, false);
+      }
+      else {
+        fb_updateGamesPlayed(livesSaved, false);
+      }
+    }
+    else {
+      fb_updateGamesPlayed(score, true);
+    }
+
+    // reset lives
+    lives = defaultLives;
+
+    // Game Over Screen: if freePlayModeFlag = false, show # of bonus lives earned and option for free play; else game over & personal high score
+    if(freePlayModeFlag == false) {
+      if(score > 0) {
+        $("#game-over-results").show().html("<span class='right'>FIN-tastic!</span><br />You earned <strong>"+score+" lives</strong> to help you and OEDI collect the missing ballots in our free play game! Check back tomorrow for new questions!");
+
+        // Show the share buttons
+        shareButtons("I earned "+score+" extra lives in Ballots: Casted Away!");
+
+        // Show the Free Play Button
+        $("#free-play").show();
+      }
+      else {
+        $("#game-over-results").show().html("<span class='wrong'>Uh-oh!</span><br />It looks like that quiz took a byte out of you.<br />Give it another try to unlock the free play version of the game!");
+      }
+    }
+    else if(teaserFlag == true) {
+      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />To keep playing, earn more lives by taking our quiz on open election data!");
+
+      // Hide Play Game Button; show Start Quiz Button
+      $("#play-game").hide();
+      $("#start-quiz").show();
 
       // Show the share buttons
-      shareButtons("I earned "+score+" extra lives in Ballots: Casted Away!");
-
-      // Show the Free Play Button
-      $("#free-play").show();
+      shareButtons("I rescued "+score+" missing ballots in Ballots: Casted Away!");
     }
     else {
-      $("#game-over-results").show().html("<span class='wrong'>Uh-oh!</span><br />It looks like that quiz took a byte out of you.<br />Give it another try to unlock the free play version of the game!");
-    }
-  }
-  else if(teaserFlag == true) {
-    $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />To keep playing, earn more lives by taking our quiz on open election data!");
-
-    // Hide Play Game Button; show Start Quiz Button
-    $("#play-game").hide();
-    $("#start-quiz").show();
-
-    // Show the share buttons
-    shareButtons("I rescued "+score+" missing ballots in Ballots: Casted Away!");
-  }
-  else {
-    // If freePlayCounter > 0, tell them to take the quiz again
-    if(freePlayCounter > 0) {
-      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You collected <strong>"+score+" missing ballots</strong>! To play again, take our quiz or sign in! Be sure to check back tomorrow for new questions!");
-    }
-    else {
-      // Personal High Score
-      var bonus = "";
-      if(score > prevScore) {
-        var bonus = "That’s a JAWSdropping new personal high score!";
+      // If freePlayCounter > 0, tell them to take the quiz again
+      if(freePlayCounter > 0) {
+        $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You collected <strong>"+score+" missing ballots</strong>! To play again, take our quiz or sign in! Be sure to check back tomorrow for new questions!");
       }
-      // Overall High Score
-      if(score > highScore) {
-        var bonus = "JAWesome! You have set the record with the highest score so far!";
+      else {
+        // Personal High Score
+        var bonus = "";
+        if(score > prevScore) {
+          bonus = "That’s a JAWSdropping new personal high score!";
+        }
+        // Overall High Score
+        if(score > highScore) {
+          bonus = "JAWesome! You have set the record with the highest score so far!";
+        }
+
+        $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />"+bonus+"<br />Check back tomorrow for new quiz questions!");
       }
 
-      $("#game-over-results").show().html("<span>FIN-tastic!</span><br />You saved <strong>"+score+" missing ballots</strong>!<br />"+bonus+"<br />Check back tomorrow for new quiz questions!");
+      // Show the share buttons
+      shareButtons("I rescued "+score+" missing ballots in Ballots: Casted Away!");
+
     }
 
-    // Show the share buttons
-    shareButtons("I rescued "+score+" missing ballots in Ballots: Casted Away!");
+    // Reset Flags
+    quizFlag = false;
+    freePlayModeFlag = false;
+    teaserFlag = false;
 
-  }
-
-  // Reset Flags
-  quizFlag = false;
-  freePlayModeFlag = false;
-  teaserFlag = false;
+  }, 500);
 }
 
 function keyPressed()

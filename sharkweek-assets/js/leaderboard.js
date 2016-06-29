@@ -4,10 +4,10 @@
 
 // Initialize Firebase
 var config = {
-	apiKey: "AIzaSyBpz9yAldgWgjQug-cfBWHZb-7pRGKUPt4",
-	authDomain: "shark-week-leaderboard.firebaseapp.com",
-	databaseURL: "https://shark-week-leaderboard.firebaseio.com",
-	storageBucket: "",
+  apiKey: "AIzaSyBpz9yAldgWgjQug-cfBWHZb-7pRGKUPt4",
+  authDomain: "shark-week-leaderboard.firebaseapp.com",
+  databaseURL: "https://shark-week-leaderboard.firebaseio.com",
+  storageBucket: "",
 };
 firebase.initializeApp(config);
 
@@ -124,7 +124,7 @@ function initApp() {
       $("#shark_signin").click(function() {
         authenticateEmailSignIn();
       });
-      
+
     }
   });
 
@@ -136,8 +136,10 @@ window.onload = function() {
 // Set livesEarned & prevScore global variables
 function fb_setUserEarnedInfo() {
   firebase.database().ref("scoreList/"+uid).once("value").then(function(snapshot) {
+    console.log('Updating sidebar...');
     livesEarned = snapshot.child("lives").val(); // Current Lives Earned
     prevScore = snapshot.child("score").val(); // Current Personal High Score
+    console.log("prevScore: "+prevScore);
     var timestamp = snapshot.child("timestamp").val(); // Timestamp of last game
     var priority = snapshot.getPriority();
 
@@ -148,16 +150,17 @@ function fb_setUserEarnedInfo() {
     });
 
     // Update Lives Counter if timestamp is from previous days, only if date is before 7/1/16
-    var now               = new Date();
-    var startOfToday      = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var July1             = new Date(2016, 06, 01);
+    var now               = new Date();
+    var startOfToday      = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var July1             = new Date(2016, 06, 01);
 
     var lastGameTimestamp = new Date(timestamp);
-    var lastGameDay       = new Date(lastGameTimestamp.getFullYear(), lastGameTimestamp.getMonth(), lastGameTimestamp.getDate());
+    var lastGameDay       = new Date(lastGameTimestamp.getFullYear(), lastGameTimestamp.getMonth(), lastGameTimestamp.getDate());
 
     if(startOfToday < July1 && lastGameDay < startOfToday) {
-        livesEarned = 0;
-        firebase.database().ref("scoreList/"+uid).update({lives: 0});
+        console.log('Timestamps forced reset...')
+        livesEarned = 0;
+        firebase.database().ref("scoreList/"+uid).update({lives: 0});
     }
 
     // If user has a previous score
@@ -187,7 +190,6 @@ function fb_updateLeaderboard(score, freePlay) {
 
     if(freePlay == false) {
       newLives = Number(document.cookie.replace(/(?:(?:^|.*;\s*)quizLivesEarned\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
-      document.cookie = "quizLivesEarned=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       if(newLives > (numQuestions * 2)) {
         return;
       }
@@ -207,32 +209,44 @@ function fb_updateLeaderboard(score, freePlay) {
         if(oldScore === undefined || newScore > oldScore) {
           // Update the old score; use setPriority to reset the priority to the new score
           userScoreRef.update({score:newScore, timestamp:Date.now()});
-          userScoreRef.setPriority(newScore);
+          userScoreRef.setPriority(newScore, function(){
+              console.log('Updated user score 1...');
+            fb_setUserEarnedInfo();
+          });
+
           // Update the user's lives earned if freePlay = false
           if(freePlay == false) {
-            userScoreRef.update({lives:newLives, timestamp:Date.now()});
+          userScoreRef.update({lives:newLives, timestamp:Date.now()}, function(){
+            console.log('Updated user lives 1...');
+            fb_setUserEarnedInfo();
+          });
           }
         }
         else {
           // Update the user's lives earned if freePlay = false
           if(freePlay == false) {
-            userScoreRef.update({lives:newLives, timestamp:Date.now()});
+          userScoreRef.update({lives:newLives, timestamp:Date.now()}, function(){
+            console.log('Updated user lives 2...');
+            fb_setUserEarnedInfo();
+          });
           }
           //return;
         }
       }
       else {
         // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-        userScoreRef.setWithPriority({ name:name, score:newScore, timestamp:Date.now() }, newScore);
+        userScoreRef.setWithPriority({ name:name, score:newScore, timestamp:Date.now() }, newScore, function(){
+          console.log('Updated user score 2...');
+          fb_setUserEarnedInfo();
+        });
         // Update the user's lives earned if freePlay = false
         if(freePlay == false) {
-          userScoreRef.update({lives:newLives, timestamp:Date.now()});
+          userScoreRef.update({lives:newLives, timestamp:Date.now()}, function(){
+            console.log('Updated user lives 3...');
+            fb_setUserEarnedInfo();
+          });
         }
       }
-
-      // Update our earned values to reflect what was just added to the database
-      fb_setUserEarnedInfo();
-
     });
 
     // Track the highest score using a transaction.  A transaction guarantees that the code inside the block is
@@ -245,7 +259,7 @@ function fb_updateLeaderboard(score, freePlay) {
       }
       // if we return with no arguments, it cancels the transaction.
       return;
-    }); 
+    });
 }
 
 /**
@@ -253,7 +267,7 @@ function fb_updateLeaderboard(score, freePlay) {
  * @param  {string} lives     # of lives either earned (in quiz mode) or started out with (in free play)
  * @param  {flag} freePlay    true or false
  * @return none
- */ 
+ */
 function fb_updateGamesPlayed(lives, freePlay) {
   // Push new game_played
   if(!uid) {
