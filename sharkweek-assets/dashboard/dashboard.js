@@ -16,7 +16,6 @@ $(function() {
 	fb_overallGamesPlayed(gamesPlayedRef, "#gamesPlayedBreakdownTable", function(){
 		fb_createAnswersTable();
 		fb_processUsers();
-		console.log(usersInfoObj);
 	});
 
 	fb_getNumChildren(gamesPlayedRef, "#gamesPlayedNum");
@@ -35,37 +34,6 @@ function fb_getNumChildren(ref, element) {
 	ref.once("value").then(function(snapshot) {
 		var children = snapshot.numChildren();
 		return $(element).html(children);
-	});
-}
-
-/**
- * Populates the overall correct/incorrect question counters
- * @param  {string} ref       Firebase reference
- * @param  {string} element   HTML element to populate
- * @param  {int} counterID    Counter to update
- * @return {int}           	  Total number of correct/incorrect answered questions
- */
-function fb_overallAnswers(ref, element, counterID, tableID) {
-	ref.once("value").then(function(snapshot) {
-	    snapshot.forEach(function(childSnapshot) {
-	    	var question_id = childSnapshot.key;
-	    	var value = childSnapshot.val();
-	    	var result = fridayQuestions.filter(function( obj ) {
-			  return obj.question_id == question_id;
-			});
-	    	var questionText = result[0].question;
-	    	counterID += value;
-	    	// HTML based on ref
-	    	if(ref == "correctAnswersRef") {
-	    		console.log("correct");
-	    		$(tableID).append("<tr><td id='q"+question_id+"_corect'>"+value+"</td><td id='q"+question_id+"_incorect'></td><td>"+questionText+"</td></tr>");
-	    	}
-	    	else {
-	    		console.log("incorrect");
-	    		$('#q'+question_id+'_incorrect').html(value);
-	    	}
-	  });
-	  $(element).html(counterID);
 	});
 }
 

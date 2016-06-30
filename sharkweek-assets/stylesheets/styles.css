@@ -158,18 +158,3 @@ section#quiz {
 .credits {
   font-size: 0.8em;
 }
-
-/*=================================
-=            Dashboard            =
-=================================*/
-.sw_dashboard .nav {
-  padding:0px;
-}
-.sw_dashboard .nav > li > a {
-  color:#cc4627;
-}
-.tab-pane.anchor-active {
-  background-color:transparent;
-}
-
-/*=====  End of Dashboard  ======*/
