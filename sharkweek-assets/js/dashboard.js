@@ -1,12 +1,10 @@
 var questionsInfoObj = {};
+var usersInfoObj = {};
 var staffUIDs = ["F1zqKL0uQWSy7mmeKmek8Du1zIt1","m5Ry2ixq44XiTNBHBZN7qAZYn0E2","6cwe32Uh5cWVcF0nQjzwtrYZYYm1","vZ2UPMDBJ9QqZbSg7N8bMqFHdk13","uw4ps4gMstaI7tMD25P6mJxaTzw2","iJuxwpRvtlZDgfErI1BE6oUBJkq1","LjUSOAk6jBftQiKJHrTX8hG9IjC2","GLo9poPP6PT9dZWJRULDycAhBZ63"];
 
 $(function() {
 
 	// Build some firebase references.
-	// var rootRef = firebase.database().ref(); DEFINED in leaderboard.js
-	// var scoreListRef = firebase.database().ref("scoreList"); DEFINED in leaderboard.js
-	// var highestScoreRef = firebase.database().ref("highestScore");DEFINED in leaderboard.js
 	var gamesPlayedRef = firebase.database().ref("gamesPlayed");
 	var correctAnswersRef = firebase.database().ref("correctAnswers");
 	var incorrectAnswersRef = firebase.database().ref("incorrectAnswers");
@@ -17,28 +15,12 @@ $(function() {
 
 	fb_overallGamesPlayed(gamesPlayedRef, "#gamesPlayedBreakdownTable", function(){
 		fb_createAnswersTable();
+		fb_processUsers();
+		console.log(usersInfoObj);
 	});
 
 	fb_getNumChildren(gamesPlayedRef, "#gamesPlayedNum");
 	fb_getNumChildren(scoreListRef, "#usersNum");
-
-	// var overallCorrectAnswerCounter = 0;
-	// fb_overallAnswers(correctAnswersRef, "#correctAnswersNum", overallCorrectAnswerCounter, "#correctAnswersTable");
-	// var overallIncorrectAnswerCounter = 0;
-	// fb_overallAnswers(incorrectAnswersRef, "#incorrectAnswersNum", overallIncorrectAnswerCounter, "#incorrectAnswersTable");
-
-	$("#gamesPlayedBreakdownLink").click(function(){
-		$("section#gamesPlayedBreakdown").toggle();
-	});
-	$("#usersBreakdownLink").click(function(){
-		$("section#usersBreakdown").toggle();
-	});
-	$("#correctAnswersLink").click(function(){
-		$("section#correctlyAnsweredQuestions").toggle();
-	});
-	$("#incorrectAnswersLink").click(function(){
-		$("section#incorrectlyAnsweredQuestions").toggle();
-	});
 
 	/*=====  End of Dashboard Overview Numbers  ======*/
 	
@@ -109,14 +91,35 @@ function fb_overallGamesPlayed(ref, tableID, callback) {
 	    	var questionsIncorrect = value.questionsIncorrect;
 	    	var name = value.name;
 
-	    	// if(uid == "F1zqKL0uQWSy7mmeKmek8Du1zIt1") {
-	    	// 	console.log("game_id: "+game_id);
-	    	// 	firebase.database().ref("gamesPlayed/"+game_id).remove().then(function() {
-				  //   console.log("Remove succeeded.")
-				  // }).catch(function(error) {
-				  //   console.log("Remove failed: " + error.message)
-				  // });
-	    	// }
+	    	// Populate usersInfoObj
+	    	if(uid != null) {
+	    		usersInfoObj[uid] = usersInfoObj[uid] || {};
+	    		usersInfoObj[uid].name = name || "";
+	    		usersInfoObj[uid].numGamesPlayed = usersInfoObj[uid].numGamesPlayed + 1 || 1;
+	    		var date = timeConverter(value.timestamp, true);
+	    		usersInfoObj[uid].dates = usersInfoObj[uid].dates || {};
+	    		usersInfoObj[uid].dates[date] = usersInfoObj[uid].dates[date] + 1 || 1;
+	    		if(questionsCorrect != undefined) {
+					childSnapshot.child("questionsCorrect").forEach(function(answersSnapshot) {
+						var question_id = answersSnapshot.key;
+						var answer_given = answersSnapshot.val();
+						usersInfoObj[uid].numIncorrect = usersInfoObj[uid].numIncorrect || 0;
+						usersInfoObj[uid].numCorrect = usersInfoObj[uid].numCorrect + 1 || 1;
+					});
+				};
+				if(questionsIncorrect != undefined) {
+					childSnapshot.child("questionsIncorrect").forEach(function(answersSnapshot) {
+						var question_id = answersSnapshot.key;
+						var answer_given = answersSnapshot.val();
+						usersInfoObj[uid].numCorrect = usersInfoObj[uid].numCorrect || 0;
+						usersInfoObj[uid].incorrectAnswers = usersInfoObj[uid].incorrectAnswers || {};
+						usersInfoObj[uid].numIncorrect = usersInfoObj[uid].numIncorrect + 1 || 1;
+						if(value.timestamp > 1467156439999) {
+							usersInfoObj[uid].incorrectAnswers[answer_given] = usersInfoObj[uid].incorrectAnswers[answer_given] + 1 || 1;
+						}
+					});
+				};
+	    	}
 	    	
 	    	// Filter by Staff IDs; If the UID matches one in the object, do not display it or add it to our counters
 	    	if($.inArray( uid, staffUIDs ) === -1) {
@@ -196,7 +199,7 @@ function fb_createAnswersTable() {
 		  numIncorrectLink = numIncorrect;
 		}
 		else {
-			numIncorrectLink = "<a id='answerInfo"+question_id+"Link'>"+numIncorrect+"</a>";
+			numIncorrectLink = "<a id='answerInfo"+question_id+"Link' title='Click for more details' style='cursor:pointer;'>"+numIncorrect+"</a>";
 		}
 
     	$("#correctAnswersTable").append("<tr><td id='q"+question_id+"_corect'>"+numCorrect+"</td><td id='q"+question_id+"_incorect'>"+numIncorrectLink+"</td><td>"+question_id+". "+questionText+answerBreakdown+"</td></tr>");
@@ -205,10 +208,36 @@ function fb_createAnswersTable() {
     		$("#answerInfo"+question_id).toggle();
     	});
 	});
-
 }
 
-function timeConverter(UNIX_timestamp){
+function fb_processUsers() {
+	$.each(usersInfoObj, function(index, information) {
+		var uid = index;
+		var name = information.name;
+		var numGamesPlayed = information.numGamesPlayed;
+    	var numCorrect = information.numCorrect;
+    	var numIncorrect = information.numIncorrect;
+    	var incorrectAnswers = information.incorrectAnswers;
+
+    	if(numCorrect == undefined) {
+    		numCorrect = "---";
+    	}
+    	if(numIncorrect == undefined) {
+    		numIncorrect = "---";
+    	}
+
+    	// Loop Through Dates
+    	var dates = "";
+    	$.each(information.dates, function(date, counter) {
+    		dates += date+": "+counter+"<br />";
+    	});
+  
+    	$("#usersBreakdownTable").append("<tr><td>"+name+"</td><td>"+numGamesPlayed+"</td><td>"+numCorrect+"</td><td>"+numIncorrect+"</td><td>"+dates+"</td></tr>");
+	});
+}
+
+
+function timeConverter(UNIX_timestamp, dayOnly = false){
   var a = new Date(UNIX_timestamp);
   var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var year = a.getFullYear();
@@ -217,6 +246,11 @@ function timeConverter(UNIX_timestamp){
   var hour = a.getHours();
   var min = a.getMinutes();
   var sec = a.getSeconds();
-  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  if(dayOnly == true) {
+  	var time = date + ' ' + month + ' ' + year;
+  }
+  else {
+  	var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  }
   return time;
 }

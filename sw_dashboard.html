@@ -183,6 +183,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       =            Section: Games Played           =
       ===========================================-->
       <div role="tabpanel" class="tab-pane" id="gamesPlayedBreakdown">
+        <em>Excludes games played by signed-in Elections team members</em>
         <table id="gamesPlayedBreakdownTable" class="table">
           <thead>
             <tr>
@@ -201,7 +202,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       =            Section: Users            =
       =====================================-->
       <div role="tabpanel" class="tab-pane" id="usersBreakdown">
+        <strong>Signup Provider Breakdown:</strong> (Number of people who signed in, but not all played games)<br />
+        <ul>
+          <li>Google: 13</li>
+          <li>Facebook: 7</li>
+          <li>Twitter: 6</li>
+        </ul>
         <table id="usersBreakdownTable" class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th># Games Played</th>
+              <th># Questions Correct</th>
+              <th># Questions Incorrect</th>
+              <th>Days Games Played</th>
+            </tr>
         </table>
       </div>
       <!--====  End of Section: Users  ====-->
