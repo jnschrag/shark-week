@@ -107,9 +107,9 @@ var wednesdayQuestions = [
   "question_id" : 11,
   "question": "What should guide procurement decisions in election management bodies’ decision-making processes?",
   "answers": [
-    {"answer": "Transparency and objective criteria", "correctAnswer": true, "answer_id": 1},
+    {"answer": "Transparency and objective criteria", "correctAnswer": false, "answer_id": 1},
     {"answer": "Competition", "correctAnswer": false, "answer_id": 2},
-    {"answer": "All of the these", "correctAnswer": false, "answer_id": 3},
+    {"answer": "All of these", "correctAnswer": true, "answer_id": 3},
     {"answer": "None of these; procurement decisions are made by sharkuitous logic", "correctAnswer": false, "answer_id": 4}
   ]
 }, {
