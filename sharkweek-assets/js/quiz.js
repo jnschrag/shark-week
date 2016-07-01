@@ -194,7 +194,8 @@ switch (currentDate) {
 }
 
 /*----------  Define Questions Variables  ----------*/
-var numQuestions = Object.keys(questionsObj).length;
+var numQuestions = Object.keys(questionsObj).length - 12;
+console.log("numQuestions: "+numQuestions);
 var maxNumQuestions = 3;
 var answerLetterOptions = ["a","b","c","d"];
 

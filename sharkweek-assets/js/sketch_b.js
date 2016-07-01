@@ -15,7 +15,6 @@ var freePlayModeFlag = false;
 var teaserFlag = false;
 var letters = ["a","b","c","d"];
 var correctAnswer;
-var numQuestions = Object.keys(questionsObj).length;
 var questionsCorrect = {};
 var questionsIncorrect = {};
 var numQuestionsIncorrect;
